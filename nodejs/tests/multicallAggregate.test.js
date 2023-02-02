@@ -1,4 +1,8 @@
-const multiCallAggregate = require('./multicallAggregate');
+console.clear();
+
+require('dotenv').config({path: '.env'});
+
+const multiCallAggregate = require('./../json-rpc-relay/multicall-aggregate-example/multicallAggregate');
 
 describe('MulticallAggregate Arkhia Prod', () => {
     expect(process.env.ARKHIA_API_KEY).toBeDefined();

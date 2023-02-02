@@ -1,8 +1,6 @@
 const { ethers } = require("ethers");
 const ABI = require('./abi');
 const data = require('./data');
-require("dotenv").config();
-
 
 module.exports = {
     getMultiCallData: async function(providerUrl) {

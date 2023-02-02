@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test:multicall": "./node_modules/.bin/jest tests/multicallAggregate.test.js"
   },
   "author": "",
   "license": "ISC",
