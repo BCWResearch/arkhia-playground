@@ -1,14 +1,14 @@
 const multiCallAggregate = require('./multicallAggregate');
 
 describe('MulticallAggregate Arkhia Prod', () => {
-    expect(process.env.ARKHIA_KEY).toBeDefined();
+    expect(process.env.ARKHIA_API_KEY).toBeDefined();
     test('getMultiCallData: Call Arkhia Testnet', async () => {
-        const data = await multiCallAggregate.getMultiCallData(`https://hedera.testnet.arkhia.io/json-rpc/v1/${process.env.ARKHIA_KEY}`);
+        const data = await multiCallAggregate.getMultiCallData(`https://hedera.testnet.arkhia.io/json-rpc/v1/${process.env.ARKHIA_API_KEY}`);
         expect(data).toHaveProperty('data');
     });
 
     test('getMutliCallData: Call Arkhia Mainnet', async () => {
-        const data = await multiCallAggregate.getMultiCallData(`https://hedera.mainnet.arkhia.io/json-rpc/v1/${process.env.ARKHIA_KEY}`);
+        const data = await multiCallAggregate.getMultiCallData(`https://hedera.mainnet.arkhia.io/json-rpc/v1/${process.env.ARKHIA_API_KEY}`);
         expect(data).toHaveProperty('data');
     });
 });
