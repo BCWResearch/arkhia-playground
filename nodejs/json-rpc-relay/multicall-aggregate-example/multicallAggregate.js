@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
-const ABI = require('./abi');
-const data = require('./data');
+const ABI = require('./samples/abi');
+const data = require('./samples/data');
 
 module.exports = {
     getMultiCallData: async function(providerUrl) {

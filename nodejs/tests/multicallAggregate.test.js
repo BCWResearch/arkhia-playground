@@ -11,7 +11,7 @@ describe('MulticallAggregate Arkhia Prod', () => {
         expect(data).toHaveProperty('data');
     });
 
-    test('getMutliCallData: Call Arkhia Mainnet', async () => {
+    test('getMultiCallData: Call Arkhia Mainnet', async () => {
         const data = await multiCallAggregate.getMultiCallData(`https://hedera.mainnet.arkhia.io/json-rpc/v1/${process.env.ARKHIA_API_KEY}`);
         expect(data).toHaveProperty('data');
     });
@@ -23,7 +23,7 @@ describe('MulticallAggregate Hashio', () => {
         expect(data).toHaveProperty('data');
     });
 
-    test('getMutliCallData: Call Hashio Mainnet', async () => {
+    test('getMultiCallData: Call Hashio Mainnet', async () => {
         const data = await multiCallAggregate.getMultiCallData('https://mainnet.hashio.io/api');
         expect(data).toHaveProperty('data');
     });
