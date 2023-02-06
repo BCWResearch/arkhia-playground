@@ -1,5 +1,6 @@
 # arkhia-playground
-A set of internal handy code snippets to share with us and our close clients 
+- A set of internal handy code snippets and integration tests to sanity check the set of APIS from Hedera/Arkhia.
+
 
 ## Index
 

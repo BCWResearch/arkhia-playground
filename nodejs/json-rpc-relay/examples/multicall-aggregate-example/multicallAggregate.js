@@ -1,8 +1,9 @@
 const { ethers } = require("ethers");
-const ABI = require('./samples/abi');
-const data = require('./samples/data');
+const ABI = require('./../../samples/multicall/multicall.abi');
+const data = require('./../../samples/multicall/data');
 
 module.exports = {
+ 
     getMultiCallData: async function(providerUrl) {
 
         const provider = new ethers.providers.JsonRpcProvider(providerUrl);
@@ -17,4 +18,5 @@ module.exports = {
         );
         return tx;
     }
+
 }
