@@ -1,41 +1,52 @@
 console.clear();
-const axios = require(`axios`);
+
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
 const { ethers } = require("ethers");
+const { curly } = require('node-libcurl')
 
-const arkhiaJsonRpcRelayMainnet = `${process.env.ARKHIA_MAINNET_URL}/${process.env.ARKHIA_API_KEY}`;
 const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
+const httpHeaderJson = [
+    'Content-Type: application/json',
+    'Accept: application/json'
+  ];
 const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
 const testnetEvmAccount = "0x0000000000000000000000000000000000000589";
 
-const getAccountPayload = () => {
+const getBalancePayload = () => {
     const data = JSON.stringify({
         "jsonrpc": "2.0",
         "method": "eth_getBalance",
         "params": [
-            "0x0000000000000000000000000000000000000589"
+            "0x0000000000000000000000000000000000000589", "latest"
         ],
         "id": 1
       });
     return data;
 }
 
-describe('[CURL] Accounts',  () => {
+describe('[CURL] GetBalance',  () => {
 
-    // WIP
     test('Should get Balance from Hedera account through EVM Account address from Arhia Testnet', async () => {
-        // Arrange
-        const configAccounts = getAccountPayload();
-        // Act
-        //  const accountBalance = await axios.post(arkhiaJsonRpcRelayMainnet, configAccounts);
-        // Assert
-        // expect(accountBalance).toBeDefined();
 
+        // Arrange
+        const getBalance= getBalancePayload();
+
+        // Act
+        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+            postFields: getBalance,
+            httpHeader: httpHeaderJson,
+        });
+
+        // Assert
+        expect(data).toBeDefined();
+        expect(data.result.toString().length).toEqual(21);
+        expect(data.jsonrpc).toBeDefined();
     });
 });
 
-describe('[Web3] Accounts', () => {
+
+describe('[Web3] GetBalance', () => {
 
     test('Should get Balance from Hedera account through EVM Account address from Arhia Testnet', async () => {
         // Arrange
@@ -48,9 +59,10 @@ describe('[Web3] Accounts', () => {
         expect(balance).toBeDefined();
         expect(Number(balance)).toBeGreaterThan(0);
     });
+
 });
 
-describe('[Ethers] Accounts', () => {
+describe('[Ethers] GetBalance', () => {
 
     test('Should get Balance from Hedera account through EVM Account address from Arhia Testnet', async () => {
         // Arrange
@@ -65,3 +77,4 @@ describe('[Ethers] Accounts', () => {
     });
 
 });
+
