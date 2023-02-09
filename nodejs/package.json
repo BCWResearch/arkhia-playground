@@ -8,11 +8,11 @@
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
     "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.node/get.balance.test.js",
     "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js",
-    "test:hashrate": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.hashrate.test.js",
-    "test:clientVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/web3.clientVersion.test.js",
-    "test:netVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/net.version.test.js",
-    "test:netListening": "./node_modules/.bin/jest json-rpc-relay/integration.tests/net.listening.test.js",
-    "test:ethSyncing": "./node_modules/.bin/jest json-rpc-relay/integration.tests/eth.syncing.test.js"
+    "test:hashrate": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/get.hashrate.test.js",
+    "test:clientVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/web3.clientVersion.test.js",
+    "test:netVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.version.test.js",
+    "test:netListening": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.listening.test.js",
+    "test:ethSyncing": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.syncing.test.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,11 +20,10 @@
     "axios": "^1.3.2",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "web3": "^1.8.2",
-    "node-liburl" : "latest"
+    "node-libcurl": "^3.0.0",
+    "web3": "^1.8.2"
   },
   "devDependencies": {
     "jest": "^29.4.1"
   }
 }
-
