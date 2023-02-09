@@ -1,14 +1,18 @@
 console.clear();
-const axios = require(`axios`);
+
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
+const { curly } = require('node-libcurl');
 const { ethers } = require("ethers");
 
-const arkhiaJsonRpcRelayMainnet = `${process.env.ARKHIA_MAINNET_URL}/${process.env.ARKHIA_API_KEY}`;
+const httpHeaderJson = [
+    'Content-Type: application/json',
+    'Accept: application/json'
+  ];
 const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
 const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
 
-const web3ClientVersionPayload = () => {
+const getPayload = () => {
     const data = {
         "jsonrpc": "2.0",
         "method": "web3_clientVersion",
@@ -22,14 +26,16 @@ describe('[CURL] ClientVersion', () => {
 
     test('Should get relay version from Arhia Testnet', async () => {
         // Arrange
-        const configHashratePayload = web3ClientVersionPayload();
+        const configPayload = getPayload();
 
         // Act
-        const result = await axios.post(arkhiaJsonRpcRelayTestnet, configHashratePayload);
+        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+            postFields: JSON.stringify(configPayload),
+            httpHeader: httpHeaderJson,
+        });
 
         // Assert
-        expect(result.data.result).toBeDefined();
-
+        expect(data?.result).toBeDefined();
     });
 });
 

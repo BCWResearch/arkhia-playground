@@ -1,14 +1,17 @@
 console.clear();
-const axios = require(`axios`);
+
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { ethers } = require("ethers");
+const { curly } = require('node-libcurl')
 
-const arkhiaJsonRpcRelayMainnet = `${process.env.ARKHIA_MAINNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
+const httpHeaderJson = [
+    'Content-Type: application/json',
+    'Accept: application/json'
+  ];
+const arkhiaJsonRpcRelayTestnet = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
 const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
 
-const hashratePayload = () => {
+const getPayload = () => {
     const data = {
         "jsonrpc": "2.0",
         "method": "eth_hashrate",
@@ -20,16 +23,19 @@ const hashratePayload = () => {
 
 describe('[CURL] Hashrate', () => {
 
-    test('Should get 0x0 from Hedera account through EVM Account address from Arhia Testnet', async () => {
+    test('Should get 0x0 from Arhia Testnet', async () => {
         // Arrange
-        const configHashratePayload = hashratePayload();
+        const configPayload = getPayload();
 
         // Act
-        const result = await axios.post(arkhiaJsonRpcRelayTestnet, configHashratePayload);
+        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+            postFields: JSON.stringify(configPayload),
+            httpHeader: httpHeaderJson,
+        });
 
         // Assert
-        expect(result).toBeDefined();
-
+        expect(data).toBeDefined();
+        expect(data?.result).toEqual("0x0");
     });
 });
 
@@ -47,18 +53,3 @@ describe('[Web3] Hashrate', () => {
         expect(Number(hashrate)).toEqual(0);
     });
 });
-
-// describe('[Ethers] Hashrate', () => {
-
-//     test('Should get Hashrate from Hedera from Arhia Testnet', async () => {
-//         // Arrange
-//         const ethersProvider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayTestnet);
-        
-//         // Arrange
-//         const balance = await ethersProvider.getHashrate();
-
-//         // Assert
-//         expect(balance).toBeDefined();
-//         // expect(Number(balance)).toBeGreaterThan(0);
-//     });
-// });

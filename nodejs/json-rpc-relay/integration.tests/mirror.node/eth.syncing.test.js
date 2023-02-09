@@ -1,14 +1,18 @@
 console.clear();
-const axios = require(`axios`);
+
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
+const { curly } = require('node-libcurl');
 const { ethers } = require("ethers");
 
-const arkhiaJsonRpcRelayMainnet = `${process.env.ARKHIA_MAINNET_URL}/${process.env.ARKHIA_API_KEY}`;
+const httpHeaderJson = [
+    'Content-Type: application/json',
+    'Accept: application/json'
+  ];
 const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
 const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
 
-const web3Payload = () => {
+const getPayload = () => {
     const data = {
         "jsonrpc": "2.0",
         "method": "net_listening",
@@ -22,14 +26,17 @@ describe('[CURL] Eth Syncing', () => {
 
     test('Should return false from Arhia Testnet', async () => {
         // Arrange
-        const configPayload = web3Payload();
+        const configPayload = getPayload();
 
         // Act
-        const result = await axios.post(arkhiaJsonRpcRelayTestnet, configPayload);
+        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+            postFields: JSON.stringify(configPayload),
+            httpHeader: httpHeaderJson,
+        });
 
         // Assert
-        expect(result).toBeDefined();
-        expect(JSON.parse(result.data.result)).toBeFalsy()
+        expect(data.result).toBeDefined();
+        expect(JSON.parse(data.result)).toBeFalsy()
 
     });
 });
@@ -42,7 +49,6 @@ describe('[Web3] Eth Syncing', () => {
 
         // Act
         const result = await web3Provider.eth.isSyncing();
-        console.log(result)
 
         // Assert
         expect(result).toBeDefined();
@@ -58,7 +64,6 @@ describe('[Ethers] Eth Syncing', () => {
         
         // Act
         const result = await ethersProvider.send("eth_syncing", []);
-        console.log(result)
 
         // Assert
         expect(result).toBeDefined();
