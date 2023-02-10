@@ -12,13 +12,17 @@
     "test:clientVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/web3.clientVersion.test.js",
     "test:netVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.version.test.js",
     "test:netListening": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.listening.test.js",
-    "test:ethSyncing": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.syncing.test.js"
+    "test:ethSyncing": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.syncing.test.js",
+    "test:sendRawTransaction": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/sendRawTransaction.test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hashgraph/sdk": "^2.19.2",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
+    "hardhat": "^2.12.6",
     "node-libcurl": "^3.0.0",
     "web3": "^1.8.2"
   },
