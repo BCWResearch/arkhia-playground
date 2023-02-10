@@ -6,8 +6,9 @@
   "scripts": {
     "test:config": "./node_modules/.bin/jest json-rpc-relay/integration.tests/config.test.js",
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
-    "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.node/get.balance.test.js",
+    "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/get.balance.test.js",
     "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js",
+    "test:logs": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/get.logs.test.js",
     "test:hashrate": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/get.hashrate.test.js",
     "test:clientVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/web3.clientVersion.test.js",
     "test:netVersion": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.version.test.js",
