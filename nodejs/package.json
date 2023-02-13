@@ -7,7 +7,8 @@
     "test:config" : "./node_modules/.bin/jest json-rpc-relay/integration.tests/config.test.js",
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
     "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/get.balance.test.js",
-    "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js"
+    "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js",
+    "test:logs": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/get.logs.test.js"
   },
   "author": "",
   "license": "ISC",
