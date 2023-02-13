@@ -10,7 +10,7 @@ const httpHeaderJson = [
     'Accept: application/json'
   ];
 const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
+const communityHashioTestnet = process.env.COMMUNITY_TESTNET_URL;
 
 const getPayload = () => {
     const data = {
@@ -24,7 +24,7 @@ const getPayload = () => {
 
 describe('[CURL] Net Version', () => {
 
-    test('Should get the current chain id from Arhia Testnet', async () => {
+    test('Should get current chain id from Arkhia Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -36,12 +36,28 @@ describe('[CURL] Net Version', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
+        expect(data?.result).toBe("0x128");
+    });
+
+    test('Should get current chain id from Hashio Testnet', async () => {
+        // Arrange
+        const configPayload = getPayload();
+
+        // Act
+        const { data } = await curly.post(communityHashioTestnet, {
+            postFields: JSON.stringify(configPayload),
+            httpHeader: httpHeaderJson,
+        });
+
+        // Assert
+        expect(data?.result).toBeDefined();
+        expect(data?.result).toBe("0x128");
     });
 });
 
 describe('[Web3] Net Version', () => {
 
-    test('Should get current chain id from Arhia Testnet', async () => {
+    test('Should get current chain id from Arkhia Testnet', async () => {
         // Arrange
         const web3Provider = new Web3(arkhiaJsonRpcRelayTestnet);
 
@@ -50,12 +66,25 @@ describe('[Web3] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
+        expect(result).toBe(296);
+    });
+
+    test('Should get current chain id from Hashio Testnet', async () => {
+        // Arrange
+        const web3Provider = new Web3(communityHashioTestnet);
+
+        // Act
+        const result = await web3Provider.eth.net.getId();
+
+        // Assert
+        expect(result).toBeDefined();
+        expect(result).toBe(296);
     });
 });
 
 describe('[Ethers] Net Version', () => {
 
-    test('Should get current chain id from Hedera from Arhia Testnet', async () => {
+    test('Should get current chain id from Arkhia Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayTestnet);
         
@@ -64,5 +93,18 @@ describe('[Ethers] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
+        expect(result?.chainId).toBe(296);
+    });
+
+    test('Should get current chain id from Hashio Testnet', async () => {
+        // Arrange
+        const ethersProvider = new ethers.providers.JsonRpcProvider(communityHashioTestnet);
+        
+        // Arrange
+        const result = await ethersProvider.getNetwork();
+
+        // Assert
+        expect(result).toBeDefined();
+        expect(result?.chainId).toBe(296);
     });
 });
