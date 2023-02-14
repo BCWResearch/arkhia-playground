@@ -3,14 +3,10 @@ console.clear();
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
 const { ethers } = require("ethers");
-const { curly } = require('node-libcurl')
+const { curly } = require('node-libcurl');
+const urlHandler = require('../../handlers/url.handler');
 
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const httpHeaderJson = [
-    'Content-Type: application/json',
-    'Accept: application/json'
-  ];
-const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
+const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
 const testnetEvmAccount = "0x0000000000000000000000000000000000000589";
 
 const getBalancePayload = () => {
@@ -33,7 +29,7 @@ describe('[CURL] GetBalance',  () => {
         const getBalance= getBalancePayload();
 
         // Act
-        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
             postFields: getBalance,
             httpHeader: httpHeaderJson,
         });
@@ -50,7 +46,7 @@ describe('[Web3] GetBalance', () => {
 
     test('Should get Balance from Hedera account through EVM Account address from Arhia Testnet', async () => {
         // Arrange
-        const web3Provider = new Web3(arkhiaJsonRpcRelayTestnet);
+        const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
         // Act
         const balance = await web3Provider.eth.getBalance(testnetEvmAccount);
@@ -66,7 +62,7 @@ describe('[Ethers] GetBalance', () => {
 
     test('Should get Balance from Hedera account through EVM Account address from Arhia Testnet', async () => {
         // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayTestnet);
+        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         
         // Arrange
         const balance = await ethersProvider.getBalance(testnetEvmAccount);

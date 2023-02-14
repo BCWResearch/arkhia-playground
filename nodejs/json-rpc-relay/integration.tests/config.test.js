@@ -1,6 +1,7 @@
-console.clear();
-
 require('dotenv').config({path: '.env'});
+const urlHandler = require('../handlers/url.handler');
+
+console.clear();
 
 describe('Config variables', () => {
     test('Should load API Key', async () => {
@@ -34,5 +35,24 @@ describe('Config variables', () => {
     test('Should load  Testnet Account EVM ID', async () => {
         expect(process.env.TESTNET_ACCOUNT_ID_EVM).toBeDefined();
     });
+
+    test('Should get Url JSON-RPC relay Mainnet', async () => {
+        expect(urlHandler.getJsonRpcMainnet()).toBeDefined();
+        expect(urlHandler.getJsonRpcMainnet()).toContain(`hedera.mainnet`);
+    });
+
+    test('Should get Url JSON-RPC relay Testnet', async () => {
+        expect(urlHandler.getJsonRpcTestnet()).toBeDefined();
+        expect(urlHandler.getJsonRpcTestnet()).toContain(`hedera.testnet`);
+    });
+
+    test('Should get Url JSON-RPC relay Hashio Community Testnet', async () => {
+        expect(urlHandler.getCommunityServiceTestnet()).toBeDefined();
+        expect(urlHandler.getCommunityServiceTestnet()).toContain(`testnet.hashio`);
+    });
     
+    test('Should get Url JSON-RPC relay Hashio Community Mainnet', async () => {
+        expect(urlHandler.getCommunityServiceMainnet()).toBeDefined();
+        expect(urlHandler.getCommunityServiceMainnet()).toContain(`mainnet.hashio`);
+    });
 });
