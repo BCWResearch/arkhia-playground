@@ -1,8 +1,6 @@
 console.clear();
 
 require('dotenv').config({path: '.env'});
-const Web3 = require('web3');
-const { ethers } = require("ethers");
 const { curly } = require('node-libcurl');
 const urlHandler = require('../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
