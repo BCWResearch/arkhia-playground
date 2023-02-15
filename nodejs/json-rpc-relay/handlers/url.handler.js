@@ -22,6 +22,10 @@ class UrlHandler {
     getCommunityServiceTestnet = () => {
         return communityHashioTestnet;
     }
+
+    getOperatorPrivateKey = () => {
+        return process.env.OPERATOR_PRIVATE_KEY;
+    }
 }
 
 module.exports = Object.freeze(new UrlHandler());

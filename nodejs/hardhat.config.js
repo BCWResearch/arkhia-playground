@@ -1,8 +1,11 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require("@nomicfoundation/hardhat-toolbox");
 require('dotenv').config({path: '.env'});
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const operatorPrivateKey = process.env.OPERATOR_PRIVATE_KEY;
+const urlHandler = require('./json-rpc-relay/handlers/url.handler');
+const arkhiaJsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
+const communityHashioTestnet = urlHandler.getCommunityServiceTestnet();
+const operatorPrivateKey = urlHandler.getOperatorPrivateKey();
+
 
 module.exports = {
   defaultNetwork: "hedera",
