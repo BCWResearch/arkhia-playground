@@ -18,13 +18,13 @@ const getMainnetContractFromEthers = (_jsonRpcProvider) => {
 }
 
 describe('Curl: Multicall Aggregation: Json-RPC Relay', () => {
-    test('No tests available', async () => {
+    test('No integration.tests available', async () => {
        expect(true);
     });
 });
 
 describe('Web3: Multicall Aggregation: Json-RPC Relay', () => {
-    test('No tests available', async () => {
+    test('No integration.tests available', async () => {
         expect(true);
      });
 });
@@ -32,12 +32,12 @@ describe('Web3: Multicall Aggregation: Json-RPC Relay', () => {
 describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
 
     beforeAll(() => {
-        
+
         console.log(`Preparing contract...`);
     });
 
     beforeEach (() => {
-  
+
     });
 
     test('Should have a valid contract from Arkhia Mainnet', async () => {
@@ -75,7 +75,7 @@ describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
 
         // Assert
         expect(transaction).toBeDefined();
-        expect(transaction).toHaveProperty('data'); 
+        expect(transaction).toHaveProperty('data');
     });
 
     test('Should call successfully multicall on Community Mainnet', async () => {
@@ -90,7 +90,7 @@ describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
 
         // Assert
         expect(transaction).toBeDefined();
-        expect(transaction).toHaveProperty('data'); 
+        expect(transaction).toHaveProperty('data');
     });
 
 });

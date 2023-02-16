@@ -29,7 +29,6 @@ describe('Hedera Environment variables', function() {
         expect(process.env.OPERATOR_ETHKEY_ECDSA).to.not.be.NaN;
     });
 
-    0x0000000000000000000000000000000000000589
 });
 
 

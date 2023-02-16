@@ -5,11 +5,11 @@ require('dotenv').config({path: '.env'});
 const { expect } = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 
-describe('Rest API tests', function() {
+describe('Rest API integration.tests', function() {
 
     it('should be able to get the account by id', async function() {
-        const contracts = await restApiHandler.getAccountById(process.env.OPERATOR_ID)
-        expect(contracts).to.have.property('status').equals(200);
+        const accounts = await restApiHandler.getAccountById(process.env.OPERATOR_ID)
+        expect(accounts).to.have.property('status').equals(200);
     });
 
     it('should be able to get the contracts', async function() {

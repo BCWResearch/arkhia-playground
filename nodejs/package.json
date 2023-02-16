@@ -16,12 +16,14 @@
     "test:netListening": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/net.listening.test.js",
     "test:ethSyncing": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.syncing.test.js",
     "test:sendRawTransaction": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/eth.sendRawTransaction.test.js",
+
     "test:blocks": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocks.test.js",
     "test:blocksByNumber": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksNumber.test.js",
     "test:blocksByHash": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksHash.test.js"
     "test:restapi": "./node_modules/.bin/mocha rest-api/tests/rest.api.test.js",
     "test:config": "./node_modules/.bin/mocha rest-api/tests/config.vars.test.js",
     "test:arkhia": "./node_modules/.bin/mocha rest-api/tests/arkhia.vars.test.js"
+
 
   },
   "author": "",
