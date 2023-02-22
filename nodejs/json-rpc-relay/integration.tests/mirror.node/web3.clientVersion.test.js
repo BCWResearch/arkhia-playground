@@ -14,6 +14,10 @@ const arkhiaJsonRpcRelayMainnet  = `${process.env.ARKHIA_MAINNET_URL}/${process.
 const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
 const communityHashioTestnet = process.env.COMMUNITY_TESTNET_URL;
 
+const hashioRelayVersion = "relay/0.18.0-rc2";
+const hashioRelayMainnetVersion = "relay/0.18.0-rc1";
+const arkhiaRelayVersion = "relay/0.17.1";
+
 const getPayload = () => {
     const data = {
         "jsonrpc": "2.0",
@@ -38,7 +42,7 @@ describe('[CURL] ClientVersion', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("relay/0.17.1");
+        expect(data?.result).toBe(arkhiaRelayVersion);
     });
 
     test('Should get relay version from Arhia Mainnet', async () => {
@@ -53,7 +57,7 @@ describe('[CURL] ClientVersion', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("relay/0.17.1");
+        expect(data?.result).toBe(arkhiaRelayVersion);
     });
 
     test('Should get relay version from Hashio Testnet', async () => {
@@ -68,7 +72,7 @@ describe('[CURL] ClientVersion', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("relay/0.17.1");
+        expect(data?.result).toBe(hashioRelayVersion);
     });
 
     test('Should get relay version from Hashio Mainnet', async () => {
@@ -83,7 +87,7 @@ describe('[CURL] ClientVersion', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("relay/0.17.1");
+        expect(data?.result).toBe(hashioRelayMainnetVersion);
     });
 });
 
@@ -97,7 +101,7 @@ describe('[Web3] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(arkhiaRelayVersion);
     });
 
     test('Should get clientVersion from Arhia Mainnet', async () => {
@@ -109,7 +113,7 @@ describe('[Web3] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(arkhiaRelayVersion);
     });
 
     test('Should get clientVersion from Hashio Testnet', async () => {
@@ -121,7 +125,7 @@ describe('[Web3] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(hashioRelayVersion);
     });
 
     test('Should get clientVersion from Hashio Mainnet', async () => {
@@ -133,7 +137,7 @@ describe('[Web3] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(hashioRelayMainnetVersion);
     });
 });
 
@@ -148,7 +152,7 @@ describe('[Ethers] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(arkhiaRelayVersion);
     });
 
     test('Should get clientVersion from Hedera from Arhia Mainnet', async () => {
@@ -160,10 +164,10 @@ describe('[Ethers] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(arkhiaRelayVersion);
     });
 
-    test('Should get clientVersion from Hedera from Arhia Mainnet', async () => {
+    test('Should get clientVersion from Hedera from Hashio Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(communityHashioTestnet);
         
@@ -172,10 +176,10 @@ describe('[Ethers] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(hashioRelayVersion);
     });
 
-    test('Should get clientVersion from Hedera from Arhia Mainnet', async () => {
+    test('Should get clientVersion from Hedera from Hashio Mainnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(communityHashioMainnet);
         
@@ -184,6 +188,6 @@ describe('[Ethers] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("relay/0.17.1");
+        expect(result).toBe(hashioRelayMainnetVersion);
     });
 });
