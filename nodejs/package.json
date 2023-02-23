@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:all": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
-    "test:config": "./node_modules/.bin/jest json-rpc-relay/integration.tests/config.test.js",
+    "test:config": "./node_modules/.bin/jest tests/config.test.js",
+    "test:jsonrpc:all": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
     "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/get.balance.test.js",
     "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js",
@@ -34,6 +34,7 @@
     "ethers": "^5.7.2",
     "hardhat": "^2.12.6",
     "node-libcurl": "^3.0.0",
+    "socket.io": "^4.6.1",
     "web3": "^1.8.2"
   },
   "devDependencies": {

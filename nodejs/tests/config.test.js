@@ -55,4 +55,22 @@ describe('Config variables', () => {
         expect(urlHandler.getCommunityServiceMainnet()).toBeDefined();
         expect(urlHandler.getCommunityServiceMainnet()).toContain(`mainnet.hashio`);
     });
+
+    test('Should load Mainnet Watchtower URL', async () => {
+        expect(process.env.ARKHIA_MAINNET_WATCHTOWER).toBeDefined();
+    });
+
+    test('Should load Testnet Watchtower URL', async () => {
+        expect(process.env.ARKHIA_TESTNET_WATCHTOWER).toBeDefined();
+    });
+
+    test('Should get Url Watchtower URL Mainnet', async () => {
+        expect(urlHandler.getWatchtowerUrlMainnet()).toBeDefined();
+        expect(urlHandler.getWatchtowerUrlMainnet()).toContain(`watchtowerws.mainnet`);
+    });
+
+    test('Should get Url Watchtower URL Testnet', async () => {
+        expect(urlHandler.getWatchtowerUrlTestnet()).toBeDefined();
+        expect(urlHandler.getWatchtowerUrlTestnet()).toContain(`watchtowerws.testnet`);
+    });
 });
