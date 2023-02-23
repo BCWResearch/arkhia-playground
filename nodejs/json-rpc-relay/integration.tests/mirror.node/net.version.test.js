@@ -11,6 +11,8 @@ const httpHeaderJson = [
   ];
 const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
 const communityHashioTestnet = process.env.COMMUNITY_TESTNET_URL;
+const testnetNetworkId = 296;
+const hashTestnetNetworkId = "0x128";
 
 const getPayload = () => {
     const data = {
@@ -36,7 +38,7 @@ describe('[CURL] Net Version', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("0x128");
+        expect(data?.result).toBe(hashTestnetNetworkId);
     });
 
     test('Should get current chain id from Hashio Testnet', async () => {
@@ -51,7 +53,7 @@ describe('[CURL] Net Version', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe("0x128");
+        expect(data?.result).toBe(hashTestnetNetworkId);
     });
 });
 
@@ -66,7 +68,7 @@ describe('[Web3] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe(296);
+        expect(result).toBe(testnetNetworkId);
     });
 
     test('Should get current chain id from Hashio Testnet', async () => {
@@ -78,7 +80,7 @@ describe('[Web3] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe(296);
+        expect(result).toBe(testnetNetworkId);
     });
 });
 
@@ -93,7 +95,7 @@ describe('[Ethers] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result?.chainId).toBe(296);
+        expect(result?.chainId).toBe(testnetNetworkId);
     });
 
     test('Should get current chain id from Hashio Testnet', async () => {
@@ -105,6 +107,6 @@ describe('[Ethers] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result?.chainId).toBe(296);
+        expect(result?.chainId).toBe(testnetNetworkId);
     });
 });
