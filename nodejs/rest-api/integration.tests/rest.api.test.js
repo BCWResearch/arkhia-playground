@@ -8,8 +8,10 @@ const restApiHandler = require('../handlers/rest.api.handler');
 describe('Rest API integration.tests', function() {
 
     it('should be able to get the account by id', async function() {
-        const accounts = await restApiHandler.getAccountById(process.env.OPERATOR_ID)
-        expect(accounts).to.have.property('status').equals(200);
+        const { data } = await restApiHandler.getAccountById(process.env.OPERATOR_ID)
+        expect(data).to.have.property('account').equals(process.env.OPERATOR_ID);
+
+
     });
 
     it('should be able to get the contracts', async function() {
