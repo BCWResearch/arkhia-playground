@@ -73,4 +73,12 @@ describe('Config variables', () => {
         expect(urlHandler.getWatchtowerUrlTestnet()).toBeDefined();
         expect(urlHandler.getWatchtowerUrlTestnet()).toContain(`watchtowerws.testnet`);
     });
+
+    test('Should get Testnet Topic Id', async () => {
+        expect(process.env.TESTNET_TOPIC_ID).toBeDefined();
+    });
+
+    test('Should get Mainnet Topic Id', async () => {
+        expect(process.env.MAINNET_TOPIC_ID).toBeDefined();
+    });
 });

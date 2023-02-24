@@ -24,8 +24,6 @@
     "test:blocksByHash": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksHash.test.js",
     "test:restapi": "./node_modules/.bin/mocha rest-api/integration.tests/rest.api.test.js",
     "test:arkhia": "./node_modules/.bin/mocha rest-api/integration.tests/config.vars.test.js"
-
-
   },
   "author": "",
   "license": "ISC",
