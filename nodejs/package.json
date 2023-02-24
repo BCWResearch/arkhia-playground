@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test:config": "./node_modules/.bin/jest tests/config.test.js",
+    "test:wt:connect": "./node_modules/.bin/jest watchtower/integration.tests/connect.test.js",
+    "test:wt:topics": "./node_modules/.bin/jest watchtower/integration.tests/subscribe.topic.test.js",
+    "test:wt:all": "./node_modules/.bin/jest watchtower/integration.tests/*",
     "test:jsonrpc:all": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
     "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/get.balance.test.js",
@@ -35,6 +38,7 @@
     "hardhat": "^2.12.6",
     "node-libcurl": "^3.0.0",
     "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
     "web3": "^1.8.2"
   },
   "devDependencies": {
