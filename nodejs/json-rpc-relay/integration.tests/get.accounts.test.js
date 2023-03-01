@@ -1,16 +1,9 @@
 console.clear();
 
 require('dotenv').config({path: '.env'});
-const Web3 = require('web3');
-const { ethers } = require("ethers");
-const { curly } = require('node-libcurl')
-
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const httpHeaderJson = [
-    'Content-Type: application/json',
-    'Accept: application/json'
-  ];
-const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
+const { curly } = require('node-libcurl');
+const urlHandler = require('../../handlers/url.handler');
+const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const getAccountPayload = () => {
     const data = JSON.stringify({"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1});
@@ -25,7 +18,7 @@ describe('[CURL] Get Accounts',  () => {
         const configAccountsPayload = getAccountPayload();
 
         // Act
-        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
             postFields: configAccountsPayload,
             httpHeader: httpHeaderJson,
         });

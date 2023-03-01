@@ -4,15 +4,8 @@ require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
 const { curly } = require('node-libcurl');
 const { ethers } = require("ethers");
-
-const httpHeaderJson = [
-    'Content-Type: application/json',
-    'Accept: application/json'
-  ];
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const arkhiaJsonRpcRelayMainnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const communityHashioTestnet = process.env.COMMUNITY_TESTNET_URL;
-const communityHashioMainnet = process.env.COMMUNITY_MAINNET_URL;
+const urlHandler = require('../../../handlers/url.handler');
+const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
 
 const getPayload = () => {
     const data = {
@@ -31,7 +24,7 @@ describe('[CURL] Net Listening', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(arkhiaJsonRpcRelayTestnet, {
+        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
             postFields: JSON.stringify(configPayload),
             httpHeader: httpHeaderJson,
         });
@@ -47,7 +40,7 @@ describe('[CURL] Net Listening', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(arkhiaJsonRpcRelayMainnet, {
+        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
             postFields: JSON.stringify(configPayload),
             httpHeader: httpHeaderJson,
         });
@@ -63,7 +56,7 @@ describe('[CURL] Net Listening', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(communityHashioTestnet, {
+        const { data } = await curly.post(urlHandler.getCommunityServiceTestnet(), {
             postFields: JSON.stringify(configPayload),
             httpHeader: httpHeaderJson,
         });
@@ -79,7 +72,7 @@ describe('[CURL] Net Listening', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(communityHashioMainnet, {
+        const { data } = await curly.post(urlHandler.getCommunityServiceMainnet(), {
             postFields: JSON.stringify(configPayload),
             httpHeader: httpHeaderJson,
         });
@@ -95,7 +88,7 @@ describe('[Web3] Net Listening', () => {
 
     test('Should return false from Arkhia Testnet', async () => {
         // Arrange
-        const web3Provider = new Web3(arkhiaJsonRpcRelayTestnet);
+        const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
         // Act
         const result = await web3Provider.eth.net.isListening();
@@ -107,7 +100,7 @@ describe('[Web3] Net Listening', () => {
 
     test('Should return false from Arkhia Mainnet', async () => {
         // Arrange
-        const web3Provider = new Web3(arkhiaJsonRpcRelayMainnet);
+        const web3Provider = new Web3(urlHandler.getJsonRpcMainnet());
 
         // Act
         const result = await web3Provider.eth.net.isListening();
@@ -119,7 +112,7 @@ describe('[Web3] Net Listening', () => {
 
     test('Should return false from Hashio Testnet', async () => {
         // Arrange
-        const web3Provider = new Web3(communityHashioTestnet);
+        const web3Provider = new Web3(urlHandler.getCommunityServiceTestnet());
 
         // Act
         const result = await web3Provider.eth.net.isListening();
@@ -131,7 +124,7 @@ describe('[Web3] Net Listening', () => {
 
     test('Should return false from Hashio Mainnet', async () => {
         // Arrange
-        const web3Provider = new Web3(communityHashioMainnet);
+        const web3Provider = new Web3(urlHandler.getCommunityServiceMainnet());
 
         // Act
         const result = await web3Provider.eth.net.isListening();
@@ -146,7 +139,7 @@ describe('[Ethers] Net Listening', () => {
 
     test('Should return false from Arkhia Testnet', async () => {
         // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayTestnet);
+        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         
         // Act
         const result = await ethersProvider.send("net_listening", []);
@@ -158,7 +151,7 @@ describe('[Ethers] Net Listening', () => {
 
     test('Should return false from Arkhia Mainnet', async () => {
         // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayMainnet);
+        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
         
         // Act
         const result = await ethersProvider.send("net_listening", []);
@@ -170,7 +163,7 @@ describe('[Ethers] Net Listening', () => {
 
     test('Should return false from Hashio Testnet', async () => {
         // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(communityHashioTestnet);
+        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getCommunityServiceTestnet());
         
         // Act
         const result = await ethersProvider.send("net_listening", []);
@@ -182,7 +175,7 @@ describe('[Ethers] Net Listening', () => {
 
     test('Should return false from Hashio Mainnet', async () => {
         // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(communityHashioMainnet);
+        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getCommunityServiceMainnet());
         
         // Act
         const result = await ethersProvider.send("net_listening", []);

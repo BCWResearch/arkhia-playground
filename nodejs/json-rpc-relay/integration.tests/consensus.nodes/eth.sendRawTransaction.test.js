@@ -5,7 +5,7 @@ const { ContractId } = require('@hashgraph/sdk');
 require('dotenv').config({path: '.env'});
 
 const { ethers } = require("hardhat");
-const urlHandler = require('../../handlers/url.handler');
+const urlHandler = require('../../../handlers/url.handler');
 
 const operatorPrivateKey = urlHandler.getOperatorPrivateKey();
 const communityHashioTestnet = urlHandler.getCommunityServiceTestnet();

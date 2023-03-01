@@ -1,7 +1,7 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require("@nomicfoundation/hardhat-toolbox");
 require('dotenv').config({path: '.env'});
-const urlHandler = require('./json-rpc-relay/handlers/url.handler');
+const urlHandler = require('./handlers/url.handler');
 const arkhiaJsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
 const communityHashioTestnet = urlHandler.getCommunityServiceTestnet();
 const operatorPrivateKey = urlHandler.getOperatorPrivateKey();
