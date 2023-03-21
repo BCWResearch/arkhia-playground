@@ -36,6 +36,14 @@ describe('Config variables', () => {
         expect(process.env.TESTNET_ACCOUNT_ID_EVM).toBeDefined();
     });
 
+    test('Should get Mainnet Account Id', async () => {
+        expect(process.env.MAINNET_ACCOUNT_ID).toBeDefined();
+    });
+
+    test('Should get Mainnet Evm Account Id', async () => {
+        expect(process.env.MAINNET_ACCOUNT_ID_EVM).toBeDefined();
+    });
+
     test('Should get Url JSON-RPC relay Mainnet', async () => {
         expect(urlHandler.getJsonRpcMainnet()).toBeDefined();
         expect(urlHandler.getJsonRpcMainnet()).toContain(`hedera.mainnet`);
@@ -81,4 +89,13 @@ describe('Config variables', () => {
     test('Should get Mainnet Topic Id', async () => {
         expect(process.env.MAINNET_TOPIC_ID).toBeDefined();
     });
+
+    test('Should get Arkhia Mainnet Api URL', async () => {
+        expect(process.env.ARKHIA_MAINNET_API_URL).toBeDefined();
+    });
+
+    test('Should get Arkhia Tesnet Api URL', async () => {
+        expect(process.env.ARKHIA_TESTNET_API_URL).toBeDefined();
+    });
+  
 });

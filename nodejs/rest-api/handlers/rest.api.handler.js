@@ -1,21 +1,33 @@
 require('dotenv').config();
 
 const axios = require('axios');
-const baseApiUrl = process.env.ARKHIA_BASE_API_URL;
-const restApiSuffix = process.env.ARKHIA_REST_API_SUFFIX;
+
+// Arkhia config
+const baseMainnetApiUrl = process.env.ARKHIA_MAINNET_API_URL;
+const baseTestnetApiUrl = process.env.ARKHIA_TESTNET_API_URL;
+const restApiUrl = `${baseMainnetApiUrl}`;
 const apiKey = process.env.ARKHIA_API_KEY;
-const restApiUrl = `${baseApiUrl}/${restApiSuffix}`;
 const body = { headers: { "x-api-key": apiKey } };
+
+const getRestApiUrl = (mainnet) => {
+    return
+}
 
 class RestApiHandler {
 
-    getUrl = () => {
-        return restApiUrl;
+    getApiUrl = (isMainnet) => {
+        return isMainnet ? baseMainnetApiUrl : baseTestnetApiUrl;
+    }
+    getTestnetUrl = () => {
+        return baseTestnetApiUrl;
+    }
+    getMainnetUrl = () => {
+        return baseMainnetApiUrl;
     }
 
-    getAccountById = async (accountId) => {
+    getAccountById = async (accountId, isMainnet) => {
         try {
-            const accountUrl = `${restApiUrl}/accounts/${accountId}`;
+            const accountUrl = `${this.getApiUrl(isMainnet)}/accounts/${accountId}`;
             const response = await axios.get(accountUrl, body);
             return response;
         } catch(e) {
@@ -23,9 +35,9 @@ class RestApiHandler {
         }
     }
 
-    getTokens = async () => {
+    getTokens = async (isMainnet) => {
         try {
-            const tokensUrl = `${restApiUrl}/tokens`;
+            const tokensUrl = `${this.getApiUrl(isMainnet)}/tokens`;
             const response = await axios.get(tokensUrl, body);
             return response;
         } catch(e) {
@@ -33,9 +45,9 @@ class RestApiHandler {
         }
     }
 
-    getTokenById = async (tokenId) => {
+    getTokenById = async (tokenId, isMainnet) => {
         try {
-            const tokenUrl = `${restApiUrl}/tokens/${tokenId}`;
+            const tokenUrl = `${this.getApiUrl(isMainnet)}/tokens/${tokenId}`;
             const response = await axios.get(tokenUrl, body);
             return response;
         } catch(e) {
@@ -43,9 +55,9 @@ class RestApiHandler {
         }
     }
 
-    getContracts = async () => {
+    getContracts = async (isMainnet) => {
         try {
-            const contractUrl = `${restApiUrl}/contracts`;
+            const contractUrl = `${this.getApiUrl(isMainnet)}/contracts`;
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
@@ -53,9 +65,9 @@ class RestApiHandler {
         }
     }
 
-    getContractById = async (contract_id) => {
+    getContractById = async (contract_id, isMainnet) => {
         try {
-            const contractUrl = `${restApiUrl}/contracts/${contract_id}`;
+            const contractUrl = `${this.getApiUrl(isMainnet)}/contracts/${contract_id}`;
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
@@ -63,9 +75,9 @@ class RestApiHandler {
         }
     }
 
-    getTransactions = async () => {
+    getTransactions = async (isMainnet) => {
         try {
-            const transactionsUrl = `${restApiUrl}/transactions`;
+            const transactionsUrl = `${this.getApiUrl(isMainnet)}/transactions`;
             const response = await axios.get(transactionsUrl, body);
             return response;
         } catch(e) {
@@ -73,9 +85,9 @@ class RestApiHandler {
         }
     }
 
-    getNetworkNodes = async() => {
+    getNetworkNodes = async(isMainnet) => {
         try {
-            const networkNodesUrl = `${restApiUrl}/network/nodes`;
+            const networkNodesUrl = `${this.getApiUrl(isMainnet)}/network/nodes`;
             const response = await axios.get(networkNodesUrl, body);
             return response;
         } catch(e) {
@@ -83,9 +95,9 @@ class RestApiHandler {
         }
     }
 
-    getAccounts = async() => {
+    getAccounts = async(isMainnet) => {
         try {
-            const accountsUrl = `${restApiUrl}/accounts`;
+            const accountsUrl = `${this.getApiUrl(isMainnet)}/accounts`;
             const response = await axios.get(accountsUrl, body);
             return response;
         } catch(e) {
