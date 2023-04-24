@@ -7,6 +7,7 @@
     "test:config": "./node_modules/.bin/jest tests/config.test.js",
     "test:rest:api": "./node_modules/.bin/mocha rest-api/integration.tests/rest.api.test.js",
     "test:jsonrpc:api": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
+    "test:graphql:api": "./node_modules/.bin/mocha graphql/integration.test/graphql.test.js",
     "test:wt:connect": "./node_modules/.bin/jest watchtower/integration.tests/connect.test.js",
     "test:wt:topics": "./node_modules/.bin/jest watchtower/integration.tests/subscribe.topic.test.js",
     "test:wt:balance": "./node_modules/.bin/jest watchtower/integration.tests/subscribe.balance.test.js",

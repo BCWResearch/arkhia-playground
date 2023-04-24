@@ -159,6 +159,7 @@ describe('Rest API Integration tests for Testnet', function () {
     });
 
     it('should be able to access Testnet data when making an Account request to Testnet', async function () {
+
         const testnetAccount = await restApiHandler.getAccountById(testnetAccountId, false);
         expect(testnetAccount).to.have.property('status').equals(200);
         expect(testnetAccount).to.have.property(`data`);
