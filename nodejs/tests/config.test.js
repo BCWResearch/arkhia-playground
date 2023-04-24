@@ -13,11 +13,11 @@ describe('Config variables', () => {
     });
 
     test('Should load Arkhia Json-Rpc mainnet URL', async () => {
-        expect(process.env.ARKHIA_MAINNET_URL).toBeDefined();
+        expect(process.env.ARKHIA_MAINNET_RPC_URL).toBeDefined();
     });
 
     test('Should load Arkhia Json-Rpc testnet URL', async () => {
-        expect(process.env.ARKHIA_TESTNET_URL).toBeDefined();
+        expect(process.env.ARKHIA_TESTNET_RPC_URL).toBeDefined();
     });
 
     test('Should load Community Json-Rpc testnet URL', async () => {
@@ -46,12 +46,12 @@ describe('Config variables', () => {
 
     test('Should get Url JSON-RPC relay Mainnet', async () => {
         expect(urlHandler.getJsonRpcMainnet()).toBeDefined();
-        expect(urlHandler.getJsonRpcMainnet()).toContain(`hedera.mainnet`);
+        expect(urlHandler.getJsonRpcMainnet()).toContain(`hedera/mainnet/json-rpc/v1`);
     });
 
     test('Should get Url JSON-RPC relay Testnet', async () => {
         expect(urlHandler.getJsonRpcTestnet()).toBeDefined();
-        expect(urlHandler.getJsonRpcTestnet()).toContain(`hedera.testnet`);
+        expect(urlHandler.getJsonRpcTestnet()).toContain(`hedera/testnet/json-rpc/v1`);
     });
 
     test('Should get Url JSON-RPC relay Hashio Community Testnet', async () => {
@@ -99,3 +99,4 @@ describe('Config variables', () => {
     });
   
 });
+

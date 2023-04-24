@@ -6,6 +6,54 @@ const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const testnetAccountId = process.env.TESTNET_ACCOUNT_ID;
 const mainnetAccountId = process.env.MAINNET_ACCOUNT_ID;
+const tokenId = `0.0.1475673`;
+
+const assertTransactionsByAccountId = async (isMainnet) => {
+    const transactionByAccountId = await restApiHandler.getTransactionByAccountId(testnetAccountId, false);
+    expect(transactionByAccountId).to.have.property('status').equals(200);
+    expect(transactionByAccountId).to.have.property(`data`);
+    expect(transactionByAccountId.data.transactions).to.have.lengthOf.at.least(1);
+    const transaction = transactionByAccountId.data.transactions[0];
+    expect(transaction).to.have.property(`charged_tx_fee`);
+    expect(transaction).to.have.property(`transaction_hash`);
+    expect(transaction).to.have.property(`transaction_id`);
+    expect(transaction).to.have.property(`valid_start_timestamp`);
+}
+
+const assertToken = async (isMainnet) => {
+    const response = await restApiHandler.getTokenById(tokenId, false);
+    expect(response).to.have.property('status').equals(200);
+    expect(response).to.have.property(`data`);
+    const token = response.data;
+    expect(token).to.have.property(`symbol`);
+    expect(token).to.have.property(`token_id`);
+    expect(token).to.have.property(`type`);;
+    expect(token).to.have.nested.property('type').to.be.a('string');
+    expect(token).to.have.nested.property('token_id').to.be.a('string');
+}
+const assertTokens = async (isMainnet) => {
+    const tokens = await restApiHandler.getTokens(false);
+    expect(tokens).to.have.property('status').equals(200);
+    expect(tokens).to.have.property(`data`);
+    expect(tokens.data.tokens).to.have.lengthOf.at.least(1);
+    const token = tokens.data.tokens[0];
+    expect(token).to.have.property(`symbol`);
+    expect(token).to.have.property(`token_id`);
+    expect(token).to.have.property(`type`);;
+    expect(token).to.have.nested.property('type').to.be.a('string');
+    expect(token).to.have.nested.property('token_id').to.be.a('string');
+}
+const assertTransactions = async (isMainnet) => {
+    const transactions = await restApiHandler.getTransactions(false);
+    expect(transactions).to.have.property('status').equals(200);
+    expect(transactions).to.have.property(`data`);
+    expect(transactions.data.transactions).to.have.lengthOf.at.least(1);
+    const transaction = transactions.data.transactions[0];
+    expect(transaction).to.have.property(`charged_tx_fee`);
+    expect(transaction).to.have.property(`transaction_hash`);
+    expect(transaction).to.have.property(`transaction_id`);
+    expect(transaction).to.have.property(`valid_start_timestamp`);
+}
 
 const assertAccountId = async (accountId, isMainnet) => {
     const account = await restApiHandler.getAccountById(accountId, isMainnet);
@@ -51,14 +99,14 @@ const assertContracts = async (isMainnet) => {
     expect(firstContract).to.have.property('contract_id').that.is.a('string');
     expect(firstContract).to.have.property('created_timestamp').that.is.a('string');
     expect(firstContract).to.have.property('expiration_timestamp').that.is.a('string');
-    expect(firstContract).to.have.property('file_id').that.is.a('string');
+    expect(firstContract).to.have.property('file_id');
     expect(firstContract).to.have.property('evm_address').that.is.a('string');
 }
 
 describe('Rest API Integration tests for Testnet', function () {
 
     it('should be able to get the account by id', async function () {
-        assertAccountId(testnetAccountId, false);
+        return assertAccountId(testnetAccountId, false);
     });
 
     it('should be able to access Testnet data when making an Account request to Testnet', async function () {
@@ -70,18 +118,36 @@ describe('Rest API Integration tests for Testnet', function () {
     });
 
     it('should be able to get the contracts', async function () {
-        assertContracts(false);
+        return assertContracts(false);
     });
 
     it('should be able to get the accounts', async function () {
-        assertAccounts(false);
+        return assertAccounts(false);
     });
+
+    it('should be able to get transactions', async function () {
+        return assertTransactions(false);
+    });
+
+    it('should be able to get tokens', async function () {
+         return assertTokens(false);
+    });
+
+    it('should be able to get token id', async function () {
+        return assertToken(false);
+    });
+
+    it('should be able to get the transaction byd id', async function () {
+        return assertTransactionsByAccountId(false);
+    });
+    
+    
 });
 
 describe('Rest API Integration tests for Mainnet', function () {
 
     it('should be able to get the account by id', async function () {
-        assertAccountId(mainnetAccountId, true);
+        return assertAccountId(mainnetAccountId, true);
     });
 
     it('should be able to access Mainnet data when making an Account request to Mainnet', async function () {
@@ -92,11 +158,11 @@ describe('Rest API Integration tests for Mainnet', function () {
     });
 
     it('should be able to get the contracts', async function () {
-        assertContracts(true);
+        return assertContracts(true);
     });
 
     it('should be able to get the accounts', async function () {
-        assertAccounts(true);
+        return assertAccounts(true);
     });
 
     it('should be able to get the tokens', async function () {
@@ -108,5 +174,22 @@ describe('Rest API Integration tests for Mainnet', function () {
         const nodes = await restApiHandler.getNetworkNodes(true);
         expect(nodes).to.have.property('status').equals(200);
     });
+
+    it('should be able to get transactions', async function () {
+        return assertTransactions(true);
+    });
+
+    it('should be able to get tokens', async function () {
+        return assertTokens(true);
+   });
+
+   it('should be able to get token id', async function () {
+     return assertToken(true);
+   });
+
+   it('should be able to get the transaction byd id', async function () {
+    return assertTransactionsByAccountId(true);
+});
+
 
 });

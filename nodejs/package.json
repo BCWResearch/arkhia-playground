@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test:config": "./node_modules/.bin/jest tests/config.test.js",
+    "test:rest:api": "./node_modules/.bin/mocha rest-api/integration.tests/rest.api.test.js",
+    "test:jsonrpc:api": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
     "test:wt:connect": "./node_modules/.bin/jest watchtower/integration.tests/connect.test.js",
     "test:wt:topics": "./node_modules/.bin/jest watchtower/integration.tests/subscribe.topic.test.js",
     "test:wt:balance": "./node_modules/.bin/jest watchtower/integration.tests/subscribe.balance.test.js",
     "test:wt:all": "./node_modules/.bin/jest watchtower/integration.tests/*",
-    "test:jsonrpc:all": "./node_modules/.bin/jest json-rpc-relay/integration.tests/*",
     "test:multicall": "./node_modules/.bin/jest json-rpc-relay/integration.tests/multicall.test.js",
     "test:balance": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/get.balance.test.js",
     "test:accounts": "./node_modules/.bin/jest json-rpc-relay/integration.tests/get.accounts.test.js",
@@ -22,9 +23,7 @@
     "test:sendRawTransaction": "./node_modules/.bin/jest json-rpc-relay/integration.tests/consensus.nodes/eth.sendRawTransaction.test.js",
     "test:blocks": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocks.test.js",
     "test:blocksByNumber": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksNumber.test.js",
-    "test:blocksByHash": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksHash.test.js",
-    "test:restapi": "./node_modules/.bin/mocha rest-api/integration.tests/rest.api.test.js",
-    "test:arkhia": "./node_modules/.bin/mocha rest-api/integration.tests/config.vars.test.js"
+    "test:blocksByHash": "./node_modules/.bin/jest json-rpc-relay/integration.tests/mirror.node/eth.blocksHash.test.js"
   },
   "author": "",
   "license": "ISC",

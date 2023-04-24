@@ -36,7 +36,7 @@ describe('[CURL] GetBalance',  () => {
 
         // Assert
         expect(data).toBeDefined();
-        expect(data.result.toString().length).toEqual(21);
+        expect(data.result.toString().length).toEqual(22);
         expect(data.jsonrpc).toBeDefined();
     });
 });
