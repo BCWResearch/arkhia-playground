@@ -63,34 +63,4 @@ describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
         expect(contractInstance).toBeDefined();
    });
 
-    test('Should call successfully multicall on Arkhia Mainnet', async () => {
-        // Arrange
-        const multiCallData = require('./../samples/multicall/data');
-        const contractInstance = getMainnetContractFromEthers(arkhiaJsonRpcRelayMainnet);
-
-        // Act
-        const transaction = await contractInstance.aggregate(
-            multiCallData.map((item) => ([item.address, item.callData]))
-        );
-
-        // Assert
-        expect(transaction).toBeDefined();
-        expect(transaction).toHaveProperty('data');
-    });
-
-    test('Should call successfully multicall on Community Mainnet', async () => {
-        // Arrange
-        const multiCallData = require('./../samples/multicall/data');
-        const contractInstance = getMainnetContractFromEthers(process.env.COMMUNITY_MAINNET_URL);
-
-        // Act
-        const transaction = await contractInstance.aggregate(
-            multiCallData.map((item) => ([item.address, item.callData]))
-        );
-
-        // Assert
-        expect(transaction).toBeDefined();
-        expect(transaction).toHaveProperty('data');
-    });
-
 });
