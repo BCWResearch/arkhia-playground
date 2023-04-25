@@ -27,7 +27,8 @@ const assertToken = async (isMainnet) => {
     const token = response.data;
     expect(token).to.have.property(`symbol`);
     expect(token).to.have.property(`token_id`);
-    expect(token).to.have.property(`type`);;
+    expect(token).to.have.property(`type`);
+    ;
     expect(token).to.have.nested.property('type').to.be.a('string');
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
@@ -39,7 +40,8 @@ const assertTokens = async (isMainnet) => {
     const token = tokens.data.tokens[0];
     expect(token).to.have.property(`symbol`);
     expect(token).to.have.property(`token_id`);
-    expect(token).to.have.property(`type`);;
+    expect(token).to.have.property(`type`);
+    ;
     expect(token).to.have.nested.property('type').to.be.a('string');
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
@@ -102,6 +104,53 @@ const assertContracts = async (isMainnet) => {
     expect(firstContract).to.have.property('file_id');
     expect(firstContract).to.have.property('evm_address').that.is.a('string');
 }
+const assertBlocks = async (isMainnet) => {
+    const blocks = await restApiHandler.getBlocks(false);
+    expect(blocks).to.have.property('status').equals(200);
+    expect(blocks).to.be.an('object');
+    const block = blocks.data.blocks[0]
+    expect(block).to.have.property('count').to.be.a('number');
+    expect(block).to.have.property('hapi_version').to.be.a('string');
+    expect(block).to.have.property('hash').to.be.a('string');
+    expect(block).to.have.property('name').to.be.a('string');
+    expect(block).to.have.property('number').to.be.a('number');
+    expect(block).to.have.property('previous_hash').to.be.a('string');
+    expect(block).to.have.property('size').to.be.a('number');
+    expect(block).to.have.property('timestamp').to.be.an('object');
+    expect(block.timestamp).to.have.property('from').to.be.a('string');
+    expect(block.timestamp).to.have.property('to').to.be.a('string');
+    expect(block).to.have.property('gas_used').to.be.a('number');
+    expect(block).to.have.property('logs_bloom').to.be.a('string');
+
+
+}
+
+const assertSchedules = async (isMainnet) => {
+    const schedules = await restApiHandler.getSchedules(false);
+    expect(schedules).to.have.property('status').equals(200);
+    expect(schedules).to.be.an('object');
+
+    const schedule = schedules.data.schedules[0]
+    expect(schedule).to.have.property('creator_account_id').to.be.a('string');
+    expect(schedule).to.have.property('payer_account_id').to.be.a('string');
+    expect(schedule).to.have.property('transaction_body').to.be.a('string');
+    expect(schedule).to.have.property('signatures').to.be.an('array');
+    expect(schedule).to.have.property('wait_for_expiry').to.be.a('boolean');
+
+}
+
+const assertBalances = async (isMainnet) => {
+    const balances = await restApiHandler.getbalances(false);
+    expect(balances).to.have.property('status').equals(200);
+    expect(balances).to.be.an('object');
+
+    const balance = balances.data.balances[0]
+    expect(balance).to.have.property('account').to.be.a('string');
+    expect(balance).to.have.property('balance').to.be.a('number');
+    expect(balance).to.have.property('tokens').to.be.an('array');
+
+}
+
 
 describe('Rest API Integration tests for Testnet', function () {
 
@@ -130,18 +179,26 @@ describe('Rest API Integration tests for Testnet', function () {
     });
 
     it('should be able to get tokens', async function () {
-         return assertTokens(false);
+        return assertTokens(false);
     });
 
     it('should be able to get token id', async function () {
         return assertToken(false);
     });
 
-    it('should be able to get the transaction byd id', async function () {
+    it('should be able to get the transaction by id', async function () {
         return assertTransactionsByAccountId(false);
     });
-    
-    
+    it('should be able to get list of blocks', async function () {
+        return assertBlocks(false);
+    });
+    it('should be able to get list of Schedules', async function () {
+        return assertSchedules(false);
+    });
+    it('should be able to get balances', async function () {
+        return assertBalances(false);
+    });
+
 });
 
 describe('Rest API Integration tests for Mainnet', function () {
@@ -181,15 +238,26 @@ describe('Rest API Integration tests for Mainnet', function () {
 
     it('should be able to get tokens', async function () {
         return assertTokens(true);
-   });
+    });
 
-   it('should be able to get token id', async function () {
-     return assertToken(true);
-   });
+    it('should be able to get token id', async function () {
+        return assertToken(true);
+    });
 
-   it('should be able to get the transaction byd id', async function () {
-    return assertTransactionsByAccountId(true);
-});
+    it('should be able to get the transaction by id', async function () {
+        return assertTransactionsByAccountId(true);
+
+    });
+    it('should be able to get list of blocks', async function () {
+        return assertBlocks(true);
+    });
+    it('should be able to get list of Schedules', async function () {
+        return assertSchedules(true);
+    });
+
+    it('should be able to get balances', async function () {
+        return assertBalances(true);
+    });
 
 
 });

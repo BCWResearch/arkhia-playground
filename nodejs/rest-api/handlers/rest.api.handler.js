@@ -98,6 +98,36 @@ class RestApiHandler {
             console.error(e);
         }
     }
+    getBlocks = async (isMainnet) => {
+        try {
+            const blocksUrl = `${urlHandler.getApiUrl(isMainnet)}/blocks`;
+            const response = await axios.get(blocksUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    getSchedules = async (isMainnet) => {
+        try {
+            const schedulesUrl = `${urlHandler.getApiUrl(isMainnet)}/schedules`;
+            const response = await axios.get(schedulesUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    getbalances = async (isMainnet) => {
+        try {
+            const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/balances`;
+            const response = await axios.get(balancesUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
 
 
 }
