@@ -12,14 +12,6 @@ describe('Config variables', () => {
         expect(process.env.ARKHIA_API_KEY.length).toEqual(32);
     });
 
-    test('Should load Arkhia Json-Rpc mainnet URL', async () => {
-        expect(process.env.ARKHIA_MAINNET_RPC_URL).toBeDefined();
-    });
-
-    test('Should load Arkhia Json-Rpc testnet URL', async () => {
-        expect(process.env.ARKHIA_TESTNET_RPC_URL).toBeDefined();
-    });
-
     test('Should load Community Json-Rpc testnet URL', async () => {
         expect(process.env.COMMUNITY_TESTNET_URL).toBeDefined();
     });
@@ -58,7 +50,7 @@ describe('Config variables', () => {
         expect(urlHandler.getCommunityServiceTestnet()).toBeDefined();
         expect(urlHandler.getCommunityServiceTestnet()).toContain(`testnet.hashio`);
     });
-    
+
     test('Should get Url JSON-RPC relay Hashio Community Mainnet', async () => {
         expect(urlHandler.getCommunityServiceMainnet()).toBeDefined();
         expect(urlHandler.getCommunityServiceMainnet()).toContain(`mainnet.hashio`);
@@ -90,13 +82,22 @@ describe('Config variables', () => {
         expect(process.env.MAINNET_TOPIC_ID).toBeDefined();
     });
 
-    test('Should get Arkhia Mainnet Api URL', async () => {
-        expect(process.env.ARKHIA_MAINNET_API_URL).toBeDefined();
+    test('Should get Arkhia Mainnet base URL', async () => {
+        expect(process.env.ARKHIA_MAINNET_URL).toBeDefined();
     });
 
-    test('Should get Arkhia Tesnet Api URL', async () => {
-        expect(process.env.ARKHIA_TESTNET_API_URL).toBeDefined();
+    test('Should get Arkhia Tesnet base URL', async () => {
+        expect(process.env.ARKHIA_TESTNET_URL).toBeDefined();
     });
-  
+
+    test('Should get Url graphQL URL Testnet', async () => {
+        expect(urlHandler.getGraphQLTestnetUrl()).toBeDefined();
+        expect(urlHandler.getGraphQLTestnetUrl()).toContain(`graphql/alpha`);
+    });
+    test('Should get Url graphQL URL Mainnet', async () => {
+        expect(urlHandler.getGraphQLMainnetUrl()).toBeDefined();
+        expect(urlHandler.getGraphQLMainnetUrl()).toContain(`graphql/alpha`);
+    });
+
 });
 
