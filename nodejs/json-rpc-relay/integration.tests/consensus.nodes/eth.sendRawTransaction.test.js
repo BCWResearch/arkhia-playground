@@ -8,8 +8,7 @@ const { ethers } = require("hardhat");
 const urlHandler = require('../../../handlers/url.handler');
 
 const operatorPrivateKey = urlHandler.getOperatorPrivateKey();
-const communityHashioTestnet = urlHandler.getCommunityServiceTestnet();
-const arkhiaJsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
+const jsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
 
 describe('Deploy Contract and sendRawTransaction', () => {
   const init_message = 'initial_msg';
@@ -20,7 +19,7 @@ describe('Deploy Contract and sendRawTransaction', () => {
   let receipt
 
   beforeAll(async () => { 
-    provider = new ethers.providers.JsonRpcProvider(arkhiaJsonRpcRelayTestnet);
+    provider = new ethers.providers.JsonRpcProvider(jsonRpcRelayTestnet);
     wallet = new ethers.Wallet(operatorPrivateKey, provider);
   });
 

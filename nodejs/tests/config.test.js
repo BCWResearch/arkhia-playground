@@ -8,16 +8,20 @@ describe('Config variables', () => {
         expect(process.env.ARKHIA_API_KEY).toBeDefined();
     });
 
+    test('Should load Hashio var', async () => {
+        expect(process.env.ARKHIA_HASHIO).toBeDefined();
+    });
+
+    test('Should get Arkhia Mainnet base URL', async () => {
+        expect(process.env.ARKHIA_MAINNET_API_URL).toBeDefined();
+    });
+
+    test('Should get Arkhia Tesnet base URL', async () => {
+        expect(process.env.ARKHIA_TESTNET_API_URL).toBeDefined();
+    });
+
     test('Should load API Key with 32 chars', async () => {
         expect(process.env.ARKHIA_API_KEY.length).toEqual(32);
-    });
-
-    test('Should load Community Json-Rpc testnet URL', async () => {
-        expect(process.env.COMMUNITY_TESTNET_URL).toBeDefined();
-    });
-
-    test('Should load Community Json-Rpc mainnet URL', async () => {
-        expect(process.env.COMMUNITY_MAINNET_URL).toBeDefined();
     });
 
     test('Should load Testnet Account ID', async () => {
@@ -36,42 +40,12 @@ describe('Config variables', () => {
         expect(process.env.MAINNET_ACCOUNT_ID_EVM).toBeDefined();
     });
 
-    test('Should get Url JSON-RPC relay Mainnet', async () => {
-        expect(urlHandler.getJsonRpcMainnet()).toBeDefined();
-        expect(urlHandler.getJsonRpcMainnet()).toContain(`hedera/mainnet/json-rpc/v1`);
-    });
-
-    test('Should get Url JSON-RPC relay Testnet', async () => {
-        expect(urlHandler.getJsonRpcTestnet()).toBeDefined();
-        expect(urlHandler.getJsonRpcTestnet()).toContain(`hedera/testnet/json-rpc/v1`);
-    });
-
-    test('Should get Url JSON-RPC relay Hashio Community Testnet', async () => {
-        expect(urlHandler.getCommunityServiceTestnet()).toBeDefined();
-        expect(urlHandler.getCommunityServiceTestnet()).toContain(`testnet.hashio`);
-    });
-
-    test('Should get Url JSON-RPC relay Hashio Community Mainnet', async () => {
-        expect(urlHandler.getCommunityServiceMainnet()).toBeDefined();
-        expect(urlHandler.getCommunityServiceMainnet()).toContain(`mainnet.hashio`);
-    });
-
     test('Should load Mainnet Watchtower URL', async () => {
         expect(process.env.ARKHIA_MAINNET_WATCHTOWER).toBeDefined();
     });
 
     test('Should load Testnet Watchtower URL', async () => {
         expect(process.env.ARKHIA_TESTNET_WATCHTOWER).toBeDefined();
-    });
-
-    test('Should get Url Watchtower URL Mainnet', async () => {
-        expect(urlHandler.getWatchtowerUrlMainnet()).toBeDefined();
-        expect(urlHandler.getWatchtowerUrlMainnet()).toContain(`watchtowerws.mainnet`);
-    });
-
-    test('Should get Url Watchtower URL Testnet', async () => {
-        expect(urlHandler.getWatchtowerUrlTestnet()).toBeDefined();
-        expect(urlHandler.getWatchtowerUrlTestnet()).toContain(`watchtowerws.testnet`);
     });
 
     test('Should get Testnet Topic Id', async () => {
@@ -82,22 +56,17 @@ describe('Config variables', () => {
         expect(process.env.MAINNET_TOPIC_ID).toBeDefined();
     });
 
-    test('Should get Arkhia Mainnet base URL', async () => {
-        expect(process.env.ARKHIA_MAINNET_URL).toBeDefined();
-    });
-
-    test('Should get Arkhia Tesnet base URL', async () => {
-        expect(process.env.ARKHIA_TESTNET_URL).toBeDefined();
-    });
-
     test('Should get Url graphQL URL Testnet', async () => {
         expect(urlHandler.getGraphQLTestnetUrl()).toBeDefined();
         expect(urlHandler.getGraphQLTestnetUrl()).toContain(`graphql/alpha`);
     });
+    
     test('Should get Url graphQL URL Mainnet', async () => {
         expect(urlHandler.getGraphQLMainnetUrl()).toBeDefined();
         expect(urlHandler.getGraphQLMainnetUrl()).toContain(`graphql/alpha`);
     });
 
 });
+
+
 

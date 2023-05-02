@@ -47,25 +47,4 @@ describe('[CURL] Get Logs',  () => {
         expect(data.result[0].data).toBeDefined();
         expect(data.result[0].address.length).toBeGreaterThan(20);
     });
-
-    test('Should get Logs from Hashio', async () => {
-
-        // Arrange
-        const ethLogsPayload = getEthLogsPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceTestnet(), {
-            postFields: ethLogsPayload,
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data.result.length).toBeGreaterThan(0);
-        expect(data.result[0].address).toBeDefined();
-        expect(data.result[0].blockHash).toBeDefined();
-        expect(data.result[0].blockNumber).toBeDefined();
-        expect(data.result[0].transactionIndex).toBeDefined();
-        expect(data.result[0].data).toBeDefined();
-        expect(data.result[0].address.length).toBeGreaterThan(20);
-    });
 });
