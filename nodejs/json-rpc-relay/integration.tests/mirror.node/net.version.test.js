@@ -22,7 +22,7 @@ const getPayload = () => {
 
 describe('[CURL] Net Version', () => {
 
-    test('Should get current chain id from Arkhia Testnet', async () => {
+    test('Should get current chain id from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -37,25 +37,11 @@ describe('[CURL] Net Version', () => {
         expect(data?.result).toBe(hashTestnetNetworkId);
     });
 
-    test('Should get current chain id from Hashio Testnet', async () => {
-        // Arrange
-        const configPayload = getPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data?.result).toBeDefined();
-        expect(data?.result).toBe(hashTestnetNetworkId);
-    });
 });
 
 describe('[Web3] Net Version', () => {
 
-    test('Should get current chain id from Arkhia Testnet', async () => {
+    test('Should get current chain id from Testnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
@@ -67,22 +53,11 @@ describe('[Web3] Net Version', () => {
         expect(result).toBe(testnetNetworkId);
     });
 
-    test('Should get current chain id from Hashio Testnet', async () => {
-        // Arrange
-        const web3Provider = new Web3(urlHandler.getCommunityServiceTestnet());
-
-        // Act
-        const result = await web3Provider.eth.net.getId();
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result).toBe(testnetNetworkId);
-    });
 });
 
 describe('[Ethers] Net Version', () => {
 
-    test('Should get current chain id from Arkhia Testnet', async () => {
+    test('Should get current chain id from Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         
@@ -94,15 +69,4 @@ describe('[Ethers] Net Version', () => {
         expect(result?.chainId).toBe(testnetNetworkId);
     });
 
-    test('Should get current chain id from Hashio Testnet', async () => {
-        // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getCommunityServiceTestnet());
-        
-        // Arrange
-        const result = await ethersProvider.getNetwork();
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result?.chainId).toBe(testnetNetworkId);
-    });
 });

@@ -3,7 +3,6 @@ require("@nomicfoundation/hardhat-toolbox");
 require('dotenv').config({path: '.env'});
 const urlHandler = require('./handlers/url.handler');
 const arkhiaJsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
-const communityHashioTestnet = urlHandler.getCommunityServiceTestnet();
 const operatorPrivateKey = urlHandler.getOperatorPrivateKey();
 
 

@@ -18,7 +18,7 @@ const getPayload = () => {
 
 describe('[CURL] Hashrate', () => {
 
-    test('Should get 0x0 from Arkhia Testnet', async () => {
+    test('Should get 0x0 from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -33,7 +33,7 @@ describe('[CURL] Hashrate', () => {
         expect(data?.result).toEqual("0x0");
     });
 
-    test('Should get 0x0 from Arkhia Mainnet', async () => {
+    test('Should get 0x0 from Mainnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -47,41 +47,11 @@ describe('[CURL] Hashrate', () => {
         expect(data).toBeDefined();
         expect(data?.result).toEqual("0x0");
     });
-
-    test('Should get 0x0 from Hashio Testnet', async () => {
-        // Arrange
-        const configPayload = getPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data).toBeDefined();
-        expect(data?.result).toEqual("0x0");
-    });
-
-    test('Should get 0x0 from Hashio Mainnet', async () => {
-        // Arrange
-        const configPayload = getPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data).toBeDefined();
-        expect(data?.result).toEqual("0x0");
-    });
 });
 
 describe('[Web3] Hashrate', () => {
 
-    test('Should get 0 hashrate from Arkhia Testnet', async () => {
+    test('Should get 0 hashrate from Testnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
@@ -93,7 +63,7 @@ describe('[Web3] Hashrate', () => {
         expect(Number(hashrate)).toEqual(0);
     });
 
-    test('Should get 0 hashrate from Arkhia Mainnet', async () => {
+    test('Should get 0 hashrate from Mainnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcMainnet());
 
@@ -105,27 +75,4 @@ describe('[Web3] Hashrate', () => {
         expect(Number(hashrate)).toEqual(0);
     });
 
-    test('Should get 0 hashrate from Hashio Testnet', async () => {
-        // Arrange
-        const web3Provider = new Web3(urlHandler.getCommunityServiceTestnet());
-
-        // Act
-        const hashrate = await web3Provider.eth.getHashrate();
-
-        // Assert
-        expect(hashrate).toBeDefined();
-        expect(Number(hashrate)).toEqual(0);
-    });
-
-    test('Should get 0 hashrate from Hashio Mainnet', async () => {
-        // Arrange
-        const web3Provider = new Web3(urlHandler.getCommunityServiceMainnet());
-
-        // Act
-        const hashrate = await web3Provider.eth.getHashrate();
-
-        // Assert
-        expect(hashrate).toBeDefined();
-        expect(Number(hashrate)).toEqual(0);
-    });
 });

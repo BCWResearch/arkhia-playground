@@ -7,9 +7,8 @@ const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
-const hashioRelayVersion = "relay/0.22.0-rc2";
-const hashioRelayMainnetVersion = "relay/0.21.4";
-const arkhiaRelayVersion = "relay/0.20.1";
+const arkhiaRelayVersion = "relay/0.22.3";
+const arkhiaRelayVersionTestnet = "relay/0.22.3";
 
 const getPayload = () => {
     const data = {
@@ -23,7 +22,7 @@ const getPayload = () => {
 
 describe('[CURL] ClientVersion', () => {
 
-    test('Should get relay version from Arhia Testnet', async () => {
+    test('Should get relay version from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -35,10 +34,10 @@ describe('[CURL] ClientVersion', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe(arkhiaRelayVersion);
+        expect(data?.result).toBe(arkhiaRelayVersionTestnet);
     });
 
-    test('Should get relay version from Arhia Mainnet', async () => {
+    test('Should get relay version from Mainnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
@@ -53,39 +52,11 @@ describe('[CURL] ClientVersion', () => {
         expect(data?.result).toBe(arkhiaRelayVersion);
     });
 
-    test('Should get relay version from Hashio Testnet', async () => {
-        // Arrange
-        const configPayload = getPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data?.result).toBeDefined();
-        expect(data?.result).toBe(hashioRelayVersion);
-    });
-
-    test('Should get relay version from Hashio Mainnet', async () => {
-        // Arrange
-        const configPayload = getPayload();
-
-        // Act
-        const { data } = await curly.post(urlHandler.getCommunityServiceMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data?.result).toBeDefined();
-        expect(data?.result).toBe(hashioRelayMainnetVersion);
-    });
 });
 
 describe('[Web3] ClientVersion', () => {
-    test('Should get clientVersion from Arhia Testnet', async () => {
+
+    test('Should get clientVersion from Testnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
@@ -94,10 +65,10 @@ describe('[Web3] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe(arkhiaRelayVersion);
+        expect(result).toBe(arkhiaRelayVersionTestnet);
     });
 
-    test('Should get clientVersion from Arhia Mainnet', async () => {
+    test('Should get clientVersion from Mainnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcMainnet());
 
@@ -109,34 +80,11 @@ describe('[Web3] ClientVersion', () => {
         expect(result).toBe(arkhiaRelayVersion);
     });
 
-    test('Should get clientVersion from Hashio Testnet', async () => {
-        // Arrange
-        const web3Provider = new Web3(urlHandler.getCommunityServiceTestnet());
-
-        // Act
-        const result = await web3Provider.eth.getNodeInfo();
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result).toBe(hashioRelayVersion);
-    });
-
-    test('Should get clientVersion from Hashio Mainnet', async () => {
-        // Arrange
-        const web3Provider = new Web3(urlHandler.getCommunityServiceMainnet());
-
-        // Act
-        const result = await web3Provider.eth.getNodeInfo();
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result).toBe(hashioRelayMainnetVersion);
-    });
 });
 
 describe('[Ethers] ClientVersion', () => {
 
-    test('Should get clientVersion from Hedera from Arhia Testnet', async () => {
+    test('Should get clientVersion from Hedera from Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         
@@ -145,10 +93,10 @@ describe('[Ethers] ClientVersion', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe(arkhiaRelayVersion);
+        expect(result).toBe(arkhiaRelayVersionTestnet);
     });
 
-    test('Should get clientVersion from Hedera from Arhia Mainnet', async () => {
+    test('Should get clientVersion from Hedera from Mainnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
         
@@ -158,29 +106,5 @@ describe('[Ethers] ClientVersion', () => {
         // Assert
         expect(result).toBeDefined();
         expect(result).toBe(arkhiaRelayVersion);
-    });
-
-    test('Should get clientVersion from Hedera from Hashio Testnet', async () => {
-        // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getCommunityServiceTestnet());
-        
-        // Arrange
-        const result = await ethersProvider.send("web3_clientVersion", []);
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result).toBe(hashioRelayVersion);
-    });
-
-    test('Should get clientVersion from Hedera from Hashio Mainnet', async () => {
-        // Arrange
-        const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getCommunityServiceMainnet());
-        
-        // Arrange
-        const result = await ethersProvider.send("web3_clientVersion", []);
-
-        // Assert
-        expect(result).toBeDefined();
-        expect(result).toBe(hashioRelayMainnetVersion);
     });
 });

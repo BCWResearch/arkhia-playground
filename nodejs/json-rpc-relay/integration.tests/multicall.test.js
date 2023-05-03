@@ -4,11 +4,12 @@ require('dotenv').config({path: '.env'});
 
 const { ethers } = require("ethers");
 const ABI = require('./../samples/multicall/multicall.abi');
-const arkhiaJsonRpcRelayMainnet = `${process.env.ARKHIA_MAINNET_URL}/${process.env.ARKHIA_API_KEY}`;
-const arkhiaJsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_URL}/${process.env.ARKHIA_API_KEY}`;
+const urlHandler = require('../../handlers/url.handler');
+const arkhiaJsonRpcRelayMainnet = urlHandler.getJsonRpcMainnet();
+const arkhiaJsonRpcRelayTestnet  = urlHandler.getJsonRpcTestnet();
 
 const getMainnetContractFromEthers = (_jsonRpcProvider) => {
-    const jsonRpcProvider = new ethers.providers.JsonRpcProvider(_jsonRpcProvider);
+    const jsonRpcProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
     const mainnetContractAddress = "0x00000000000000000000000000000000001a89ac";
     const mainnetPrivateKey = "6d3ecf59765d194ca6da047d605d6a1062b0a00e190b83cecb2158d5a510b8dd";
 
@@ -40,7 +41,7 @@ describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
 
     });
 
-    test('Should have a valid contract from Arkhia Mainnet', async () => {
+    test('Should have a valid contract from Mainnet', async () => {
          // Arrange
          console.log(`Getting contract from ${arkhiaJsonRpcRelayMainnet}...`);
 
@@ -52,7 +53,7 @@ describe('Ethers: Multicall Aggregation: Json-RPC Relay', () => {
     });
 
 
-    test('Should have a valid contract from Arkhia Testnet', async () => {
+    test('Should have a valid contract from Testnet', async () => {
         // Arrange
         console.log(`Getting contract from ${arkhiaJsonRpcRelayTestnet}...`);
 
