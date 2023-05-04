@@ -5,7 +5,7 @@ const jsonRPCSuffix = 'json-rpc/v1';
 const restAPISuffix = 'api/v1';
 const graphqlSuffix = 'graphql/alpha';
 const apiKey = process.env.ARKHIA_API_KEY;
-const isHashio = process.env.ARKHIA_HASHIO;
+const isHashio = process.env.ARKHIA_HASHIO === true ? true : false;
 
 // APIS
 const restApiUrlMainnet  = `${process.env.ARKHIA_MAINNET_API_URL}/${restAPISuffix}`;
