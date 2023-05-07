@@ -7,6 +7,7 @@
     "test:config": "jest tests/config.test.js",
     "test:url": "jest tests/urlhandler.test.js",
     "test:rest:api": "./node_modules/.bin/mocha rest-api/integration.tests/rest.api.test.js",
+    "test:rest:api:contracts": "mocha rest-api/integration.tests/rest.api.contracts.test.js",
     "test:jsonrpc:testnet:contract:all": "./node_modules/.bin/jest json-rpc-relay/integration.tests/contracts/testnet/*",
     "test:jsonrpc:testnet:contract:deploy": "./node_modules/.bin/jest json-rpc-relay/integration.tests/contracts/testnet/deploy.contract.test.js",
     "test:jsonrpc:testnet:contract:call": "./node_modules/.bin/jest json-rpc-relay/integration.tests/contracts/testnet/call.contract.test.js",
