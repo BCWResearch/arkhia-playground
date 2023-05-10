@@ -98,9 +98,12 @@ class RestApiHandler {
             return response;
         } catch(e) {
             console.log(`Error`);
-            console.log(e);
+            console.log(e.response);
+            console.log(e.response.data._status);
         }
     }
+
+
 
     getTransactions = async (isMainnet) => {
         try {

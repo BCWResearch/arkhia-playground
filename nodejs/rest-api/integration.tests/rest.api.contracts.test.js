@@ -5,8 +5,8 @@ const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const { ethers } = require("ethers");
 const testnetContract = {
-    id: `0.0.4614834`,
-    evm_id: `0000000000000000000000000000000000466ab2`
+    id: `0.0.4627387`,
+    evm_id: `0000000000000000000000000000000000469bbb`
 }
 
 const assertContracts = async (isMainnet) => {
@@ -26,7 +26,6 @@ const assertContracts = async (isMainnet) => {
     expect(firstContract).to.have.property('file_id');
     expect(firstContract).to.have.property('evm_address').that.is.a('string');
 }
-
 
 const assertContractById = async (isMainnet) => {
     const contractResponse = await restApiHandler.getContractById(testnetContract.id ,isMainnet);
@@ -64,12 +63,12 @@ const assertContractEvmCalls = async (isMainnet) => {
         from: `0x052ad55b7aeaadc7964e4ee58a313b0c574ec1c7`,
         gas: 120000000,
         gasPrice: 100000000,
-        to: `0000000000000000000000000000000000466ab2`,
+        to: testnetContract.evm_id,
         value: 0
     };
 
     // Act.
-    const contractResponse = await restApiHandler.getContractEvmCall(payload ,isMainnet);
+    const contractResponse = await restApiHandler.getContractEvmCall(payload, isMainnet);
     console.log(`contract response`);
     console.log(contractResponse);
     // Assert.
