@@ -14,6 +14,20 @@ const contractConfig = {
 
 describe('[Web3] Call Contract Method', () => {
 
+    test('Testnet | Should call contractName from Contract ', async () => {
+        // Arrange
+        const web3 = new Web3(urlHandler.getJsonRpcTestnet());
+        const contractJson = await JSON.parse(contractAbi);
+        const sampleContract =  new web3.eth.Contract(contractJson, contractConfig.sol_id);
+
+        // Act
+        let contractBalance = await sampleContract.methods.getContractBalance().call();
+        
+        // Assert
+        console.log(contractBalance);
+        expect(contractBalance).toBeDefined();
+    });
+
     test('Testnet | Should call metadata from Contract ', async () => {
         // Arrange
         const web3 = new Web3(urlHandler.getJsonRpcTestnet());
@@ -33,6 +47,20 @@ describe('[Web3] Call Contract Method', () => {
 });
 
 describe('[Ethers] Call Contract Method', () => {
+
+    test('Testnet | Should call metadata from Contract', async () => {
+        // Arrange
+        const privateECDSAAccount = `0x8eaecc9af6db21e7bc66032d9891563e68e2930ac2a09da6c5872a92a3790203`;
+        const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
+        const signer = new ethers.Wallet(privateECDSAAccount, provider);
+        const sampleContract = new ethers.Contract(contractConfig.sol_id, contractAbi, signer)
+
+        // Act
+        let contractBalance = await sampleContract.getContractBalance();
+        
+        // Assert
+        expect(contractBalance).toBeDefined(); 
+    });
 
     test('Testnet | Should call metadata from Contract', async () => {
         // Arrange

@@ -89,14 +89,16 @@ class RestApiHandler {
         }
     }
 
+
     getContractEvmCall = async (payload, isMainnet) => {
         try {
+            // works with url : `https://testnet.mirrornode.hedera.com/api/v1/contracts/call`
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/call`;
             const response = await axios.post(contractUrl, payload, body);
             return response;
         } catch(e) {
-            console.log(`ERROR`);
-            console.error(e);
+            console.log(`Error`);
+            console.log(e);
         }
     }
 
