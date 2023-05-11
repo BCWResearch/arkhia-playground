@@ -7,8 +7,8 @@ const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
-const arkhiaRelayVersion = "relay/0.22.3";
-const arkhiaRelayVersionTestnet = "relay/0.22.3";
+const arkhiaRelayVersion = "relay/0.21.0";
+const arkhiaRelayVersionTestnet = "relay/0.23.0-rc1";
 
 const getPayload = () => {
     const data = {

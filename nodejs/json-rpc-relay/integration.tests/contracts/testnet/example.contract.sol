@@ -53,6 +53,10 @@ pragma solidity >=0.6.0 <0.9.0;
         return fairTradeMetadata.tokenSupply;
     }
 
+    function setCreator(string memory _name) external {
+        fairTradeMetadata.creatorName = _name;
+    }
+
     function makeDonationHbars(string memory _name, string memory _message, uint256 _amount) external payable returns (uint)  {
 
         require(_amount > 0, "Please send some hbars :)");

@@ -69,6 +69,42 @@ class RestApiHandler {
         }
     }
 
+    getContractResultsById = async (contract_id, isMainnet) => {
+        try {
+            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/${contract_id}/results`;
+            const response = await axios.get(contractUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+    getContractResultLogsById = async (contract_id, isMainnet) => {
+        try {
+            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/${contract_id}/results/logs`;
+            const response = await axios.get(contractUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+
+    getContractEvmCall = async (payload, isMainnet) => {
+        try {
+            // works with url : `https://testnet.mirrornode.hedera.com/api/v1/contracts/call`
+            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/call`;
+            const response = await axios.post(contractUrl, payload, body);
+            return response;
+        } catch(e) {
+            console.log(`Error`);
+            console.log(e.response);
+            console.log(e.response.data._status);
+        }
+    }
+
+
+
     getTransactions = async (isMainnet) => {
         try {
             const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions`;
@@ -118,7 +154,7 @@ class RestApiHandler {
         }
     }
 
-    getbalances = async (isMainnet) => {
+    getBalances = async (isMainnet) => {
         try {
             const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/balances`;
             const response = await axios.get(balancesUrl, body);

@@ -9,7 +9,7 @@ const mainnetAccountId = process.env.MAINNET_ACCOUNT_ID;
 const tokenId = `0.0.1475673`;
 
 const assertTransactionsByAccountId = async (isMainnet) => {
-    const transactionByAccountId = await restApiHandler.getTransactionByAccountId(testnetAccountId, false);
+    const transactionByAccountId = await restApiHandler.getTransactionByAccountId(isMainnet ? mainnetAccountId : testnetAccountId, isMainnet);
     expect(transactionByAccountId).to.have.property('status').equals(200);
     expect(transactionByAccountId).to.have.property(`data`);
     expect(transactionByAccountId.data.transactions).to.have.lengthOf.at.least(1);
@@ -21,7 +21,7 @@ const assertTransactionsByAccountId = async (isMainnet) => {
 }
 
 const assertToken = async (isMainnet) => {
-    const response = await restApiHandler.getTokenById(tokenId, false);
+    const response = await restApiHandler.getTokenById(tokenId, isMainnet);
     expect(response).to.have.property('status').equals(200);
     expect(response).to.have.property(`data`);
     const token = response.data;
@@ -33,7 +33,7 @@ const assertToken = async (isMainnet) => {
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
 const assertTokens = async (isMainnet) => {
-    const tokens = await restApiHandler.getTokens(false);
+    const tokens = await restApiHandler.getTokens(isMainnet);
     expect(tokens).to.have.property('status').equals(200);
     expect(tokens).to.have.property(`data`);
     expect(tokens.data.tokens).to.have.lengthOf.at.least(1);
@@ -46,7 +46,7 @@ const assertTokens = async (isMainnet) => {
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
 const assertTransactions = async (isMainnet) => {
-    const transactions = await restApiHandler.getTransactions(false);
+    const transactions = await restApiHandler.getTransactions(isMainnet);
     expect(transactions).to.have.property('status').equals(200);
     expect(transactions).to.have.property(`data`);
     expect(transactions.data.transactions).to.have.lengthOf.at.least(1);
@@ -63,7 +63,7 @@ const assertAccountId = async (accountId, isMainnet) => {
     expect(account).to.have.property(`data`);
 
     const {data} = account;
-    expect(data).to.have.property('account').equals(mainnetAccountId);
+    expect(data).to.have.property('account').equals(isMainnet ? mainnetAccountId : testnetAccountId);
     expect(data).to.have.nested.property('balance.balance').to.be.a('number');
     expect(data).to.have.nested.property('balance.timestamp').to.be.a('string');
     expect(data).to.have.nested.property('balance.tokens').to.be.an('array');
@@ -96,7 +96,6 @@ const assertContracts = async (isMainnet) => {
     expect(contracts.data.contracts).to.have.lengthOf.at.least(1)
 
     //Testing for the properties on the first contract
-
     const firstContract = contracts.data.contracts[0];
     expect(firstContract).to.have.property('contract_id').that.is.a('string');
     expect(firstContract).to.have.property('created_timestamp').that.is.a('string');
@@ -105,7 +104,7 @@ const assertContracts = async (isMainnet) => {
     expect(firstContract).to.have.property('evm_address').that.is.a('string');
 }
 const assertBlocks = async (isMainnet) => {
-    const blocks = await restApiHandler.getBlocks(false);
+    const blocks = await restApiHandler.getBlocks(isMainnet);
     expect(blocks).to.have.property('status').equals(200);
     expect(blocks).to.be.an('object');
     const block = blocks.data.blocks[0]
@@ -126,7 +125,7 @@ const assertBlocks = async (isMainnet) => {
 }
 
 const assertSchedules = async (isMainnet) => {
-    const schedules = await restApiHandler.getSchedules(false);
+    const schedules = await restApiHandler.getSchedules(isMainnet);
     expect(schedules).to.have.property('status').equals(200);
     expect(schedules).to.be.an('object');
 
@@ -140,7 +139,7 @@ const assertSchedules = async (isMainnet) => {
 }
 
 const assertBalances = async (isMainnet) => {
-    const balances = await restApiHandler.getbalances(false);
+    const balances = await restApiHandler.getBalances(isMainnet);
     expect(balances).to.have.property('status').equals(200);
     expect(balances).to.be.an('object');
 
@@ -148,7 +147,6 @@ const assertBalances = async (isMainnet) => {
     expect(balance).to.have.property('account').to.be.a('string');
     expect(balance).to.have.property('balance').to.be.a('number');
     expect(balance).to.have.property('tokens').to.be.an('array');
-
 }
 
 
@@ -259,6 +257,5 @@ describe('Rest API Integration tests for Mainnet', function () {
     it('should be able to get balances', async function () {
         return assertBalances(true);
     });
-
 
 });
