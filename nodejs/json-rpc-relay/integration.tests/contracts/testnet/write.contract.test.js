@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 
 const testnetContractConfig = {
-    id: `0.0.4636994`,
-    sol_id: `0x144C635a33C21d8225ea7764FcE5C205915cBe2f`
+    id: `0.0.13333712`,
+    sol_id: `0x39AD67BaCe90AB651fC2D7615625F4bB4816BdeE`
 }
 
 

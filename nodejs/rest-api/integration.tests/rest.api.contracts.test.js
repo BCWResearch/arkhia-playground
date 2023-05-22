@@ -61,8 +61,8 @@ const assertContractEvmCalls = async (isMainnet) => {
         data: encodedMethod,
         estimate: false,
         from: `0x052ad55b7aeaadc7964e4ee58a313b0c574ec1c7`,
-        gas: 120000000,
-        gasPrice: 100000000,
+        gas: 15000000,
+        gasPrice: 15000000,
         to: testnetContract.evm_id,
         value: 0
     };
