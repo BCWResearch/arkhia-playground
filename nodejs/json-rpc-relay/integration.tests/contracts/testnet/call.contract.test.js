@@ -24,6 +24,7 @@ describe('[Web3] Call Contract Method', () => {
         let contractBalance = await sampleContract.methods.getContractBalance().call();
     
         // Assert
+        console.log(``);
         expect(contractBalance).toBeDefined();
     });
 
@@ -37,6 +38,7 @@ describe('[Web3] Call Contract Method', () => {
         let metadata = await sampleContract.methods.getContractMetadata().call();
         
         // Assert
+        console.log(``);
         expect(metadata).toBeDefined();
         expect(metadata.tokenSymbol).toEqual('ARKH');
         expect(metadata.tokenName).toEqual('Token');     
@@ -48,7 +50,7 @@ describe('[Ethers] Call Contract Method', () => {
 
     test('Testnet | Should call contract Balance from Contract', async () => {
         // Arrange
-        const privateECDSAAccount = `0x8eaecc9af6db21e7bc66032d9891563e68e2930ac2a09da6c5872a92a3790203`;
+        const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
         const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const sampleContract = new ethers.Contract(testnetContractConfig.sol_id, contractAbi, signer)
@@ -57,12 +59,13 @@ describe('[Ethers] Call Contract Method', () => {
         let contractBalance = await sampleContract.getContractBalance();
         
         // Assert
+        console.log(``);
         expect(contractBalance).toBeDefined(); 
     });
 
     test('Testnet | Should call metadata from Contract', async () => {
         // Arrange
-        const privateECDSAAccount = `0x8eaecc9af6db21e7bc66032d9891563e68e2930ac2a09da6c5872a92a3790203`;
+        const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
         const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const sampleContract = new ethers.Contract(testnetContractConfig.sol_id, contractAbi, signer)
@@ -71,6 +74,7 @@ describe('[Ethers] Call Contract Method', () => {
         let metadata = await sampleContract.getContractMetadata();
         
         // Assert
+        console.log(``);
         expect(metadata).toBeDefined();
         expect(metadata.tokenSymbol).toEqual('ARKH');
         expect(metadata.tokenName).toEqual('Token');     

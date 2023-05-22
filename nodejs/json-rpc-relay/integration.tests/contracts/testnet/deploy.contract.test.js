@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../../handlers/url.handler');
-const privateECDSAAccount = `0x8eaecc9af6db21e7bc66032d9891563e68e2930ac2a09da6c5872a92a3790203`;
+const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
 
 
 describe('[Ethers] Deploy Contract ', () => {
