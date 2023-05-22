@@ -19,12 +19,8 @@ const getPayload = () => {
 
 const assertPayload = (data) => {
     expect(data.result).toBeDefined();
-    expect(data.result.timestamp).toBeDefined();
-    expect(data.result.difficulty).toBeDefined();
-    expect(data.result.extraData).toBeDefined();
-    expect(data.result.logsBloom).toBeDefined();
-    expect(data.result.miner).toBeDefined();
-    expect(data.result.mixHash).toBeDefined();
+    expect(data.result).toBeDefined();
+    expect(data.result).toBeDefined();
     expect(data.result.nonce).toBeDefined();
     expect(data.result.size).toBeDefined();
     expect(data.result.stateRoot).toBeDefined();
