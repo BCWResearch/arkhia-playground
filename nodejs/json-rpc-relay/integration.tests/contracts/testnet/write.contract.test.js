@@ -17,7 +17,7 @@ describe('[Ethers] Signed RawTransaction', () => {
 
     test('Testnet | Should make raw transaction into Contract', async () => {
         // Arrange
-        const privateECDSAAccount = `0x8eaecc9af6db21e7bc66032d9891563e68e2930ac2a09da6c5872a92a3790203`;
+        const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
         const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const contractPath = path.join(__dirname, '/');
@@ -32,6 +32,7 @@ describe('[Ethers] Signed RawTransaction', () => {
         const metadata = await sampleContract.getContractMetadata();
 
         // Assert
+        console.log(``);
         expect(changeCreator).toHaveProperty('data');
         expect(metadata).toBeDefined();
         expect(metadata.creatorName).toEqual(newCreator);
