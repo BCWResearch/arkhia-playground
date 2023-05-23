@@ -8,15 +8,15 @@ const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 
-const blockHashTestnet = "0x5bacb48d5e59e753c1508f21dbe4c7b117cb2047b5e4d48be86decad9ec03e47231f22d16d241f6bab5529efdd971991";
-const blockHashMainnet = "0x0f1c15e5a19a04f1b03bcf7f8605d14f69c4d21356728486fce2ec929366b1bb5628a4eafb94342729176dea32e14a68";
+const blockHashTestnet = "0x90c112e3a0957bae04c78238578dbcad87a73aabcf6a97c2c377262bf4f40dd8";
+const blockHashMainnet = "0x22970bd538feb8f833f6ec8f7d3a6056f09bbf62f8dd2ffcabf7aae534a98114";
 const hashTestnetParsed = blockHashTestnet.substring(0, 66);
 const hashMainnetParsed = blockHashMainnet.substring(0, 66);
 const getPayload = (mainnet = false) => {
     const data = {
         "jsonrpc": "2.0",
         "method": "eth_getBlockByHash",
-        "params":[mainnet ? hashMainnetParsed : hashTestnetParsed, false],
+        "params":[mainnet ? hashMainnetParsed : blockHashTestnet, false],
         "id": 0
       };
     return data;
@@ -48,7 +48,7 @@ describe('[CURL] Get Block By Hash', () => {
 
         // Assert
         assertPayload(data);
-   
+
     });
 
     test('Should return BlockByHashfrom Arkhia Mainnet', async () => {
@@ -63,7 +63,7 @@ describe('[CURL] Get Block By Hash', () => {
 
         // Assert
         assertPayload(data);
-   
+
     });
 
 });

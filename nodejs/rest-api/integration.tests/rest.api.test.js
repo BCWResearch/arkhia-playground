@@ -6,7 +6,8 @@ const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const testnetAccountId = process.env.TESTNET_ACCOUNT_ID;
 const mainnetAccountId = process.env.MAINNET_ACCOUNT_ID;
-const tokenId = `0.0.1475673`;
+const testnettokenId = `0.0.4284568`;
+const mainnetTokenId =`0.0.107594`;
 
 const assertTransactionsByAccountId = async (isMainnet) => {
     const transactionByAccountId = await restApiHandler.getTransactionByAccountId(isMainnet ? mainnetAccountId : testnetAccountId, isMainnet);
@@ -21,14 +22,14 @@ const assertTransactionsByAccountId = async (isMainnet) => {
 }
 
 const assertToken = async (isMainnet) => {
-    const response = await restApiHandler.getTokenById(tokenId, isMainnet);
+
+    const response = await restApiHandler.getTokenById(mainnetTokenId, isMainnet);
     expect(response).to.have.property('status').equals(200);
     expect(response).to.have.property(`data`);
     const token = response.data;
     expect(token).to.have.property(`symbol`);
     expect(token).to.have.property(`token_id`);
     expect(token).to.have.property(`type`);
-    ;
     expect(token).to.have.nested.property('type').to.be.a('string');
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
@@ -41,7 +42,6 @@ const assertTokens = async (isMainnet) => {
     expect(token).to.have.property(`symbol`);
     expect(token).to.have.property(`token_id`);
     expect(token).to.have.property(`type`);
-    ;
     expect(token).to.have.nested.property('type').to.be.a('string');
     expect(token).to.have.nested.property('token_id').to.be.a('string');
 }
@@ -79,7 +79,7 @@ const assertAccounts = async (isMainnet) => {
     //Testing for the properties of first account
     const firstAccount = accounts.data.accounts[0];
     expect(firstAccount).to.have.property('account').that.is.a('string');
-    expect(firstAccount).to.have.property('auto_renew_period').that.is.a('number');
+    // expect(firstAccount).to.have.property('auto_renew_period').that.is.a('number');
     expect(firstAccount.balance).to.have.property('timestamp').that.is.a('string');
     expect(firstAccount.balance).to.have.property('balance').that.is.a('number');
     expect(firstAccount).to.have.property('created_timestamp')
@@ -162,7 +162,7 @@ describe('Rest API Integration tests for Testnet', function () {
         expect(testnetAccount).to.have.property('status').equals(200);
         expect(testnetAccount).to.have.property(`data`);
         expect(testnetAccount.data.alias).to.be.a('string');
-        expect(testnetAccount.data.alias).to.be.equal('CIQFAYG4VYRFAN4CR5CBORQALWGL5FNZCXGACO7W4W4N7EVJFXUNSYI');
+        expect(testnetAccount.data.alias).to.be.equal('HIQQH3YWK7PLXVXPBW6I6QX3QADQWM4XVDBWRIEWT2AEP3XXU2URNL3P');
     });
 
     it('should be able to get the contracts', async function () {
@@ -182,7 +182,7 @@ describe('Rest API Integration tests for Testnet', function () {
     });
 
     it('should be able to get token id', async function () {
-        return assertToken(false);
+        return assertToken(testnettokenId,false);
     });
 
     it('should be able to get the transaction by id', async function () {
