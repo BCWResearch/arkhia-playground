@@ -99,7 +99,6 @@ class RestApiHandler {
         }
     }
 
-
     getContractEvmCall = async (payload, isMainnet) => {
         try {
             // works with url : `https://testnet.mirrornode.hedera.com/api/v1/contracts/call`
@@ -112,8 +111,6 @@ class RestApiHandler {
             console.log(e.response.data._status);
         }
     }
-
-
 
     getTransactions = async (isMainnet) => {
         try {
@@ -173,8 +170,6 @@ class RestApiHandler {
             console.error(e);
         }
     }
-
-
 
 }
 

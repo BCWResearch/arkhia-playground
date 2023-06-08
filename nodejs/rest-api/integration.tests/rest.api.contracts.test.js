@@ -7,6 +7,11 @@ const { ethers } = require("ethers");
 const testnetContract = {
     id: `0.0.4627387`,
     evm_id: `0000000000000000000000000000000000469bbb`
+};
+
+const mainnetContract = {
+    id: `0.0.2958097`,
+    evm_id: `0x86ecca95fecdb515d068975b75eac4357d6e86c5`
 }
 
 const assertContracts = async (isMainnet) => {
@@ -28,7 +33,8 @@ const assertContracts = async (isMainnet) => {
 }
 
 const assertContractById = async (isMainnet) => {
-    const contractResponse = await restApiHandler.getContractById(testnetContract.id ,isMainnet);
+    const contractId = isMainnet ? mainnetContract.id : testnetContract.id;
+    const contractResponse = await restApiHandler.getContractById(contractId ,isMainnet);
     const contract = contractResponse.data;
     expect(contract).to.have.property('contract_id').that.is.a('string');
     expect(contract).to.have.property('created_timestamp').that.is.a('string');
@@ -74,11 +80,8 @@ const assertContractEvmCalls = async (isMainnet) => {
     expect(contractResponse).to.have.property(`data`);
 }
 
-
-
 describe('Testnet | Rest API Integration tests ', function () {
 
- 
     it('should be able to get the contracts', async function () {
         return assertContracts(false);
     });
@@ -95,6 +98,30 @@ describe('Testnet | Rest API Integration tests ', function () {
         return assertContractResultLogsById(false);
     });
  
+    it('should be able to get a contract call', async function () {
+        return assertContractEvmCalls(false);
+    });
+   
+});
+
+
+describe('Mainnet | Rest API Integration tests ', function () {
+
+    it('should be able to get the contracts', async function () {
+        return assertContracts(true);
+    });
+  
+    it('should be able to get a contract by Id', async function () {
+        return assertContractById(true);
+    });
+
+    it('should be able to get contract results by Id', async function () {
+        return assertContractResultsById(true);
+    });
+
+    it('should be able to get contract log results by Id', async function () {
+        return assertContractResultLogsById(true);
+    });
  
     it('should be able to get a contract call', async function () {
         return assertContractEvmCalls(false);
