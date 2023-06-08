@@ -9,6 +9,16 @@ const body = { headers: { "x-api-key": apiKey } };
 
 class RestApiHandler {
 
+    getAccountAlias = (isMainnet) => {
+        try {
+            const alias = isMainnet ? process.env.MAINNET_ACCOUNT_ALIAS : process.env.TESTNET_ACCOUNT_ALIAS;
+            return alias;
+        } catch {
+            console.error(e);
+            return "";
+        }
+    }
+
     getAccounts = async(isMainnet) => {
         try {
             const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts`;

@@ -69,8 +69,7 @@ const assertContractEvmCalls = async (isMainnet) => {
 
     // Act.
     const contractResponse = await restApiHandler.getContractEvmCall(payload, isMainnet);
-    console.log(`contract response`);
-    console.log(contractResponse);
+
     // Assert.
     expect(contractResponse).to.have.property(`data`);
 }

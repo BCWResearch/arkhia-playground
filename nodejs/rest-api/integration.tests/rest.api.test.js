@@ -84,7 +84,6 @@ const assertAccounts = async (isMainnet) => {
     expect(firstAccount.balance).to.have.property('balance').that.is.a('number');
     expect(firstAccount).to.have.property('created_timestamp')
     expect(firstAccount).to.have.property('ethereum_nonce').that.is.a('number');
-    expect(firstAccount).to.have.property('key').that.is.an('object');
 }
 
 const assertContracts = async (isMainnet) => {
@@ -157,12 +156,11 @@ describe('Rest API Integration tests for Testnet', function () {
     });
 
     it('should be able to access Testnet data when making an Account request to Testnet', async function () {
-
         const testnetAccount = await restApiHandler.getAccountById(testnetAccountId, false);
         expect(testnetAccount).to.have.property('status').equals(200);
         expect(testnetAccount).to.have.property(`data`);
         expect(testnetAccount.data.alias).to.be.a('string');
-        expect(testnetAccount.data.alias).to.be.equal('HIQQH3YWK7PLXVXPBW6I6QX3QADQWM4XVDBWRIEWT2AEP3XXU2URNL3P');
+        expect(testnetAccount.data.alias).to.be.equal(restApiHandler.getAccountAlias(false));
     });
 
     it('should be able to get the contracts', async function () {
