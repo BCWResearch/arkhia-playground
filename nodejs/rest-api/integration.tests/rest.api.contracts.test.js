@@ -98,7 +98,7 @@ describe('Testnet | Rest API Integration tests ', function () {
         return assertContractResultLogsById(false);
     });
  
-    it('should be able to get a contract call', async function () {
+    it('should be able to get a contract call (HIP-584)', async function () {
         return assertContractEvmCalls(false);
     });
    
@@ -123,7 +123,7 @@ describe('Mainnet | Rest API Integration tests ', function () {
         return assertContractResultLogsById(true);
     });
  
-    it('should be able to get a contract call', async function () {
+    it('should be able to get a contract call (HIP-584)', async function () {
         return assertContractEvmCalls(false);
     });
    
