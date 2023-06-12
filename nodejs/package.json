@@ -19,6 +19,7 @@
     "test:wt:connect": "jest watchtower/integration.tests/connect.test.js",
     "test:wt:topics": "jest watchtower/integration.tests/subscribe.topic.test.js",
     "test:wt:balance": "jest watchtower/integration.tests/subscribe.balance.test.js",
+    "test:wt:subscriptionlimit": "jest watchtower/integration.tests/subscription.limit.test.js",
     "test:wt:all": "jest watchtower/integration.tests/*"
   },
   "author": "",

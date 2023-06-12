@@ -6,7 +6,7 @@ const watchtowerHandler = require('../../handlers/watchtower.handler');
 const io = require('socket.io-client');
 let socket;
 let balanceSubscriptionPayload;
-const accountTestnet = process.env.TESTNET_ACCOUNT_ID;
+const accountTestnet = "0.0.98"; // this accountId is always available on testnet/mainnet
 
 let timeout = 10000;
 
@@ -61,12 +61,14 @@ describe('Subscribe to CryptoGetBalance [Watchtower] on Testnet', () => {
     it('Should have correct balance payload in response', (done) => {
         socket.emit(`subscribe`, balanceSubscriptionPayload, (msg) => {
             verifyBalanceSubscriptionResponse(msg)
-            done();
+            socket.emit('unsubscribe', msg.uid, (msg) => {
+                expect(msg).toEqual(true);
+                done();
+            });
         });
     }, timeout);
 
     it('Should have balance response when subscribing to CryptoGetBalance', (done) => {
-
         socket.emit(`subscribe`, balanceSubscriptionPayload, (msg) => {
             socket.on(msg.listeners.data, function (message) {
                 expect(message).toBeDefined();
@@ -86,8 +88,10 @@ describe('Subscribe to CryptoGetBalance [Watchtower] on Testnet', () => {
                 expect(message.data.cryptogetAccountBalance.accountID.accountNum).toHaveProperty('low');
                 expect(message.data.cryptogetAccountBalance.accountID.accountNum).toHaveProperty('high');
                 expect(message.data.cryptogetAccountBalance.accountID.accountNum).toHaveProperty('unsigned');
-
-                done();
+                socket.emit('unsubscribe', msg.uid, (msg) => {
+                    expect(msg).toEqual(true);
+                    done();
+                });
             });
         });
     }, timeout);
