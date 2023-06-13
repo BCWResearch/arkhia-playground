@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:config": "jest tests/config.test.js",
+    "test:apikey": "jest tests/api.key.test.js",
     "test:url": "jest tests/urlhandler.test.js",
     "test:rest:api": "mocha rest-api/integration.tests/rest.api.test.js",
     "test:rest:api:contracts": "mocha rest-api/integration.tests/rest.api.contracts.test.js",
