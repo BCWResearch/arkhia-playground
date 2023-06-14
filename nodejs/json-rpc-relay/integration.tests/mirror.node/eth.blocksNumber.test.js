@@ -19,10 +19,8 @@ const getPayload = () => {
 
 const assertPayload = (data) => {
     expect(data.result).toBeDefined();
-    expect(data.result).toBeDefined();
-    expect(data.result).toBeDefined();
-    expect(data.result.nonce).toBeDefined();
-    expect(data.result.size).toBeDefined();
+    expect(data.result.number).toContain("0x1b4");
+    !expect(data.result.timestamp).not.toBeNull();
     expect(data.result.stateRoot).toBeDefined();
     expect(data.result.hash).toBeDefined();
     expect(data.result.parentHash).toBeDefined();
@@ -43,7 +41,7 @@ describe('[CURL] Get Block By Number', () => {
 
         // Assert
         assertPayload(data);
-   
+
     });
 
     test('Should return BlockByNumber from Arkhia Mainnet', async () => {
@@ -58,7 +56,7 @@ describe('[CURL] Get Block By Number', () => {
 
         // Assert
         assertPayload(data);
-   
+
     });
 });
 
