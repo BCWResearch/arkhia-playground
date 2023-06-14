@@ -16,11 +16,11 @@
     "test:jsonrpc:mainnet:contract:call": "jest json-rpc-relay/integration.tests/contracts/mainnet/call.contract.test.js",
     "test:jsonrpc:read": "jest json-rpc-relay/integration.tests/mirror.node/*",
     "test:graphql:api": "mocha graphql/integration.test/graphql.test.js",
-    "test:wt:connect": "jest watchtower/integration.tests/connect.test.js",
-    "test:wt:topics": "jest watchtower/integration.tests/subscribe.topic.test.js",
-    "test:wt:balance": "jest watchtower/integration.tests/subscribe.balance.test.js",
-    "test:wt:subscriptionlimit": "jest watchtower/integration.tests/subscription.limit.test.js",
-    "test:wt:all": "jest watchtower/integration.tests/*"
+    "test:wt:connect": "jest --runInBand watchtower/integration.tests/connect.test.js",
+    "test:wt:topics": "jest --runInBand watchtower/integration.tests/subscribe.topic.test.js",
+    "test:wt:balance": "jest --runInBand watchtower/integration.tests/subscribe.balance.test.js",
+    "test:wt:subscriptionlimit": "jest --runInBand watchtower/integration.tests/subscription.limit.test.js",
+    "test:wt:all": "jest --runInBand watchtower/integration.tests/*"
   },
   "author": "",
   "license": "ISC",

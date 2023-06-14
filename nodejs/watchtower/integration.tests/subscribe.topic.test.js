@@ -1,6 +1,6 @@
 console.clear();
 
-require('dotenv').config({path: '.env'});
+require('dotenv').config({ path: '.env' });
 const urlHandler = require('../../handlers/url.handler');
 const watchtowerHandler = require('../../handlers/watchtower.handler');
 const io = require('socket.io-client');
@@ -50,7 +50,13 @@ const verifyTopicSubscriptionMessageStream = (message) => {
     expect(message.data).toHaveProperty('runningHashVersion');
 }
 
-describe('Subscribe to Topic [Watchtower] on Testnet',  () => {
+const unsubscribeTopic = (socket, topic) => {
+    socket.emit(`unsubscribe`, topic.uid, (success) => {
+        expect(success).toEqual(true);
+    });
+}
+
+describe('Subscribe to Topic [Watchtower] on Testnet', () => {
 
     beforeAll((done) => {
         messageCount = 0;
@@ -61,30 +67,32 @@ describe('Subscribe to Topic [Watchtower] on Testnet',  () => {
         });
     });
 
-    it('Should have correct subscription payload',  () => {
+    it('Should have correct subscription payload', () => {
         verifyTopicPayload(topicSubscriptionPayload, topicTestnet);
     });
 
-    it('Should have correct message coming down when subscribing to topic',  (done) => {
-        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => { 
-            verifyTopicSubscriptionResponse(msg) 
+    it('Should have correct message coming down when subscribing to topic', (done) => {
+        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => {
+            verifyTopicSubscriptionResponse(msg)
+            unsubscribeTopic(socket, msg);
             done();
         });
     }, timeout);
 
-    it('Should have messages streaming down when subscribing to topic',  (done) => {
+    it('Should have messages streaming down when subscribing to topic', (done) => {
 
-        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => {  
+        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => {
             socket.on(msg.listeners.data, function (message) {
                 verifyTopicSubscriptionMessageStream(message);
                 if (messageCount === 0) expect(message.data.message).toEqual('Hello from Arkhia');
-                if (messageCount === 1) expect(message.data.message).toEqual('Welcome to Fridays Workshop');
+                if (messageCount === 1) expect(message.data.message).toEqual('Welcome to Watchtower');
                 if (messageCount === 2) expect(message.data.message).toEqual('Hello again...');
                 messageCount++;
                 if (messageCount === messagesAmount) {
+                    unsubscribeTopic(socket, msg);
                     done();
                 }
-         
+
             });
         });
     }, timeout);
@@ -105,23 +113,25 @@ describe('Subscribe to Topic [Watchtower] on Mainnet',  () => {
         });
     });
 
-    it('Should have correct subscription payload',  () => {
+    it('Should have correct subscription payload', () => {
         verifyTopicPayload(topicSubscriptionPayload, topicMainnet);
     });
 
-    it('Should have correct message coming down when subscribing to topic',  (done) => {
-        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => { 
-            verifyTopicSubscriptionResponse(msg) 
+    it('Should have correct message coming down when subscribing to topic', (done) => {
+        socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => {
+            verifyTopicSubscriptionResponse(msg)
+            unsubscribeTopic(socket, msg);
             done();
         });
     }, timeout);
 
-    it('Should have messages streaming down when subscribing to topic',  (done) => {
+    it('Should have messages streaming down when subscribing to topic', (done) => {
 
         socket.emit(`subscribe`, topicSubscriptionPayload, (msg) => {  
             socket.on(msg.listeners.data, function (message) {
                 verifyTopicSubscriptionMessageStream(message);
                 expect(message.data.message).toEqual('Mirror Node acceptance test');
+                unsubscribeTopic(socket, msg);
                 done();
             });
         });
