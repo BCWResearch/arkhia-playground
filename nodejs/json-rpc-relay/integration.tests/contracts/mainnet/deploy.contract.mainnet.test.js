@@ -5,15 +5,24 @@ const fs = require('fs');
 const path = require('path');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../../handlers/url.handler');
-const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
+const privateECDSAAccount = process.env.MAINNET_OPERATOR_PRIVATE_KEY;
 
 
 describe('[Ethers] Deploy Contract ', () => {
 
-    test('Testnet | Should able to Deploy Contract', async () => {
+    test('Mainnet | Should have valid private Key to Deploy Contract', async () => {
+        // Arrange
+        const privateECDSAAccount = process.env.MAINNET_OPERATOR_PRIVATE_KEY;
+
+        // Assert
+        expect(privateECDSAAccount).toBeDefined();
+        expect(privateECDSAAccount.length).toBeGreaterThan(2);
+    });
+
+    test('Mainnet | Should able to Deploy Contract', async () => {
 
         // Arrange
-        const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
+        const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
         const contractPath = path.join(__dirname, '/');
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const bytecode = fs.readFileSync(`${contractPath}/../artifact/example.contract.bin`).toString();
@@ -27,8 +36,7 @@ describe('[Ethers] Deploy Contract ', () => {
         // Assert
         expect(contract).toBeDefined();
         expect(contract.address).toBeDefined();
-        console.log(`Contract deployed successfully : ${contract.address}`);
-    
+        console.log(`Contract deployed successfully : ${contract}`);
     });
 
 });
