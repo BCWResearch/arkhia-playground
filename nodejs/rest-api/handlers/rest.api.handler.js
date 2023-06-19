@@ -13,19 +13,19 @@ class RestApiHandler {
         try {
             const alias = isMainnet ? process.env.MAINNET_ACCOUNT_ALIAS : process.env.TESTNET_ACCOUNT_ALIAS;
             return alias;
-        } catch {
-            console.error(e);
+        } catch (e) {
+            console.error(e.response.data);
             return "";
         }
     }
 
-    getAccounts = async(isMainnet) => {
+    getAccounts = async (isMainnet) => {
         try {
             const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts`;
             const response = await axios.get(accountsUrl, body);
             return response;
-        } catch(e) {
-            console.error(e);
+        } catch (e) {
+            console.error(e.response.data);
         }
     }
 
@@ -34,10 +34,12 @@ class RestApiHandler {
             const accountUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts/${accountId}`;
             const response = await axios.get(accountUrl, body);
             return response;
-        } catch(e) {
-            console.error(e);
+        } catch (e) {
+            console.error(e.response.data);
         }
     }
+
+    // Rest of the methods with similar modifications
 
     getTokens = async (isMainnet) => {
         try {
@@ -45,7 +47,7 @@ class RestApiHandler {
             const response = await axios.get(tokensUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -55,7 +57,7 @@ class RestApiHandler {
             const response = await axios.get(tokenUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -65,7 +67,7 @@ class RestApiHandler {
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -75,7 +77,7 @@ class RestApiHandler {
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -85,7 +87,7 @@ class RestApiHandler {
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -95,7 +97,7 @@ class RestApiHandler {
             const response = await axios.get(contractUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -107,7 +109,7 @@ class RestApiHandler {
             return response;
         } catch(e) {
             console.log(`Error`);
-            console.log(e.response);
+            console.error(e.response.data);
             console.log(e.response.data._status);
         }
     }
@@ -118,7 +120,7 @@ class RestApiHandler {
             const response = await axios.get(transactionsUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -128,7 +130,7 @@ class RestApiHandler {
             const response = await axios.get(transactionsUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -138,7 +140,7 @@ class RestApiHandler {
             const response = await axios.get(networkNodesUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
     getBlocks = async (isMainnet) => {
@@ -147,7 +149,7 @@ class RestApiHandler {
             const response = await axios.get(blocksUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -157,7 +159,7 @@ class RestApiHandler {
             const response = await axios.get(schedulesUrl, body);
             return response;
         } catch(e) {
-            console.error(e);
+            console.error(e.response.data);
         }
     }
 
@@ -166,11 +168,10 @@ class RestApiHandler {
             const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/balances`;
             const response = await axios.get(balancesUrl, body);
             return response;
-        } catch(e) {
-            console.error(e);
+        } catch (e) {
+            console.error(e.response.data);
         }
     }
-
 }
 
 module.exports = Object.freeze(new RestApiHandler());
