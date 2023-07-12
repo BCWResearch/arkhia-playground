@@ -46,6 +46,17 @@ class WatchtowerHandler {
         return balancePayload;
     }
 
+    getSubscribeEventPayload = (address, topic, inputs) => {
+        return {
+            subscribe: '/jsonRpc/event',
+            body: {
+                address: address,
+                topics: [topic],
+                inputs
+            },
+            pollingInterval: '5s',
+        }
+    }
 }
 
 module.exports = Object.freeze(new WatchtowerHandler());
