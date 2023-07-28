@@ -6,7 +6,7 @@ const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const testnetAccountId = process.env.TESTNET_ACCOUNT_ID;
 const mainnetAccountId = process.env.MAINNET_ACCOUNT_ID;
-const testnettokenId = `0.0.4284568`;
+const testnettokenId = `0.0.3134`;
 const mainnetTokenId =`0.0.107594`;
 
 const assertTransactionsByAccountId = async (isMainnet) => {
