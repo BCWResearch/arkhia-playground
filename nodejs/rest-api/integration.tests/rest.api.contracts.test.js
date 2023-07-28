@@ -5,8 +5,8 @@ const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const { ethers } = require("ethers");
 const testnetContract = {
-    id: `0.0.4627387`,
-    evm_id: `0000000000000000000000000000000000469bbb`
+    id: `0.0.67908`,
+    evm_id: `0xf3Ae99D543B77b1a4Ad522cecDC80c93176CDedB`
 };
 
 const mainnetContract = {
@@ -85,7 +85,7 @@ describe('Testnet | Rest API Integration tests ', function () {
     it('should be able to get the contracts', async function () {
         return assertContracts(false);
     });
-  
+
     it('should be able to get a contract by Id', async function () {
         return assertContractById(false);
     });
@@ -97,11 +97,11 @@ describe('Testnet | Rest API Integration tests ', function () {
     it('should be able to get contract log results by Id', async function () {
         return assertContractResultLogsById(false);
     });
- 
+
     it('should be able to get a contract call (HIP-584)', async function () {
         return assertContractEvmCalls(false);
     });
-   
+
 });
 
 
@@ -110,7 +110,7 @@ describe('Mainnet | Rest API Integration tests ', function () {
     it('should be able to get the contracts', async function () {
         return assertContracts(true);
     });
-  
+
     it('should be able to get a contract by Id', async function () {
         return assertContractById(true);
     });
@@ -122,9 +122,9 @@ describe('Mainnet | Rest API Integration tests ', function () {
     it('should be able to get contract log results by Id', async function () {
         return assertContractResultLogsById(true);
     });
- 
+
     it('should be able to get a contract call (HIP-584)', async function () {
         return assertContractEvmCalls(false);
     });
-   
+
 });

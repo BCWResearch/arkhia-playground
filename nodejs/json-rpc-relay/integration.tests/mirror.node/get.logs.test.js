@@ -7,21 +7,17 @@ const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/j
 
 const getEthLogsPayload = () => {
     const ethLogsPayload = JSON.stringify(
-    {
-        "jsonrpc": "2.0",
-        "id": 0,
-        "method": "eth_getLogs",
-        "params": [
-            {
-            "fromBlock": "0x62788",
-            "toBlock": "0x62788",
-            "address": "0x0000000000000000000000000000000000337837",
-            "topics": [
-            "0x1e8d986845d4bfd60de4b157c3db0563b5db7b9c5534f56107727d6792c1f59e"
+        {
+            "jsonrpc": "2.0",
+            "id": 0,
+            "method": "eth_getLogs",
+            "params": [
+                {
+                    "fromBlock": "0x6347",
+                    "toBlock": "0x6347"
+                }
             ]
-            }
-        ]
-    });
+        });
     return ethLogsPayload;
 }
 

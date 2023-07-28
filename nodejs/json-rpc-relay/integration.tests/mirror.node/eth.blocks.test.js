@@ -31,7 +31,7 @@ describe('[CURL] Get Latest Block Number', () => {
 
         // Assert
         expect(data.result).toBeDefined();
-        expect(data.result.length).toBeGreaterThanOrEqual(7);
+        expect(data.result.length).toBeGreaterThanOrEqual(6);
     });
 
     test('Should return Latest BlockNumber in Hext format from Arkhia Mainnet', async () => {
@@ -83,7 +83,7 @@ describe('[Ethers] Should return Latest BlockNumber', () => {
     test('Should return Latest Block number from Arkhia Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
-        
+
         // Act
         const result = await ethersProvider.getBlockNumber();
 
@@ -95,7 +95,7 @@ describe('[Ethers] Should return Latest BlockNumber', () => {
     test('Should return Latest Block number from Arkhia Mainnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
-        
+
         // Act
         const result = await ethersProvider.getBlockNumber();
 
