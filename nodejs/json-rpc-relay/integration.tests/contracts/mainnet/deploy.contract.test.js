@@ -16,8 +16,8 @@ describe('[Ethers] Deploy Contract ', () => {
         const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
         const contractPath = path.join(__dirname, '/');
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
-        const bytecode = fs.readFileSync(`${contractPath}/artifact/example.contract.bin`).toString();
-        const contractJson = fs.readFileSync(`${contractPath}/artifact/example.contract.json`);
+        const bytecode = fs.readFileSync(`${contractPath}/artifact/lookUpContract_sol_LookupContract.bin`).toString();
+        const contractJson = fs.readFileSync(`${contractPath}/lookUpContract_sol_LookupContract.json`);
         const ABI = JSON.parse(contractJson);
         const myContract = new ethers.ContractFactory(ABI, bytecode, signer);
 
