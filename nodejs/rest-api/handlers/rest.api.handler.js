@@ -22,7 +22,7 @@ class RestApiHandler {
     getAccounts = async (isMainnet) => {
         try {
             const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts`;
-            const response = await axios.get(accountsUrl, body);
+            const response = await axios.get(accountsUrl);
             return response;
         } catch (e) {
             console.error(e.response.data);
@@ -32,7 +32,7 @@ class RestApiHandler {
     getAccountById = async (accountId, isMainnet) => {
         try {
             const accountUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts/${accountId}`;
-            const response = await axios.get(accountUrl, body);
+            const response = await axios.get(accountUrl);
             return response;
         } catch (e) {
             console.error(e.response.data);
@@ -44,7 +44,7 @@ class RestApiHandler {
     getTokens = async (isMainnet) => {
         try {
             const tokensUrl = `${urlHandler.getApiUrl(isMainnet)}/tokens`;
-            const response = await axios.get(tokensUrl, body);
+            const response = await axios.get(tokensUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -54,7 +54,7 @@ class RestApiHandler {
     getTokenById = async (tokenId, isMainnet) => {
         try {
             const tokenUrl = `${urlHandler.getApiUrl(isMainnet)}/tokens/${tokenId}`;
-            const response = await axios.get(tokenUrl, body);
+            const response = await axios.get(tokenUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -64,7 +64,7 @@ class RestApiHandler {
     getContracts = async (isMainnet) => {
         try {
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts`;
-            const response = await axios.get(contractUrl, body);
+            const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -74,7 +74,7 @@ class RestApiHandler {
     getContractById = async (contract_id, isMainnet) => {
         try {
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/${contract_id}`;
-            const response = await axios.get(contractUrl, body);
+            const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -84,7 +84,7 @@ class RestApiHandler {
     getContractResultsById = async (contract_id, isMainnet) => {
         try {
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/${contract_id}/results`;
-            const response = await axios.get(contractUrl, body);
+            const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -94,7 +94,7 @@ class RestApiHandler {
     getContractResultLogsById = async (contract_id, isMainnet) => {
         try {
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/${contract_id}/results/logs`;
-            const response = await axios.get(contractUrl, body);
+            const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -105,7 +105,7 @@ class RestApiHandler {
         try {
             // works with url : `https://testnet.mirrornode.hedera.com/api/v1/contracts/call`
             const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts/call`;
-            const response = await axios.post(contractUrl, payload, body);
+            const response = await axios.post(contractUrl, payload);
             return response;
         } catch(e) {
             console.log(`Error`);
@@ -117,7 +117,7 @@ class RestApiHandler {
     getTransactions = async (isMainnet) => {
         try {
             const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions`;
-            const response = await axios.get(transactionsUrl, body);
+            const response = await axios.get(transactionsUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -127,7 +127,7 @@ class RestApiHandler {
     getAccountInfoByCryptoTransfer = async(accountId, isMainnet) => {
         try {
             const transactionUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts/${accountId}?transactionType=cryptotransfer&limit=200&order=asc`;
-            const response = await axios.get(transactionUrl, body);
+            const response = await axios.get(transactionUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -137,7 +137,7 @@ class RestApiHandler {
     getTransactionByAccountId = async (accountId, isMainnet, option) => {
         try {
             const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?account.id=${accountId}&limit=200&order=${option}`;
-            const response = await axios.get(transactionsUrl, body);
+            const response = await axios.get(transactionsUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -147,7 +147,7 @@ class RestApiHandler {
     getNetworkNodes = async(isMainnet) => {
         try {
             const networkNodesUrl = `${urlHandler.getApiUrl(isMainnet)}/network/nodes`;
-            const response = await axios.get(networkNodesUrl, body);
+            const response = await axios.get(networkNodesUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -156,7 +156,7 @@ class RestApiHandler {
     getBlocks = async (isMainnet) => {
         try {
             const blocksUrl = `${urlHandler.getApiUrl(isMainnet)}/blocks`;
-            const response = await axios.get(blocksUrl, body);
+            const response = await axios.get(blocksUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -166,7 +166,7 @@ class RestApiHandler {
     getSchedules = async (isMainnet) => {
         try {
             const schedulesUrl = `${urlHandler.getApiUrl(isMainnet)}/schedules`;
-            const response = await axios.get(schedulesUrl, body);
+            const response = await axios.get(schedulesUrl);
             return response;
         } catch(e) {
             console.error(e.response.data);
@@ -176,7 +176,7 @@ class RestApiHandler {
     getBalances = async (isMainnet) => {
         try {
             const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/balances`;
-            const response = await axios.get(balancesUrl, body);
+            const response = await axios.get(balancesUrl);
             return response;
         } catch (e) {
             console.error(e.response.data);
@@ -186,7 +186,7 @@ class RestApiHandler {
     getCryptoTransfer = async (isMainnet) => {
         try {
             const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?transactionType=CRYPTOCREATEACCOUNT&limit=220`;
-            const response = await axios.get(balancesUrl, body);
+            const response = await axios.get(balancesUrl);
             return response;
         } catch (e) {
             console.error(e.response.data);
@@ -197,14 +197,14 @@ class RestApiHandler {
     getCustomQueryMainnet = async (getCustomQuery) => {
         try {
             const balancesUrl = `https://starter.arkhia.io/hedera/mainnet${getCustomQuery}`;
-            const response = await axios.get(balancesUrl, body);
+            const response = await axios.get(balancesUrl);
             return response;
         } catch (e) {
             console.error(e.response.data);
         }
     }
 
-    
+
 }
 
 module.exports = Object.freeze(new RestApiHandler());

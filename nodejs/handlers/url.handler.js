@@ -8,8 +8,8 @@ const apiKey = process.env.ARKHIA_API_KEY;
 const isHashio = process.env.ARKHIA_HASHIO === true ? true : false;
 
 // APIS
-const restApiUrlMainnet  = `${process.env.ARKHIA_MAINNET_API_URL}/${restAPISuffix}`;
-const restApiUrlTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${restAPISuffix}`;
+const restApiUrlMainnet  = `${process.env.ARKHIA_MAINNET_API_URL}/${apiKey}/${restAPISuffix}`;
+const restApiUrlTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${apiKey}/${restAPISuffix}`;
 
 const jsonRpcRelayMainnet  = `${process.env.ARKHIA_MAINNET_API_URL}/${jsonRPCSuffix}/${apiKey}`;
 const jsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${jsonRPCSuffix}/${apiKey}`;
