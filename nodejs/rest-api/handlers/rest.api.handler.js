@@ -124,9 +124,19 @@ class RestApiHandler {
         }
     }
 
-    getTransactionByAccountId = async (accountId, isMainnet) => {
+    getAccountInfoByCryptoTransfer = async(accountId, isMainnet) => {
         try {
-            const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?account.id=${accountId}`;
+            const transactionUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts/${accountId}?transactionType=cryptotransfer&limit=200&order=asc`;
+            const response = await axios.get(transactionUrl, body);
+            return response;
+        } catch(e) {
+            console.error(e.response.data);
+        }
+    }
+
+    getTransactionByAccountId = async (accountId, isMainnet, option) => {
+        try {
+            const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?account.id=${accountId}&limit=200&order=${option}`;
             const response = await axios.get(transactionsUrl, body);
             return response;
         } catch(e) {
@@ -172,6 +182,29 @@ class RestApiHandler {
             console.error(e.response.data);
         }
     }
+
+    getCryptoTransfer = async (isMainnet) => {
+        try {
+            const balancesUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?transactionType=CRYPTOCREATEACCOUNT&limit=220`;
+            const response = await axios.get(balancesUrl, body);
+            return response;
+        } catch (e) {
+            console.error(e.response.data);
+        }
+    }
+
+
+    getCustomQueryMainnet = async (getCustomQuery) => {
+        try {
+            const balancesUrl = `https://starter.arkhia.io/hedera/mainnet${getCustomQuery}`;
+            const response = await axios.get(balancesUrl, body);
+            return response;
+        } catch (e) {
+            console.error(e.response.data);
+        }
+    }
+
+    
 }
 
 module.exports = Object.freeze(new RestApiHandler());

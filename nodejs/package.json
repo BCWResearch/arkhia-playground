@@ -7,6 +7,7 @@
     "test:config": "jest tests/config.test.js",
     "test:apikey": "jest tests/api.key.test.js",
     "test:url": "jest tests/urlhandler.test.js",
+    "accounts:transaction:history:mainnet": "mocha rest-api/integration.tests/account.history.mainnet.js",
     "test:rest:api": "mocha rest-api/integration.tests/rest.api.test.js",
     "test:rest:api:contracts": "mocha rest-api/integration.tests/rest.api.contracts.test.js",
     "test:jsonrpc:testnet:contract:all": "jest json-rpc-relay/integration.tests/contracts/testnet/*",
