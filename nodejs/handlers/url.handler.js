@@ -17,8 +17,11 @@ const jsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${jsonRPCSuf
 const watchtowerUrlMainnet = `${process.env.ARKHIA_MAINNET_WATCHTOWER}?api_key=${apiKey}`;
 const watchtowerUrlTestnet = `${process.env.ARKHIA_TESTNET_WATCHTOWER}?api_key=${apiKey}`;
 
-const graphQLUrlMainnet = `${process.env.ARKHIA_MAINNET_API_URL}/${graphqlSuffix}`
-const graphQLUrlTestnet = `${process.env.ARKHIA_TESTNET_API_URL}/${graphqlSuffix}`
+const graphQLUrlMainnet = `${process.env.ARKHIA_MAINNET_API_URL}/${graphqlSuffix}`;
+const graphQLUrlTestnet = `${process.env.ARKHIA_TESTNET_API_URL}/${graphqlSuffix}`;
+
+const accountHistoryMainnet = `${process.env.MAINNET_ACCOUNT_HISTORY_ID ?? ``}`;
+const accountHistorTestnet = `${process.env.TESTNET_ACCOUNT_HISTORY_ID ?? ``}`;
 
 class UrlHandler {
 
@@ -59,6 +62,14 @@ class UrlHandler {
 
     getOperatorPrivateKey = () => {
         return process.env.OPERATOR_PRIVATE_KEY;
+    }
+
+    getAccountKeyMainnet = () => {
+        return accountHistoryMainnet;
+    }
+
+    getAccountKeyTestnet = () => {
+        return graphQLUrlTestnet;
     }
 }
 
