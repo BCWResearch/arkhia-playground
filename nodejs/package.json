@@ -24,7 +24,8 @@
     "test:wt:balance": "jest --runInBand watchtower/integration.tests/subscribe.balance.test.js",
     "test:wt:subscriptionlimit": "jest --runInBand watchtower/integration.tests/subscription.limit.test.js",
     "test:wt:event": "jest --runInBand watchtower/integration.tests/subscribe.event.test.js",
-    "test:wt:all": "jest --runInBand watchtower/integration.tests/*"
+    "test:wt:all": "jest --runInBand watchtower/integration.tests/*",
+    "test:scout:all": "jest --runInBand arkhia.api/integration.tests/scout.api.test.js"
   },
   "author": "",
   "license": "ISC",

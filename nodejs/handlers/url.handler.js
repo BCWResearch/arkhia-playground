@@ -21,7 +21,10 @@ const graphQLUrlMainnet = `${process.env.ARKHIA_MAINNET_API_URL}/${graphqlSuffix
 const graphQLUrlTestnet = `${process.env.ARKHIA_TESTNET_API_URL}/${graphqlSuffix}`;
 
 const accountHistoryMainnet = `${process.env.MAINNET_ACCOUNT_HISTORY_ID ?? ``}`;
-const accountHistorTestnet = `${process.env.TESTNET_ACCOUNT_HISTORY_ID ?? ``}`;
+const accountHistoryTestnet = `${process.env.TESTNET_ACCOUNT_HISTORY_ID ?? ``}`;
+
+const arkhiaApiMainnet = `${process.env.ARKHIA_API_URL}`;
+const arkhiaApiTestnet = `${process.env.ARKHIA_API_URL}`;
 
 class UrlHandler {
 
@@ -70,6 +73,10 @@ class UrlHandler {
 
     getAccountKeyTestnet = () => {
         return graphQLUrlTestnet;
+    }
+
+    getArkhiaApiUrl = (isMainnet) => {
+        return isMainnet ? arkhiaApiMainnet : arkhiaApiTestnet;
     }
 }
 
