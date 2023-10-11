@@ -10,7 +10,7 @@ const testnettokenId = `0.0.3134`;
 const mainnetTokenId =`0.0.107594`;
 
 const assertTransactionsByAccountId = async (isMainnet) => {
-    const transactionByAccountId = await restApiHandler.getTransactionByAccountId(isMainnet ? mainnetAccountId : testnetAccountId, isMainnet);
+    const transactionByAccountId = await restApiHandler.getTransactionByAccountId(isMainnet);
     expect(transactionByAccountId).to.have.property('status').equals(200);
     expect(transactionByAccountId).to.have.property(`data`);
     expect(transactionByAccountId.data.transactions).to.have.lengthOf.at.least(1);

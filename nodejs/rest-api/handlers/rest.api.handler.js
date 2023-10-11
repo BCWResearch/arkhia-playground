@@ -134,9 +134,9 @@ class RestApiHandler {
         }
     }
 
-    getTransactionByAccountId = async (accountId, isMainnet, option) => {
+    getTransactionByAccountId = async (isMainnet) => {
         try {
-            const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?account.id=${accountId}&limit=200&order=${option}`;
+            const transactionsUrl = `${urlHandler.getApiUrl(isMainnet)}/transactions?account.id=0.0.779573&limit=3&order=desc`;
             const response = await axios.get(transactionsUrl);
             return response;
         } catch(e) {
