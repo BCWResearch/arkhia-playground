@@ -21,7 +21,7 @@ class RestApiHandler {
 
     getAccounts = async (isMainnet) => {
         try {
-            const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts`;
+            const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts?order=desc`;
             const response = await axios.get(accountsUrl);
             return response;
         } catch (e) {

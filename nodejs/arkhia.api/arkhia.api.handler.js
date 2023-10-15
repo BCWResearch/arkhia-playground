@@ -13,23 +13,31 @@ const headers = { headers: { "x-api-secret": apiSecret } };
 
 class ArkhiaApiHandler {
 
-    getArkhiaApiStatus = async (isMainnet) => {
-        const statusApiUrl = `${urlHandler.getArkhiaApiUrl(isMainnet)}/service/status/${apiKeyNot2Layer}`;
+    getArkhiaApiStatus = async () => {
+        const statusApiUrl = `${urlHandler.getArkhiaApiUrl()}/service/status/${apiKeyNot2Layer}`;
         const response = await axios.get(statusApiUrl, body);
         return response;
     }
 
-    getScoutRequestWithCustomKey = async (isMainnet, apiKey) => {
+    getEventRequestWithCustomKey = async (apiKey) => {
         const settingsUrl = apiKey === `` ?
-         `${urlHandler.getArkhiaApiUrl(isMainnet)}/scout/settings/${apiKey}`:
-         `${urlHandler.getArkhiaApiUrl(isMainnet)}/scout/settings/${apiKey}`;
+         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`:
+         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
         const response = await axios.post(settingsUrl, body);
         return response;
     }
 
-    getScoutSettings = async (isMainnet, addHeader=true) => {
-        const settingsUrl = `${urlHandler.getArkhiaApiUrl(isMainnet)}/scout/settings/${apiKey}`;
-        const response = await axios.post(settingsUrl, body, addHeader ? headers: {});
+    getEventSettings = async (addHeader = true) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
+        console.log(`Calling for ${settingsUrl}`);
+        const response = await axios.post(settingsUrl, body, addHeader ? headers : {});
+        return response;
+    }
+
+    createEventSettings = async (scoutCreatePayload) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/create/${apiKey}`;
+        console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
         return response;
     }
 }
