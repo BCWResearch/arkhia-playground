@@ -27,7 +27,8 @@
     "test:wt:event": "jest --runInBand watchtower/integration.tests/subscribe.event.test.js",
     "test:wt:all": "jest --runInBand watchtower/integration.tests/*",
     "test:events:read": "jest --runInBand arkhia.api/integration.tests/events.api.test.js",
-    "test:events:crud": "jest --runInBand arkhia.api/integration.tests/events.crud.api.test.js"
+    "test:events:crud": "jest --runInBand arkhia.api/integration.tests/events.crud.api.test.js",
+    "test:slow:query": "jest --runInBand rest-api/integration.tests/rest.slow.queries.test.js"
   },
   "author": "",
   "license": "ISC",
