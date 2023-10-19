@@ -28,7 +28,12 @@ const arkhiaApi = `${process.env.ARKHIA_API_URL}`;
 
 class UrlHandler {
 
-    getApiUrl = (isMainnet) => {
+    getApiUrl = (isMainnet, isPublic = false) => {
+        if (isPublic) {
+            return isMainnet ? `https://mainnet-public.mirrornode.hedera.com/api/v1` :
+            `https://testnet.mirrornode.hedera.com/api/v1`;
+        }
+
         return isMainnet ? restApiUrlMainnet : restApiUrlTestnet;
     }
 

@@ -193,7 +193,6 @@ class RestApiHandler {
         }
     }
 
-
     getCustomQueryMainnet = async (getCustomQuery) => {
         try {
             const balancesUrl = `https://starter.arkhia.io/hedera/mainnet${getCustomQuery}`;
@@ -204,7 +203,29 @@ class RestApiHandler {
         }
     }
 
+    getBlockSlow = async (isMainnet = true, usePublic = false) => {
+        try {
+            const baseUrl = urlHandler.getApiUrl(isMainnet, usePublic);
+            const blockUrl =  `${baseUrl}/blocks?order=desc&limit=1`; 
+            const response = await axios.get(blockUrl);
+            console.log(`Calling ${blockUrl};`)
+            return response;
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
+    getCryptoTransferSlow = async (isMainnet = true, usePublic = false) => {
+        try {
+            const baseUrl = urlHandler.getApiUrl(isMainnet, usePublic);
+            const cryptoTransferUrl = `${baseUrl}/transactions?order=asc&transactiontype=cryptotransfer&limit=100&timestamp=gte%3A1678267183.900257309`;
+            console.log(`Calling ${cryptoTransferUrl};`)
+            const response = await axios.get(cryptoTransferUrl);
+            return response;
+        } catch (e) {
+            console.error(e.response.data);
+        }
+    }
 }
 
 module.exports = Object.freeze(new RestApiHandler());
