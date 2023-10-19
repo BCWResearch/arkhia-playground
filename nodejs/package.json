@@ -26,9 +26,11 @@
     "test:wt:subscriptionlimit": "jest --runInBand watchtower/integration.tests/subscription.limit.test.js",
     "test:wt:event": "jest --runInBand watchtower/integration.tests/subscribe.event.test.js",
     "test:wt:all": "jest --runInBand watchtower/integration.tests/*",
+    "test:slow:query": "jest --runInBand rest-api/integration.tests/rest.slow.queries.test.js",
     "test:events:read": "jest --runInBand arkhia.api/integration.tests/events.api.test.js",
     "test:events:crud": "jest --runInBand arkhia.api/integration.tests/events.crud.api.test.js",
-    "test:slow:query": "jest --runInBand rest-api/integration.tests/rest.slow.queries.test.js"
+    "test:events:create": "jest --runInBand arkhia.api/integration.tests/events.create.api.test.js",
+    "test:events:update": "jest --runInBand arkhia.api/integration.tests/events.update.api.test.js"
   },
   "author": "",
   "license": "ISC",

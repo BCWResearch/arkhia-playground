@@ -114,7 +114,6 @@ describe("Test to validate Create Event Settings", () => {
         return createEventSettingsItem(eventCreatePayload);
     });
 
-    
     it('Testnet | Contract | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
         // Arrange.
         const response = await restApiHandler.getContracts(false); 
@@ -122,6 +121,53 @@ describe("Test to validate Create Event Settings", () => {
         const eventCreatePayload = {
             item_id: latestContract.contract_id,
             network_id: eventConfig.testnet.networkId,
+            type_id: eventConfig.type.contract,
+        };
+        return createEventSettingsItem(eventCreatePayload);
+    });
+
+    //Mainnet
+    it('Mainnet | Account | Create Event Settings with an invalid item should NOT create event settings', async function () {
+        // Arrange.
+        const eventCreatePayload = {
+            item_id: `0.0.0000`,
+            network_id: eventConfig.mainnet.networkId,
+            type_id: eventConfig.type.account,
+        };
+        return createEventSettingsInvalidItem(eventCreatePayload);
+    });
+ 
+    it('Mainnet | Account | Create Event Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
+        // Arrange.
+        const eventCreatePayload = {
+            item_id: eventConfig.testnet.accountIdExists,
+            network_id: eventConfig.mainnet.networkId,
+            type_id: eventConfig.type.account,
+        };
+        return createEventSettingsValidItemButAlreadyExists(eventCreatePayload);
+    });
+  
+    it('Mainnet | Account | Create Event Settings with valid payload and not existing should create an Events settings item', async function () {
+        // Arrange.
+        // Only works if accounts are created constantly
+        const accounts = await restApiHandler.getAccounts(false); 
+        const latestAccountId = accounts.data.accounts[0];
+        const eventCreatePayload = {
+            item_id: latestAccountId.account,
+            network_id: eventConfig.mainnet.networkId,
+            type_id: eventConfig.type.account,
+        };
+        return createEventSettingsItem(eventCreatePayload);
+    });
+
+    
+    it('Mainnet | Contract | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
+        // Arrange.
+        const response = await restApiHandler.getContracts(false); 
+        const latestContract = response.data.contracts[0];
+        const eventCreatePayload = {
+            item_id: latestContract.contract_id,
+            network_id: eventConfig.mainnet.networkId,
             type_id: eventConfig.type.contract,
         };
         return createEventSettingsItem(eventCreatePayload);

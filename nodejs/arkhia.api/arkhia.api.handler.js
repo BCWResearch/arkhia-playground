@@ -15,14 +15,14 @@ class ArkhiaApiHandler {
 
     getArkhiaApiStatus = async () => {
         const statusApiUrl = `${urlHandler.getArkhiaApiUrl()}/service/status/${apiKeyNot2Layer}`;
+        console.log(`Calling for ${statusApiUrl}`);
         const response = await axios.get(statusApiUrl, body);
         return response;
     }
 
     getEventRequestWithCustomKey = async (apiKey) => {
-        const settingsUrl = apiKey === `` ?
-         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`:
-         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
+        console.log(`Calling for ${settingsUrl}`);
         const response = await axios.post(settingsUrl, body);
         return response;
     }
@@ -38,6 +38,14 @@ class ArkhiaApiHandler {
         const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/create/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
         const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
+        return response;
+    }
+
+    updateAccountEventSettings = async (eventAccountUpdatePayload) => {
+        // /events/:protocol?/settings/:type/update/:x_api_key
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/account/update/${apiKey}`;
+        console.log(`Calling for ${settingsUrl} with payload ${eventAccountUpdatePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: eventAccountUpdatePayload }, headers);
         return response;
     }
 }

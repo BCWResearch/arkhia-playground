@@ -1,12 +1,10 @@
 require("dotenv").config();
 console.clear();
-
 const arkhiaApiHandler = require("../arkhia.api.handler");
-let isMainnet = true;
 
 const callArkhiaAPIWithNoKey = async () => {
     try {
-        const response = await arkhiaApiHandler.getEventRequestWithCustomKey(true, ``);
+        const response = await arkhiaApiHandler.getEventRequestWithCustomKey(``);
         return response;
     } 
     catch (error) {
@@ -17,10 +15,11 @@ const callArkhiaAPIWithNoKey = async () => {
 
 const callArkhiaAPIWithInvalidKey = async () => {
     try {
-        const response = await arkhiaApiHandler.getEventRequestWithCustomKey(true, `imrandomstuff`);
+        const response = await arkhiaApiHandler.getEventRequestWithCustomKey(`imrandomstuff`);
         return response;
     } 
     catch (error) {
+        console.log(error);
         expect(error.response.data).toHaveProperty("status", false);
         expect(error.response.data.response).toContain("Please send a valid API key");
     }
@@ -74,6 +73,8 @@ describe("Test to validate Events Arkhia API", () => {
         return callArkhiaAPIWithInvalidKey();
     });
 
+  
+
     it('Call Event [Arkhia API] without ApiKey should be invalid should return false', async function () {
         return callArkhiaAPIWithNoKey();
     });
@@ -85,14 +86,7 @@ describe("Test to validate Events Arkhia API", () => {
     it('Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
         return callArkhiaAPIEventSettings();
     });
-
-    it('Testnet only | Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
-        
-    });
-
-    it('Mainnet only | Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
-        
-    });
+ 
 
 });
 
