@@ -27,6 +27,8 @@ describe("Test to validate Create Event Settings", () => {
             const settings = await arkhiaApiHandler.getEventSettings();
             expect(settings.data).toHaveProperty("status", true);
             const randomContract = settings.data.response.find(( item) => item.type_id = 2);
+
+            
             console.log(`get settings`);
             console.log(randomContract);
 

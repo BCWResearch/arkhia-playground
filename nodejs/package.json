@@ -30,7 +30,8 @@
     "test:events:read": "jest --runInBand arkhia.api/integration.tests/events.api.test.js",
     "test:events:crud": "jest --runInBand arkhia.api/integration.tests/events.crud.api.test.js",
     "test:events:create": "jest --runInBand arkhia.api/integration.tests/events.create.api.test.js",
-    "test:events:update": "jest --runInBand arkhia.api/integration.tests/events.update.api.test.js"
+    "test:events:update": "jest --runInBand arkhia.api/integration.tests/events.update.api.test.js",
+    "test:events:delete": "jest arkhia.api/integration.tests/events/events.delete.api.test.js"
   },
   "author": "",
   "license": "ISC",

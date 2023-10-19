@@ -34,8 +34,8 @@ class ArkhiaApiHandler {
         return response;
     }
 
-    createEventSettings = async (scoutCreatePayload) => {
-        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/create/${apiKey}`;
+    createEventSettings = async (scoutCreatePayload, tag) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/create/${tag}/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
         const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
         return response;
