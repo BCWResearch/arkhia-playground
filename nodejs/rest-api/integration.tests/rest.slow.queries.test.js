@@ -5,11 +5,14 @@ require('dotenv').config({path: '.env'});
 const {expect} = require('chai');
 const restApiHandler = require('../handlers/rest.api.handler');
 const burst = 30;
+//TODO: Move these variables to ENV file
+const mainnetAccountID = '0.0.1716145'
+const testnetAccountID  = '0.0.4520099'
 
 describe('Rest API Block Queries test', function () {
-    
+
     beforeAll(() => {
-  
+
     });
 
     it('Arkhia | Mainnet | Get Blocks Limit 1 ', async function () {
@@ -42,9 +45,9 @@ describe('Rest API Block Queries test', function () {
 });
 
 describe('Rest API CryptoTransfer Slow Queries test', function () {
-    
+
     beforeAll(() => {
-  
+
     });
 
     it('Arkhia | Mainnet | Get Crypto Transfer ', async function () {
@@ -76,3 +79,37 @@ describe('Rest API CryptoTransfer Slow Queries test', function () {
     });
 });
 
+describe('Rest API Account token queries test', function () {
+
+    beforeAll(() => {
+
+    });
+
+    it('Arkhia | Mainnet | Get tokens for account  ', async function () {
+        for ( let i =0; i< burst; i++ ) {
+            const result = await restApiHandler.gettokenslow(true, false, mainnetAccountID);
+            expect(result.data).to.have.property(`tokens`);
+        }
+    });
+
+    it('Public | Mainnet | Get tokens for account', async function () {
+        for ( let i =0; i< burst; i++ ) {
+            const result = await restApiHandler.gettokenslow(true, true, mainnetAccountID);
+            expect(result.data).to.have.property(`tokens`);
+        }
+    });
+
+    it('Arkhia | Testnet | Get token for account', async function () {
+        for ( let i =0; i< burst; i++ ) {
+            const result = await restApiHandler.gettokenslow(false, false, testnetAccountID);
+            expect(result.data).to.have.property(`tokens`);
+        }
+    });
+
+    it('Public | Testnet | Get tokens for account', async function () {
+        for ( let i =0; i< burst; i++ ) {
+            const result = await restApiHandler.gettokenslow(false, true, testnetAccountID);
+            expect(result.data).to.have.property(`tokens`);
+        }
+    });
+});
