@@ -206,9 +206,21 @@ class RestApiHandler {
     getBlockSlow = async (isMainnet = true, usePublic = false) => {
         try {
             const baseUrl = urlHandler.getApiUrl(isMainnet, usePublic);
-            const blockUrl =  `${baseUrl}/blocks?order=desc&limit=1`; 
+            const blockUrl =  `${baseUrl}/blocks?order=desc&limit=1`;
             const response = await axios.get(blockUrl);
             console.log(`Calling ${blockUrl};`)
+            return response;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    gettokenslow = async (isMainnet = true, usePublic = false, accountID) => {
+        try {
+            const baseUrl = urlHandler.getApiUrl(isMainnet, usePublic);
+            const tokenUrl =  `${baseUrl}/accounts/${accountID}/tokens`;
+            const response = await axios.get(tokenUrl);
+            console.log(`Calling ${tokenUrl};`)
             return response;
         } catch (e) {
             console.error(e);
