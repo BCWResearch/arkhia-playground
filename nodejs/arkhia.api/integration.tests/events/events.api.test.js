@@ -1,6 +1,6 @@
 require("dotenv").config();
 console.clear();
-const arkhiaApiHandler = require("../arkhia.api.handler");
+const arkhiaApiHandler = require("../../arkhia.api.handler");
 
 const callArkhiaAPIWithNoKey = async () => {
     try {
@@ -27,7 +27,7 @@ const callArkhiaAPIWithInvalidKey = async () => {
 
 const callArkhiaAPIWithValidKeyButWithoutApiSecret = async () => {
     try {
-        const response = await arkhiaApiHandler.getEventSettings(false);
+        const response = await arkhiaApiHandler.getItemSettings(false);
         return response;
     } 
     catch (error) {
@@ -38,7 +38,7 @@ const callArkhiaAPIWithValidKeyButWithoutApiSecret = async () => {
 
 const callArkhiaAPIEventSettings = async () => {
     try {
-        const response = await arkhiaApiHandler.getEventSettings(true);
+        const response = await arkhiaApiHandler.getItemSettings(true);
 
         expect(response.data).toHaveProperty("status", true);
         expect(response.data.response).toBeDefined();

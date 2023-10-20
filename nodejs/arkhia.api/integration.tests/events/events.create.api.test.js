@@ -27,7 +27,7 @@ const eventConfig = {
 
 const createEventSettingsInvalidItem = async (eventCreatePayload) => {
     try {
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload);
+        const response = await arkhiaApiHandler.createItemSettings(eventCreatePayload);
         return response;
     } 
     catch (error) {
@@ -38,7 +38,7 @@ const createEventSettingsInvalidItem = async (eventCreatePayload) => {
 
 const createEventSettingsValidItemButAlreadyExists = async (eventCreatePayload) => {
     try {
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload);
+        const response = await arkhiaApiHandler.createItemSettings(eventCreatePayload);
         return response;
     } 
     catch (error) {
@@ -50,7 +50,7 @@ const createEventSettingsValidItemButAlreadyExists = async (eventCreatePayload) 
 
 const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) => {
   
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload, eventType);
+        const response = await arkhiaApiHandler.createItemSettings(eventCreatePayload, eventType);
         const eventItem = response.data.response;
         expect(eventItem).toHaveProperty("id");
         expect(eventItem).toHaveProperty("item_id");

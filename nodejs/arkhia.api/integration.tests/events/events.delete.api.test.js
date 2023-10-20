@@ -5,159 +5,101 @@ const restApiHandler = require("../../../rest-api/handlers/rest.api.handler");
 const arkhiaApiHandler = require("../../arkhia.api.handler");
 
 
+const eventConfig = {
+    type : {
+        account: 1,
+        contract: 2
+    },
+    mainnet : {
+        networkId: 295
+    },
+    testnet: {
+        networkId: 296
+    }
+};
 
 
-const createEventSettingsInvalidItem = async (eventCreatePayload) => {
+const deleteSettingsInvalidItem = async (eventCreatePayload, eventType) => {
     try {
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload);
+        const response = await arkhiaApiHandler.deleteItemSettings(eventCreatePayload, eventType);
         return response;
     } 
     catch (error) {
         expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Could not create item. Arguments invalid or item does not seem available in the mirror node.");
+        expect(error.response.data.response).toContain("Unable to find setting item");
     }
 }
 
-const createEventSettingsValidItemButAlreadyExists = async (eventCreatePayload) => {
+const deleteSettingsItem = async (eventDeletePayload, eventType) => {
     try {
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload);
+        const response = await arkhiaApiHandler.deleteItemSettings(eventDeletePayload, eventType);
+        expect(response.data).toHaveProperty("status", true);
+         const item = response.data.response;
+        expect(item).toHaveProperty("item_id", eventDeletePayload.item_id);
         return response;
     } 
     catch (error) {
-        console.log(error);
         expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Event settings already exists");
+        expect(error.response.data.response).toContain("Unable to find setting item");
     }
 }
 
-const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) => {
-  
-        const response = await arkhiaApiHandler.createEventSettings(eventCreatePayload, eventType);
-        const eventItem = response.data.response;
 
-        console.log(`EVENT ITEM`);
-        console.log(eventItem);
-        expect(eventItem).toHaveProperty("id");
-        expect(eventItem).toHaveProperty("item_id");
-        expect(eventItem).toHaveProperty("user_id");
-        expect(eventItem).toHaveProperty("network_id");
-        expect(eventItem).toHaveProperty("type_id", eventId);
-        expect(eventItem).toHaveProperty("enabled", false);
-        expect(eventItem).toHaveProperty("json_settings");
-        expect(eventItem).toHaveProperty("status");
-        expect(eventItem).toHaveProperty("created_at");
-        expect(eventItem).toHaveProperty("updated_at");
-        expect(eventItem).toHaveProperty("job_health_timestamp");
-        expect(eventItem).toHaveProperty("request_fetch_limit");
-        return response;
-}
-
-describe("Test to validate Create Event Settings", () => {
+describe("Test to validate Delete Item Event Settings", () => {
 
     beforeAll(() => {
 
     });
 
-
-    it('Testnet | Account | Delete a testnet account should delete it', async function () {
+    it('Account | Delete a account should return null if not found', async function () {
         // Arrange.
-        const deletePayload = {
+        const deleteAccount = {
             item_id: `0.0.0000`,
             network_id: eventConfig.testnet.networkId,
         };
-        return createEventSettingsInvalidItem(deletePayload, `account`);
+        return deleteSettingsInvalidItem(deleteAccount, `account`);
     });
- 
 
-    it('Testnet | Account | Create Event Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
+    it('Contract | Delete a contract should return null if not found', async function () {
         // Arrange.
-        const eventCreatePayload = {
-            item_id: eventConfig.testnet.accountIdExists,
-            network_id: eventConfig.testnet.networkId
+        const deleteAccount = {
+            item_id: `0.0.0000`,
+            network_id: eventConfig.mainnet.networkId,
         };
-        return createEventSettingsValidItemButAlreadyExists(eventCreatePayload, `account`);
+        return deleteSettingsInvalidItem(deleteAccount, `contract`);
     });
 
-
-    it('Testnet | Account | Create Contract Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
-        // Arrange.
-        const eventCreatePayload = {
-            item_id: eventConfig.testnet.contractIdExists,
-            network_id: eventConfig.testnet.networkId
+    it('Account | Should be able to delete a valid account item', async function () {
+        const accounts = await arkhiaApiHandler.getItemSettings();
+        const accountItem = accounts.data?.response.find((item) => item.type_id == eventConfig.type.account);
+        expect(accountItem).toBeDefined();
+        const itemDeletePayload = {
+            item_id: accountItem.item_id,
+            network_id: accountItem.network_id,
         };
-        return createEventSettingsValidItemButAlreadyExists(eventCreatePayload, `contract`);
-    });
 
-  
+        console.log(`Deleting Account ${itemDeletePayload.item_id} (${itemDeletePayload.network_id})`);      
+        return deleteSettingsItem(itemDeletePayload, `account`, eventConfig.type.account);
    
-    it('Testnet | Account | Create Event Settings with valid payload and not existing should create an Events settings item', async function () {
-        // Arrange.
-        // Only works if accounts are created constantly
-        const accounts = await restApiHandler.getAccounts(false); 
-        const latestAccountId = accounts.data.accounts[0];
-        const eventCreatePayload = {
-            item_id: latestAccountId.account,
-            network_id: eventConfig.testnet.networkId,
-        };
-
-        console.log(`Creating Account ${eventCreatePayload.item_id} (${eventCreatePayload.network_id})`);      
-        return createEventSettingsItem(eventCreatePayload, `account`, eventConfig.type.account);
     });
 
-
-    it('Testnet | Contract | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
-        // Arrange.
-        const response = await restApiHandler.getContracts(false); 
-        const latestContract = response.data.contracts[0];
-        const eventCreatePayload = {
-            item_id: latestContract.contract_id,
-            network_id: eventConfig.testnet.networkId
-        };
-        console.log(`Creating Contract ${eventCreatePayload.item_id} (${eventCreatePayload.network_id})`);
-        return createEventSettingsItem(eventCreatePayload, `contract`, eventConfig.type.contract);
-    });
-
-
-    //Mainnet
-    it('Mainnet | Account | Create Event Settings with an invalid item should NOT create event settings', async function () {
-        // Arrange.
-        const eventCreatePayload = {
-            item_id: `0.0.0000`,
-            network_id: eventConfig.mainnet.networkId
-        };
-        return createEventSettingsInvalidItem(eventCreatePayload, `account`);
-    });
- 
-    it('Mainnet | Account | Create Event Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
-        // Arrange.
-        const eventCreatePayload = {
-            item_id: eventConfig.mainnet.accountIdExists,
-            network_id: eventConfig.mainnet.networkId
-        };
-        return createEventSettingsValidItemButAlreadyExists(eventCreatePayload, `account`);
-    });
-  
-    it('Mainnet | Account | Create Event Settings with valid payload and not existing should create an Events settings item', async function () {
-        // Arrange.
-        // Only works if accounts are created constantly
-        const accounts = await restApiHandler.getAccounts(true); 
-        const latestAccountId = accounts.data.accounts[0];
-        const eventCreatePayload = {
-            item_id: latestAccountId.account,
-            network_id: eventConfig.mainnet.networkId
-        };
-        return createEventSettingsItem(eventCreatePayload, `account`, eventConfig.type.account );
-    });
-
-    it('Mainnet | Contract | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
-        // Arrange.
-        const response = await restApiHandler.getContracts(true); 
-        const latestContract = response.data.contracts[0];
-        const eventCreatePayload = {
-            item_id: latestContract.contract_id,
-            network_id: eventConfig.mainnet.networkId
-        };
-        return createEventSettingsItem(eventCreatePayload, `contract`,  eventConfig.type.contract);
-    });
+    it('Contract | Should be able to delete a valid contract item', async function () {
+        const accounts = await arkhiaApiHandler.getItemSettings();
+        console.log(accounts.data.response);
+        const accountItem = accounts.data?.response.find((item) => item.type_id == eventConfig.type.contract);
     
+        if (accountItem === null) {
+            console.log(`Could not find item account`);
+            return;
+        }
+        const itemDeletePayload = {
+            item_id: accountItem.item_id,
+            network_id: accountItem.network_id,
+        };
+
+        console.log(`Deleting Contract ${itemDeletePayload.item_id} (${itemDeletePayload.network_id})`);      
+        return deleteSettingsItem(itemDeletePayload, `contract`, eventConfig.type.contract);
+   
+    });
+
 });

@@ -1,8 +1,8 @@
 require("dotenv").config();
 console.clear();
 
-const restApiHandler = require("../../rest-api/handlers/rest.api.handler");
-const arkhiaApiHandler = require("../arkhia.api.handler");
+const restApiHandler = require("../../../rest-api/handlers/rest.api.handler");
+const arkhiaApiHandler = require("../../arkhia.api.handler");
 
 
 
@@ -24,7 +24,7 @@ describe("Test to validate Create Event Settings", () => {
     it('Testnet | Contract | Should update enable for a testnet Contract and return result', async function () {
         try {
             // Arrange.
-            const settings = await arkhiaApiHandler.getEventSettings();
+            const settings = await arkhiaApiHandler.getItemSettings();
             expect(settings.data).toHaveProperty("status", true);
             const randomContract = settings.data.response.find(( item) => item.type_id = 2);
 

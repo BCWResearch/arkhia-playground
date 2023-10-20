@@ -27,15 +27,22 @@ class ArkhiaApiHandler {
         return response;
     }
 
-    getEventSettings = async (addHeader = true) => {
+    getItemSettings = async (addHeader = true) => {
         const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
         console.log(`Calling for ${settingsUrl}`);
         const response = await axios.post(settingsUrl, body, addHeader ? headers : {});
         return response;
     }
 
-    createEventSettings = async (scoutCreatePayload, tag) => {
+    createItemSettings = async (scoutCreatePayload, tag) => {
         const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/create/${tag}/${apiKey}`;
+        console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
+        return response;
+    }
+
+    deleteItemSettings = async (scoutCreatePayload, tag) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/delete/${tag}/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
         const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
         return response;
