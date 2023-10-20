@@ -41,6 +41,13 @@ class ArkhiaApiHandler {
         return response;
     }
 
+    toggleSettingsItem = async (scoutTogglePayload, type, action) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/${action}/${type}/${apiKey}`;
+        console.log(`Calling for toggle ${settingsUrl} with payload ${scoutTogglePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: scoutTogglePayload }, headers);
+        return response;
+    }
+
     deleteItemSettings = async (scoutCreatePayload, tag) => {
         const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/delete/${tag}/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);

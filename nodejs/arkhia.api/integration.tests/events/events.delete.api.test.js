@@ -1,9 +1,6 @@
 require("dotenv").config();
 console.clear();
-
-const restApiHandler = require("../../../rest-api/handlers/rest.api.handler");
 const arkhiaApiHandler = require("../../arkhia.api.handler");
-
 
 const eventConfig = {
     type : {
@@ -17,7 +14,6 @@ const eventConfig = {
         networkId: 296
     }
 };
-
 
 const deleteSettingsInvalidItem = async (eventCreatePayload, eventType) => {
     try {
@@ -44,12 +40,7 @@ const deleteSettingsItem = async (eventDeletePayload, eventType) => {
     }
 }
 
-
 describe("Test to validate Delete Item Event Settings", () => {
-
-    beforeAll(() => {
-
-    });
 
     it('Account | Delete a account should return null if not found', async function () {
         // Arrange.
