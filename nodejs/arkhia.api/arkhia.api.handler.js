@@ -57,9 +57,17 @@ class ArkhiaApiHandler {
 
     updateAccountEventSettings = async (eventAccountUpdatePayload) => {
         // /events/:protocol?/settings/:type/update/:x_api_key
-        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/account/update/${apiKey}`;
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/account/update/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${eventAccountUpdatePayload}`);
         const response = await axios.post(settingsUrl, { scoutSettings: eventAccountUpdatePayload }, headers);
+        return response;
+    }
+
+    getItemsCategoryConfig = async(eventSettingsPayload, item, configCategory) => {
+        //events/hedera/settings/contract/events
+        const settingsUnique = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${item}/${configCategory}/${apiKey}`;
+        console.log(`Calling for ${settingsUnique} with payload ${eventSettingsPayload}`);
+        const response = await axios.post(settingsUnique, { scoutSettings: eventSettingsPayload }, headers);
         return response;
     }
 }

@@ -1,6 +1,12 @@
 require("dotenv").config();
 console.clear();
 const arkhiaApiHandler = require("../../arkhia.api.handler");
+const eventConfig = {
+    type : {
+        account: 1,
+        contract: 2
+    },
+};
 
 const callArkhiaAPIWithNoKey = async () => {
     try {
@@ -36,7 +42,7 @@ const callArkhiaAPIWithValidKeyButWithoutApiSecret = async () => {
     }
 }
 
-const callArkhiaAPIEventSettings = async () => {
+const callArkhiaAPIEventAllSettings = async () => {
     try {
         const response = await arkhiaApiHandler.getItemSettings(true);
 
@@ -64,16 +70,30 @@ const callArkhiaAPIEventSettings = async () => {
     }
 }
 
-describe("Test to validate Events Arkhia API", () => {
-    beforeAll(() => {
+const callArkhiaContractInvalidTag = async (eventSettingsPayload, itemType, configType) => {
+    try {
+        const response = await arkhiaApiHandler.getItemsCategoryConfig(eventSettingsPayload, itemType, configType);
+    } catch(e) {
+        expect(e.response.data).toHaveProperty("status", false);
+        expect(e.response.data).toHaveProperty("response", "Invalid value");
+    }
+}
 
-    });
+const callArkhiaContractExpiryConfig = async (eventSettingsPayload, itemType, configType) => {
+    const response = await arkhiaApiHandler.getItemsCategoryConfig(eventSettingsPayload, itemType, configType);
+    expect(response.data).toHaveProperty("status", true);
+    expect(response.data.response).toBeDefined();
+    expect(response.data.response).toHaveProperty("config_type", "events");
+    expect(response.data.response).toHaveProperty("config_object");
+    expect(response.data.response).toHaveProperty("config_object_template");
+}
 
+
+describe("Test to validate Events Arkhia API authentication layer", () => {
+   
     it('Call Event [Arkhia API] with an invalid ApiKey should return false', async function () {
         return callArkhiaAPIWithInvalidKey();
     });
-
-  
 
     it('Call Event [Arkhia API] without ApiKey should be invalid should return false', async function () {
         return callArkhiaAPIWithNoKey();
@@ -82,11 +102,50 @@ describe("Test to validate Events Arkhia API", () => {
     it('Call Event [Arkhia API] without ApiSecret should return false', async function () {
         return callArkhiaAPIWithValidKeyButWithoutApiSecret();
     });
+});
+
+
+describe("Test to valid read events of the Arkhia API", () => {
 
     it('Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
-        return callArkhiaAPIEventSettings();
+        return callArkhiaAPIEventAllSettings();
+    });
+
+    it('Call Contract Events without valid tag should not return config ', async function () {
+
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+
+        if (contractItem === null || contractItem === undefined) {
+            console.info(`Could not find contract item.`);
+            return;
+        }
+
+        const settingsPayload = {
+            item_id: contractItem.item_id,
+            network_id: contractItem.network_id,
+        };
+
+        return callArkhiaContractInvalidTag(settingsPayload, `contract`, 'random_tag');
     });
  
+    it('Call Contract Events config should return the Events configuration ', async function () {
 
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+
+        if (contractItem === null || contractItem === undefined) {
+            console.info(`Could not find contract item to retrieve config.`);
+            return;
+        }
+
+        const settingsPayload = {
+            item_id: contractItem.item_id,
+            network_id: contractItem.network_id,
+        };
+
+        return callArkhiaContractExpiryConfig(settingsPayload, `contract`, 'events');
+    });
+  
 });
 
