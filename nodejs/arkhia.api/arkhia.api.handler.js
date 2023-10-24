@@ -15,29 +15,59 @@ class ArkhiaApiHandler {
 
     getArkhiaApiStatus = async () => {
         const statusApiUrl = `${urlHandler.getArkhiaApiUrl()}/service/status/${apiKeyNot2Layer}`;
+        console.log(`Calling for ${statusApiUrl}`);
         const response = await axios.get(statusApiUrl, body);
         return response;
     }
 
     getEventRequestWithCustomKey = async (apiKey) => {
-        const settingsUrl = apiKey === `` ?
-         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`:
-         `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
+        console.log(`Calling for ${settingsUrl}`);
         const response = await axios.post(settingsUrl, body);
         return response;
     }
 
-    getEventSettings = async (addHeader = true) => {
+    getItemSettings = async (addHeader = true) => {
         const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${apiKey}`;
         console.log(`Calling for ${settingsUrl}`);
         const response = await axios.post(settingsUrl, body, addHeader ? headers : {});
         return response;
     }
 
-    createEventSettings = async (scoutCreatePayload) => {
-        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/create/${apiKey}`;
+    createItemSettings = async (scoutCreatePayload, tag) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/create/${tag}/${apiKey}`;
         console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
         const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
+        return response;
+    }
+
+    toggleSettingsItem = async (scoutTogglePayload, type, action) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/${action}/${type}/${apiKey}`;
+        console.log(`Calling for toggle ${settingsUrl} with payload ${scoutTogglePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: scoutTogglePayload }, headers);
+        return response;
+    }
+
+    deleteItemSettings = async (scoutCreatePayload, tag) => {
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/delete/${tag}/${apiKey}`;
+        console.log(`Calling for ${settingsUrl} with payload ${scoutCreatePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: scoutCreatePayload }, headers);
+        return response;
+    }
+
+    updateAccountEventSettings = async (eventAccountUpdatePayload) => {
+        // /events/:protocol?/settings/:type/update/:x_api_key
+        const settingsUrl = `${urlHandler.getArkhiaApiUrl()}/events/hedera/account/update/${apiKey}`;
+        console.log(`Calling for ${settingsUrl} with payload ${eventAccountUpdatePayload}`);
+        const response = await axios.post(settingsUrl, { scoutSettings: eventAccountUpdatePayload }, headers);
+        return response;
+    }
+
+    getItemsCategoryConfig = async(eventSettingsPayload, item, configCategory) => {
+        //events/hedera/settings/contract/events
+        const settingsUnique = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${item}/${configCategory}/${apiKey}`;
+        console.log(`Calling for ${settingsUnique} with payload ${eventSettingsPayload}`);
+        const response = await axios.post(settingsUnique, { scoutSettings: eventSettingsPayload }, headers);
         return response;
     }
 }
