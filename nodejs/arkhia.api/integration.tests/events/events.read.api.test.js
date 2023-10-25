@@ -79,7 +79,7 @@ const callArkhiaContractInvalidTag = async (eventSettingsPayload, itemType, conf
     }
 }
 
-const callArkhiaContractExpiryConfig = async (eventSettingsPayload, itemType, configType) => {
+const callArkhiaContractEventsConfig = async (eventSettingsPayload, itemType, configType) => {
     const response = await arkhiaApiHandler.getItemsCategoryConfig(eventSettingsPayload, itemType, configType);
     expect(response.data).toHaveProperty("status", true);
     expect(response.data.response).toBeDefined();
@@ -144,7 +144,7 @@ describe("Test to valid read events of the Arkhia API", () => {
             network_id: contractItem.network_id,
         };
 
-        return callArkhiaContractExpiryConfig(settingsPayload, `contract`, 'events');
+        return callArkhiaContractEventsConfig(settingsPayload, `contract`, 'events');
     });
   
 });
