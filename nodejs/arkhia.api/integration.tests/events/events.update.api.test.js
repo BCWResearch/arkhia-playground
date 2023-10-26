@@ -226,7 +226,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterName: "ParameterName",
                                 parameterRule: 1,
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                             {
                                 enabled: true,
@@ -234,7 +233,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterType: "string",
                                 parameterRule: 1,
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                         ]
                     }
@@ -272,7 +270,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterName: "ParameterName",
                                 parameterRule: 1,
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                             {
                                 enabled: true,
@@ -281,7 +278,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterName: "ParameterName",
                                 parameterRule: "myrule",
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                         ]
                     }
@@ -319,7 +315,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterName: "ParameterName",
                                 parameterRule: 1,
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                             {
                                 enabled: true,
@@ -328,7 +323,6 @@ describe("Test to validate Update Contract Event Rule [Parameters] Settings", ()
                                 parameterName: "ParameterName",
                                 parameterRule: 1,
                                 parameterRuleValue: "dummyvalue1",
-                                webhooks: []
                             },
                         ]
                     }
