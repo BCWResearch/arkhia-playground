@@ -1,29 +1,19 @@
 require("dotenv").config();
 console.clear();
-
 const restApiHandler = require("../../../rest-api/handlers/rest.api.handler");
 const arkhiaApiHandler = require("../../arkhia.api.handler");
-
-
 const eventConfig = {
     type : {
         account: 1,
         contract: 2
     },
     mainnet : {
-        accountIdExists: `0.0.3517698`,
-        accountId: `0.0.3910039`, // Here we can fetch the latest account created dynamically using Mirror Node
-        contractIdExists: `0.0.3872547`,
         networkId: 295
     },
     testnet: {
-        accountIdExists: `0.0.4530881`,
-        accountId: `0.0.5695606`, // Same here
-        contractIdExists: `0.0.4530862`,
         networkId: 296
     }
 };
-
 
 const createEventSettingsInvalidItem = async (eventCreatePayload) => {
     try {
@@ -73,7 +63,6 @@ describe("Test to validate Create Event Settings", () => {
 
     });
 
-
     it('Testnet | Account | Create Event Settings with an invalid item should NOT create event settings', async function () {
         // Arrange.
         const eventCreatePayload = {
@@ -86,25 +75,40 @@ describe("Test to validate Create Event Settings", () => {
 
     it('Testnet | Account | Create Event Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
         // Arrange.
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const accountItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.account && item.enabled == true);
+
+        if (accountItem === null || accountItem === undefined) {
+            console.info(`Could not find contract item to retrieve config.`);
+            return;
+        }
+
         const eventCreatePayload = {
-            item_id: eventConfig.testnet.accountIdExists,
-            network_id: eventConfig.testnet.networkId
+            item_id: accountItem.item_id,
+            network_id: accountItem.networkId
         };
         return createEventSettingsValidItemButAlreadyExists(eventCreatePayload, `account`);
     });
 
 
+ 
     it('Testnet | Account | Create Contract Settings with a valid payload but already existing should NOT create a Events settings item', async function () {
         // Arrange.
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+
+        if (contractItem === null || contractItem === undefined) {
+            console.info(`Could not find contract item to retrieve config.`);
+            return;
+        }
+
         const eventCreatePayload = {
-            item_id: eventConfig.testnet.contractIdExists,
-            network_id: eventConfig.testnet.networkId
+            item_id: contractItem.item_id,
+            network_id: contractItem.network_id
         };
         return createEventSettingsValidItemButAlreadyExists(eventCreatePayload, `contract`);
     });
 
-  
-   
     it('Testnet | Account | Create Event Settings with valid payload and not existing should create an Events settings item', async function () {
         // Arrange.
         // Only works if accounts are created constantly
@@ -174,5 +178,5 @@ describe("Test to validate Create Event Settings", () => {
         };
         return createEventSettingsItem(eventCreatePayload, `contract`,  eventConfig.type.contract);
     });
-    
+
 });

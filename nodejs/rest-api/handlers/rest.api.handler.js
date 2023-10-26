@@ -25,7 +25,7 @@ class RestApiHandler {
             const response = await axios.get(accountsUrl);
             return response;
         } catch (e) {
-            console.error(e.response.data);
+            console.error(e);
         }
     }
 

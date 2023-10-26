@@ -40,7 +40,7 @@ const updateSettingsItem = async (updateSettingsPayload) => {
 const getContractItem = async() => { 
    // Get a list of all our available contracts
    const settings = await arkhiaApiHandler.getItemSettings();
-   const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+   const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract);
 
    if (contractItem === null || contractItem === undefined) {
        console.info(`Could not find contract item to retrieve config.`);
