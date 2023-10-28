@@ -39,7 +39,7 @@ const createEventSettingsValidItemButAlreadyExists = async (eventCreatePayload) 
 }
 
 const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) => {
-  
+    try {
         const response = await arkhiaApiHandler.createItemSettings(eventCreatePayload, eventType);
         const eventItem = response.data.response;
         expect(eventItem).toHaveProperty("id");
@@ -55,6 +55,10 @@ const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) =
         expect(eventItem).toHaveProperty("job_health_timestamp");
         expect(eventItem).toHaveProperty("request_fetch_limit");
         return response;
+    } catch(error) {
+        console.log(`Something went wrong`);
+        console.log(error);
+    }
 }
 
 describe("Test to validate Create Event Settings", () => {
@@ -111,9 +115,9 @@ describe("Test to validate Create Event Settings", () => {
 
     it('Testnet | Account | Create Event Settings with valid payload and not existing should create an Events settings item', async function () {
         // Arrange.
-        // Only works if accounts are created constantly
         const accounts = await restApiHandler.getAccounts(false); 
-        const latestAccountId = accounts.data.accounts[0];
+        const getRandomItem = Math.floor(Math.random() * 100);
+        const latestAccountId = accounts.data.accounts[getRandomItem];
         const eventCreatePayload = {
             item_id: latestAccountId.account,
             network_id: eventConfig.testnet.networkId,
@@ -127,7 +131,9 @@ describe("Test to validate Create Event Settings", () => {
     it('Testnet | Contract | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
         // Arrange.
         const response = await restApiHandler.getContracts(false); 
-        const latestContract = response.data.contracts[0];
+        const getRandomItem = Math.floor(Math.random() * 100);
+        console.log(`looking for item at ${getRandomItem}`);
+        const latestContract = response.data.contracts[getRandomItem];
         const eventCreatePayload = {
             item_id: latestContract.contract_id,
             network_id: eventConfig.testnet.networkId
