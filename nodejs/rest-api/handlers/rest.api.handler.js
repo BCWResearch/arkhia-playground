@@ -21,7 +21,7 @@ class RestApiHandler {
 
     getAccounts = async (isMainnet) => {
         try {
-            const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts?order=desc`;
+            const accountsUrl = `${urlHandler.getApiUrl(isMainnet)}/accounts?order=desc&limit=100`;
             const response = await axios.get(accountsUrl);
             return response;
         } catch (e) {
@@ -63,7 +63,7 @@ class RestApiHandler {
 
     getContracts = async (isMainnet) => {
         try {
-            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts`;
+            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts?limit=100`;
             const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
