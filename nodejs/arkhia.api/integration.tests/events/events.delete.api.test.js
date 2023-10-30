@@ -5,7 +5,8 @@ const arkhiaApiHandler = require("../../arkhia.api.handler");
 const eventConfig = {
     type : {
         account: 1,
-        contract: 2
+        contract: 2,
+        ethTopic: 5
     },
     mainnet : {
         networkId: 295
@@ -27,20 +28,16 @@ const deleteSettingsInvalidItem = async (eventCreatePayload, eventType) => {
 }
 
 const deleteSettingsItem = async (eventDeletePayload, eventType) => {
-    try {
-        const response = await arkhiaApiHandler.deleteItemSettings(eventDeletePayload, eventType);
-        expect(response.data).toHaveProperty("status", true);
-         const item = response.data.response;
-        expect(item).toHaveProperty("item_id", eventDeletePayload.item_id);
-        return response;
-    } 
-    catch (error) {
-        expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Unable to find setting item");
-    }
+    const response = await arkhiaApiHandler.deleteItemSettings(eventDeletePayload, eventType);
+    expect(response.data).toHaveProperty("status", true);
+    const item = response.data.response;
+    expect(item).toHaveProperty("item_id", eventDeletePayload.item_id);
+    return response;
 }
 
 describe("Test to validate Delete Item Event Settings", () => {
+
+
 
     it('Account | Delete a account should return null if not found', async function () {
         // Arrange.
@@ -76,7 +73,6 @@ describe("Test to validate Delete Item Event Settings", () => {
 
     it('Contract | Should be able to delete a valid contract item', async function () {
         const accounts = await arkhiaApiHandler.getItemSettings();
-        console.log(accounts.data.response);
         const accountItem = accounts.data?.response.find((item) => item.type_id == eventConfig.type.contract);
     
         if (accountItem === null) {
@@ -90,6 +86,24 @@ describe("Test to validate Delete Item Event Settings", () => {
 
         console.log(`Deleting Contract ${itemDeletePayload.item_id} (${itemDeletePayload.network_id})`);      
         return deleteSettingsItem(itemDeletePayload, `contract`, eventConfig.type.contract);
+   
+    });
+ 
+
+    it('Eth Topic | Should be able to delete a valid contract item', async function () {
+        const items = await arkhiaApiHandler.getItemSettings();
+        const ethItem = items.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic);
+    
+        if (ethItem === null) {
+            console.log(`Could not find item eth topic`);
+            return;
+        }
+        const itemDeletePayload = {
+            item_id: ethItem.item_id,
+            network_id: ethItem.network_id,
+        };
+        console.log(`Deleting Eth Topic ${itemDeletePayload.item_id} (${itemDeletePayload.network_id})`);      
+        return deleteSettingsItem(itemDeletePayload, `ethtopic`, eventConfig.type.ethTopic);
    
     });
 

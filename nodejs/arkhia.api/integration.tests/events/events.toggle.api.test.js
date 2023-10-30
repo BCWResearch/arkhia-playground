@@ -6,7 +6,8 @@ const arkhiaApiHandler = require("../../arkhia.api.handler");
 const eventConfig = {
     type : {
         account: 1,
-        contract: 2
+        contract: 2,
+        ethTopic: 5
     },
     mainnet : {
         networkId: 295
@@ -37,6 +38,7 @@ const toggleSettingsItem = async (eventTooglePayload, eventType, eventToggle, ex
 }
 
 describe("Test to Toggle On/Off Item Event Settings", () => {
+
 
     it('Should toggle ON Account', async function () {
         const accounts = await arkhiaApiHandler.getItemSettings();
@@ -103,6 +105,36 @@ describe("Test to Toggle On/Off Item Event Settings", () => {
         return toggleSettingsItem(itemTogglePayload, `contract`, `disable`, false);
     });
 
- 
+    it('Should toggle ON Eth Topic', async function () {
+        const items = await arkhiaApiHandler.getItemSettings();
+        const item = items.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic && item.enabled == false);
 
+        if (item === null || item === undefined) {
+            console.info(`Could not find item disabled to toggle on.`);
+            expect(item).toHaveProperty('enabled', false);
+            return;
+        }
+        const itemTogglePayload = {
+            item_id: item.item_id,
+            network_id: item.network_id,
+        };
+        return toggleSettingsItem(itemTogglePayload, `ethtopic`, `enable`, true);
+    });
+
+    it('Should toggle OFF Eth Topic', async function () {
+        const items = await arkhiaApiHandler.getItemSettings();
+        const item = items.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic && item.enabled ==  true);
+
+        if (item === null || item === undefined) {
+            console.info(`Could not find item disabled to toggle on.`);
+            expect(item).toHaveProperty('enabled', false);
+            return;
+        }
+        const itemTogglePayload = {
+            item_id: item.item_id,
+            network_id: item.network_id,
+        };
+        return toggleSettingsItem(itemTogglePayload, `ethtopic`, `disable`, false);
+    });
+ 
 });

@@ -4,7 +4,8 @@ const arkhiaApiHandler = require("../../arkhia.api.handler");
 const eventConfig = {
     type : {
         account: 1,
-        contract: 2
+        contract: 2,
+        ethTopic: 5
     },
 };
 
@@ -107,6 +108,7 @@ describe("Test to validate Arkhia API authentication layer", () => {
 
 describe("Test to valid read events of the Events Arkhia API", () => {
 
+
     it('Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
         return callArkhiaAPIEventAllSettings();
     });
@@ -146,6 +148,26 @@ describe("Test to valid read events of the Events Arkhia API", () => {
 
         return callArkhiaContractEventsConfig(settingsPayload, `contract`, 'events');
     });
-  
+
+
+
+    it('Call EthTopic Events config should return the Events configuration ', async function () {
+
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic && item.enabled == true);
+
+        if (contractItem === null || contractItem === undefined) {
+            console.info(`Could not find contract item to retrieve config.`);
+            return;
+        }
+
+        const settingsPayload = {
+            item_id: contractItem.item_id,
+            network_id: contractItem.network_id,
+        };
+
+        return callArkhiaContractEventsConfig(settingsPayload, `ethtopic`, 'events');
+    });
+
 });
 
