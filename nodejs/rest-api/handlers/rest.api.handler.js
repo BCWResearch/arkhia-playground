@@ -63,7 +63,7 @@ class RestApiHandler {
 
     getContracts = async (isMainnet) => {
         try {
-            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts?limit=100`;
+            const contractUrl = `${urlHandler.getApiUrl(isMainnet)}/contracts?order=desc&limit=100`;
             const response = await axios.get(contractUrl);
             return response;
         } catch(e) {

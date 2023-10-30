@@ -89,7 +89,7 @@ const callArkhiaContractEventsConfig = async (eventSettingsPayload, itemType, co
 }
 
 
-describe("Test to validate Events Arkhia API authentication layer", () => {
+describe("Test to validate Arkhia API authentication layer", () => {
    
     it('Call Event [Arkhia API] with an invalid ApiKey should return false', async function () {
         return callArkhiaAPIWithInvalidKey();
@@ -105,7 +105,7 @@ describe("Test to validate Events Arkhia API authentication layer", () => {
 });
 
 
-describe("Test to valid read events of the Arkhia API", () => {
+describe("Test to valid read events of the Events Arkhia API", () => {
 
     it('Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
         return callArkhiaAPIEventAllSettings();
