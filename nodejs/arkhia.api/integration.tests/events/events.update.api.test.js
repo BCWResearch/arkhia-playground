@@ -397,6 +397,20 @@ describe("Test to validate Update Item Event Rule [Parameters] Settings", () => 
                         enabled: true,
                         email_notification: false,
                         polling_interval: 1000,
+                        webhooks: [
+                            {
+                                tag: "api-micro",
+                                key: "api-micro",
+                                value: "https://www.mywebhook.com",
+                                type: "get",
+                                active: true
+                            },
+                            {
+                                tag: "api-micro",
+                                type: "get",
+                                active: true
+                            }
+                        ],
                         parameterCollection: [
                             {
                                 enabled: true,
