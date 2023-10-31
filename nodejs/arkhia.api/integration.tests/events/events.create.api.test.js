@@ -56,7 +56,7 @@ const createEventSettingsInvalidItem = async (eventCreatePayload, eventType) => 
     } 
     catch (error) {
         expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Could not create item. Arguments invalid or item does not seem available in the mirror node.");
+        expect(error.response.data.response).toContain("Could not create item. Arguments invalid or item does not seem available in Hedera Mirror Node");
     }
 }
 
@@ -90,8 +90,10 @@ const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) =
         expect(eventItem).toHaveProperty("request_fetch_limit");
         return response;
     } catch(error) {
+        expect(error.data?.status).toHaveProperty("status", true);
         console.log(`Something went wrong`);
         console.log(error);
+  
     }
 }
 
@@ -180,7 +182,7 @@ describe("Test to validate Create Event Settings | Account ", () => {
             console.info(`Could not find account item to retrieve config.`);
             return;
         }
-        // Arrange.
+        // Act.
         const eventCreatePayload = {
             item_id: accountItem.item_id,
             network_id: accountItem.networkId
