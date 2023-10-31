@@ -89,7 +89,6 @@ const callArkhiaContractEventsConfig = async (eventSettingsPayload, itemType, co
     expect(response.data.response).toHaveProperty("config_object_template");
 }
 
-
 describe("Test to validate Arkhia API authentication layer", () => {
    
     it('Call Event [Arkhia API] with an invalid ApiKey should return false', async function () {
@@ -106,6 +105,17 @@ describe("Test to validate Arkhia API authentication layer", () => {
 });
 
 
+describe("Test to validate Arkhia API analytics functionality", () => {
+
+    it('Call Status API should return a valid payload', async function () {
+        const response = await arkhiaApiHandler.getStatusInfo();
+        expect(response).toHaveProperty('status', 200);
+        expect(response.data).toBeDefined();
+        expect(response.data).toHaveProperty('maintenance_mode', false);
+        expect(response.data).toHaveProperty('outage_mode', false);
+    });
+});
+
 describe("Test to valid read events of the Events Arkhia API", () => {
 
 
@@ -116,7 +126,7 @@ describe("Test to valid read events of the Events Arkhia API", () => {
     it('Call Contract Events without valid tag should not return config ', async function () {
 
         const settings = await arkhiaApiHandler.getItemSettings();
-        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract);
 
         if (contractItem === null || contractItem === undefined) {
             console.info(`Could not find contract item.`);
@@ -134,7 +144,7 @@ describe("Test to valid read events of the Events Arkhia API", () => {
     it('Call Contract Events config should return the Events configuration ', async function () {
 
         const settings = await arkhiaApiHandler.getItemSettings();
-        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract && item.enabled == true);
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract);
 
         if (contractItem === null || contractItem === undefined) {
             console.info(`Could not find contract item to retrieve config.`);
@@ -149,12 +159,10 @@ describe("Test to valid read events of the Events Arkhia API", () => {
         return callArkhiaContractEventsConfig(settingsPayload, `contract`, 'events');
     });
 
-
-
     it('Call EthTopic Events config should return the Events configuration ', async function () {
 
         const settings = await arkhiaApiHandler.getItemSettings();
-        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic && item.enabled == true);
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic);
 
         if (contractItem === null || contractItem === undefined) {
             console.info(`Could not find contract item to retrieve config.`);
@@ -170,4 +178,5 @@ describe("Test to valid read events of the Events Arkhia API", () => {
     });
 
 });
+
 

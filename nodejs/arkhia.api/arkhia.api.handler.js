@@ -68,6 +68,12 @@ class ArkhiaApiHandler {
         const response = await axios.post(updateUrl, { scoutSettings: updateEventsPayload }, headers);
         return response;
     }
+
+    getStatusInfo = async () => {
+        const updateUrl = `${urlHandler.getArkhiaApiUrl()}/arkhia/service/status/${apiKey}`;
+        const response = await axios.get(updateUrl);
+        return response;
+    }
 }
 
 module.exports = Object.freeze(new ArkhiaApiHandler());
