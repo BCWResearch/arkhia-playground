@@ -1,29 +1,15 @@
+const arkhiaApiHandler = require("../arkhia.api.handler");
+
 require("dotenv").config();
 console.clear();
 
-const getArkhiaApiStatus = async (isMainnet) => {
-    try {
-        const response = await arkhiaApiHandler.getArkhiaApiStatus(true);
-        return response;
-    } 
-    catch (error) {
-        expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Please send a valid API key");
-    }
-}
+describe("Test to validate Arkhia API analytics functionality", () => {
 
-describe("Test to validate Status API", () => {
-
-    it('Call Arkhia API with no APi Key should return false', async function () {
-
+    it('Call Status API should return a valid payload', async function () {
+        const response = await arkhiaApiHandler.getStatusInfo();
+        expect(response).toHaveProperty('status', 200);
+        expect(response.data).toBeDefined();
+        expect(response.data).toHaveProperty('maintenance_mode', false);
+        expect(response.data).toHaveProperty('outage_mode', false);
     });
-
-    it('Call Arkhia API with a free API Key should return false', async function () {
-
-    });
-
-    it('Call Arkhia API with a paid API Key should return true and with a valid payload', async function () {
-
-    });
-
 });
