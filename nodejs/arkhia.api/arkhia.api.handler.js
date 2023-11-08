@@ -70,7 +70,7 @@ class ArkhiaApiHandler {
     }
 
     getStatusInfo = async () => {
-        const updateUrl = `${urlHandler.getArkhiaApiUrl()}/arkhia/service/status/${apiKey}`;
+        const updateUrl = `${urlHandler.getArkhiaApiUrl()}/service/status/${apiKey}`;
         const response = await axios.get(updateUrl);
         return response;
     }

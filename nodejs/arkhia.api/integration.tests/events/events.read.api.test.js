@@ -89,6 +89,17 @@ const callArkhiaContractEventsConfig = async (eventSettingsPayload, itemType, co
     expect(response.data.response).toHaveProperty("config_object_template");
 }
 
+
+const callArkhiaContractAbiConfig = async (eventSettingsPayload, itemType, configType) => {
+    const response = await arkhiaApiHandler.getItemsCategoryConfig(eventSettingsPayload, itemType, configType);
+    expect(response.data).toHaveProperty("status", true);
+
+    console.log(response.data);
+    expect(response.data.response).toBeDefined();
+    expect(response.data.response).toHaveProperty("config_type", "abi");
+    expect(response.data.response).toHaveProperty("config_object_template");
+}
+
 describe("Test to validate Arkhia API authentication layer", () => {
    
     it('Call Event [Arkhia API] with an invalid ApiKey should return false', async function () {
@@ -105,20 +116,9 @@ describe("Test to validate Arkhia API authentication layer", () => {
 });
 
 
-describe("Test to validate Arkhia API analytics functionality", () => {
-
-    it('Call Status API should return a valid payload', async function () {
-        const response = await arkhiaApiHandler.getStatusInfo();
-        expect(response).toHaveProperty('status', 200);
-        expect(response.data).toBeDefined();
-        expect(response.data).toHaveProperty('maintenance_mode', false);
-        expect(response.data).toHaveProperty('outage_mode', false);
-    });
-});
-
 describe("Test to valid read events of the Events Arkhia API", () => {
 
-
+  
     it('Call Event [Arkhia API]  Settings should return a settings array with valid payload', async function () {
         return callArkhiaAPIEventAllSettings();
     });
@@ -159,6 +159,7 @@ describe("Test to valid read events of the Events Arkhia API", () => {
         return callArkhiaContractEventsConfig(settingsPayload, `contract`, 'events');
     });
 
+
     it('Call EthTopic Events config should return the Events configuration ', async function () {
 
         const settings = await arkhiaApiHandler.getItemSettings();
@@ -175,6 +176,25 @@ describe("Test to valid read events of the Events Arkhia API", () => {
         };
 
         return callArkhiaContractEventsConfig(settingsPayload, `ethtopic`, 'events');
+    });
+
+
+    it('Call Contract ABI config should return the ABI configuration ', async function () {
+
+        const settings = await arkhiaApiHandler.getItemSettings();
+        const contractItem = settings.data?.response.find((item) => item.type_id == eventConfig.type.contract);
+
+        if (contractItem === null || contractItem === undefined) {
+            console.info(`Could not find contract item to retrieve config.`);
+            return;
+        }
+
+        const settingsPayload = {
+            item_id: contractItem.item_id,
+            network_id: contractItem.network_id,
+        };
+
+        return callArkhiaContractAbiConfig(settingsPayload, `contract`, 'abi');
     });
 
 });
