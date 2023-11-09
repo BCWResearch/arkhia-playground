@@ -18,6 +18,7 @@
     "test:jsonrpc:mainnet:contract:deploy": "jest json-rpc-relay/integration.tests/contracts/mainnet/deploy.contract.mainnet.test.js",
     "test:jsonrpc:mainnet:contract:call": "jest json-rpc-relay/integration.tests/contracts/mainnet/call.contract.mainnet.test.js",
     "test:jsonrpc:mainnet:contract:write": "jest json-rpc-relay/integration.tests/contracts/mainnet/call.contract.mainnet.test.js",
+    "test:jsonrpc:polygon": "jest json-rpc-relay/polygon/*",
     "test:jsonrpc:read": "jest json-rpc-relay/integration.tests/mirror.node/*",
     "test:graphql:api": "mocha graphql/integration.test/graphql.test.js",
     "test:wt:connect": "jest --runInBand watchtower/integration.tests/connect.test.js",

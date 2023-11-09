@@ -14,6 +14,9 @@ const restApiUrlTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${apiKey}/${re
 const jsonRpcRelayMainnet  = `${process.env.ARKHIA_MAINNET_API_URL}/${jsonRPCSuffix}/${apiKey}`;
 const jsonRpcRelayTestnet  = `${process.env.ARKHIA_TESTNET_API_URL}/${jsonRPCSuffix}/${apiKey}`;
 
+const polygonJsonRpcMainnet  = `${process.env.POLYGON_MAINNET_API_URL}/${jsonRPCSuffix}/${apiKey}`;
+const polygonJsonRpcMumbai  = `${process.env.POLYGON_MUMBAI_API_URL}/${jsonRPCSuffix}/${apiKey}`;
+
 const watchtowerUrlMainnet = `${process.env.ARKHIA_MAINNET_WATCHTOWER}?api_key=${apiKey}`;
 const watchtowerUrlTestnet = `${process.env.ARKHIA_TESTNET_WATCHTOWER}?api_key=${apiKey}`;
 
@@ -59,6 +62,14 @@ class UrlHandler {
 
     getJsonRpcMainnet = () => {
         return isHashio ? 'https://mainnet.hashio.io/api' : jsonRpcRelayMainnet;
+    }
+
+    getPolygonMumbaiTestnet = () => {
+        return polygonJsonRpcMumbai;
+    }
+
+    getPolygonMainnet = () => {
+        return polygonJsonRpcMainnet;
     }
 
     getGraphQLMainnetUrl  = () => {

@@ -17,7 +17,7 @@ const getBalancePayload = () => {
             "0x0000000000000000000000000000000000000589", "latest"
         ],
         "id": 1
-      });
+    });
     return data;
 }
 
