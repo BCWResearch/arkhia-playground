@@ -74,6 +74,15 @@ class ArkhiaApiHandler {
         const response = await axios.get(updateUrl);
         return response;
     }
+
+    getArkhiaApiTokenMetadata = async (tokenPayload) => {
+        const updateUrl = `${urlHandler.getArkhiaApiUrl()}/token/hedera/nft/metadata/esg/${apiKey}`;
+        console.log(`Looking for ${updateUrl} with payload ${tokenPayload.toString()}`);
+        const response = await axios.post(updateUrl, { itemSettings: tokenPayload }, headers);
+       
+       // `/token/:protocol?/metadata/:x_api_key?`,
+        return response;
+    }
 }
 
 module.exports = Object.freeze(new ArkhiaApiHandler());
