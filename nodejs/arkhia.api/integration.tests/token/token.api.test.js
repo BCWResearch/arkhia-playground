@@ -7,32 +7,30 @@ const networks = {
     testnet: 296
 };
 
-
-const callTokenMetadata = async (tokenPayload) => {
+const callTokenNftEsgMetadata = async (tokenPayload) => {
     try {
         const response = await arkhiaApiHandler.getArkhiaApiTokenMetadata(tokenPayload);
         expect(response.data).toHaveProperty("status", true);
         expect(response.data.response).toHaveProperty("nftMetadata", 'MTY2NzIyOTgyNy44Nzg4ODU4MDM=');
         expect(response.data.response).toHaveProperty("topic");
         expect(response.data.response).toHaveProperty("topicDecodedMessage");
-        expect(response.data.response).toHaveProperty("topicIpfsData");
+        expect(response.data.response).toHaveProperty("topicEsgData");
+        expect(response.data.response).toHaveProperty("topicEsgDataSchemaValidation");
         return response;
     } 
     catch (error) {
         console.log(error);
-        expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("You have enabled 2 layer security. Please send a valid API secret in the body");
+        expect(error.response.data).toHaveProperty("status", true);
+        expect(error.response.data.response).toContain("This test went wrong. You should not be here.");
     }
 }
 
 describe("Test to valid Arkhia API Token Metadata ", () => {
 
-
     it('Call Token metadata endpoint should return not found message if invalid token', async function () {
         const tokenPayload = {
             item_id: '0.0.11111',
             network_id: networks.mainnnet,
-            is_nft: true,
             nft_serialnumber: 30
         }
         try {
@@ -43,7 +41,6 @@ describe("Test to valid Arkhia API Token Metadata ", () => {
             expect(error.response.data).toHaveProperty('status', false);
             expect(error.response.data).toHaveProperty('response', 'Nft with Serial number 30 for Token 0.0.11111 could not be found.')
       }
-
     });
 
 
@@ -51,10 +48,9 @@ describe("Test to valid Arkhia API Token Metadata ", () => {
         const tokenPayload = {
             item_id: tokenEsgId,
             network_id: networks.mainnnet,
-            is_nft: true,
             nft_serialnumber: 30
         }
-        return callTokenMetadata(tokenPayload);
+        return callTokenNftEsgMetadata(tokenPayload);
     });
 
 });
