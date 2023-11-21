@@ -5,11 +5,11 @@ const { ethers } = require("ethers");
 const urlHandler = require('../../../../handlers/url.handler');
 const fs = require('fs');
 const path = require('path');
-const privateECDSAAccount = process.env.MAINNET_OPERATOR_PRIVATE_KEY;
+const privateECDSAAccount = process.env.MAINNET_ECDSA_PRIVATE_KEY;
 
 const mainnetContractConfig = {
-    id: ``,
-    sol_id: ``
+    id: `0.0.3746808`,
+    sol_id: `0000000000000000000000000000000000392bf8`
 }
 
 describe('[Ethers] Signed RawTransaction', () => {
@@ -20,21 +20,27 @@ describe('[Ethers] Signed RawTransaction', () => {
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const contractPath = path.join(__dirname, '/');
 
-        const contractJson = fs.readFileSync(`${contractPath}/../artifact/example.contract.json`);
+        const contractJson = fs.readFileSync(`${contractPath}/../artifact/lookUpContract_sol_LookupContract.abi`);
         const ABI = JSON.parse(contractJson);
         const sampleContract = new ethers.Contract(mainnetContractConfig.sol_id, ABI, signer)
-        const newCreator = `ARKHIA ${new Date().toDateString()}`;
+        const mobileNumber = 'Arkhia';
+        const uintValue = 2222;
+
+
 
         // Act
-        const changeCreator = await sampleContract.setCreator(newCreator);
-        await changeCreator.wait();
+        const transaction =  await sampleContract.setMobileNumber(mobileNumber, uintValue,{
+            gasLimit: 100000,
+        });
+
+        const receipt = await transaction.wait();
         const metadata = await sampleContract.getContractMetadata();
 
         // Assert
-        console.log(``);
-        expect(changeCreator).toHaveProperty('data');
+        console.log(receipt);
+        expect(receipt).toHaveProperty('data');
         expect(metadata).toBeDefined();
-        expect(metadata.creatorName).toEqual(newCreator);
+        expect(metadata.mobileNumber).toEqual(mobileNumber);
     });
 
 });
