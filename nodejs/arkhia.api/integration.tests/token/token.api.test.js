@@ -11,11 +11,9 @@ const callTokenNftEsgMetadata = async (tokenPayload) => {
     try {
         const response = await arkhiaApiHandler.getArkhiaApiTokenMetadata(tokenPayload);
         expect(response.data).toHaveProperty("status", true);
-        expect(response.data.response).toHaveProperty("nftMetadata", 'MTY2NzIyOTgyNy44Nzg4ODU4MDM=');
-        expect(response.data.response).toHaveProperty("topic");
-        expect(response.data.response).toHaveProperty("topicDecodedMessage");
-        expect(response.data.response).toHaveProperty("topicEsgData");
-        expect(response.data.response).toHaveProperty("topicEsgDataSchemaValidation");
+        expect(response.data.response).toHaveProperty("tokenIsEsg", true);
+        expect(response.data.response).toHaveProperty("tokenEsgData");
+        expect(response.data.response).toHaveProperty("tokenEsgSchemaValidation");
         return response;
     } 
     catch (error) {
