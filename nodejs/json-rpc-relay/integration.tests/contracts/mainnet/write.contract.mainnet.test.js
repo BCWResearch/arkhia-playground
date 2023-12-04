@@ -34,13 +34,19 @@ describe('[Ethers] Signed RawTransaction', () => {
         });
 
         const receipt = await transaction.wait();
-        const metadata = await sampleContract.getContractMetadata();
+        const metadata =  await sampleContract.getMobileNumber(mobileNumber);
+
+
 
         // Assert
-        console.log(receipt);
-        expect(receipt).toHaveProperty('data');
         expect(metadata).toBeDefined();
-        expect(metadata.mobileNumber).toEqual(mobileNumber);
+        expect(metadata.toString()).toEqual('2222');
+        expect(receipt.contractAddress).toBeDefined()
+        expect(receipt.blockHash).toBeDefined()
+        expect(receipt.transactionHash).toBeDefined()
+
+
+
     });
 
 });

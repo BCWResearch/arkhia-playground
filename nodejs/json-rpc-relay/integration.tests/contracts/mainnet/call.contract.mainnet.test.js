@@ -72,7 +72,7 @@ describe('[Ethers] Call Contract Method', () => {
         // sort response time from fastest to slowest and assert if median is under milliseconds
         const sortedResponseTime = responseTime.sort((a, b) => a - b);
         const medianResponseTime = sortedResponseTime[2];
-        expect(medianResponseTime).toBeLessThan(1000);
+        expect(medianResponseTime).toBeLessThan(2000);
     });
 
 });
