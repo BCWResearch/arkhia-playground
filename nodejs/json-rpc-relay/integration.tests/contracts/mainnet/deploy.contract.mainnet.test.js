@@ -33,12 +33,12 @@ describe('[Ethers] Deploy Contract ', () => {
         // Act
         const mobileNumber = 'Arkhia';
         const uintValue = 2222;
-        const contract = await myContract.deploy(mobileNumber,uintValue, 100000);
+        const contract = await myContract.deploy(mobileNumber,uintValue);
 
         // Assert
         expect(contract).toBeDefined();
         expect(contract.address).toBeDefined();
-        console.log(`Contract deployed successfully : ${contract}`);
+        console.log(`Contract deployed successfully : ${contract.address}`);
     });
 
 });
