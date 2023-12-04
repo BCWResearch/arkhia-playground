@@ -17,7 +17,7 @@
     "test:jsonrpc:testnet:contract:write": "jest json-rpc-relay/integration.tests/contracts/testnet/write.contract.test.js",
     "test:hedera:jsonrpc:mainnet:contract:deploy": "jest json-rpc-relay/integration.tests/contracts/mainnet/deploy.contract.mainnet.test.js",
     "test:hedera:jsonrpc:mainnet:contract:call": "jest json-rpc-relay/integration.tests/contracts/mainnet/call.contract.mainnet.test.js",
-    "test:hedera:jsonrpc:mainnet:contract:write": "jest json-rpc-relay/integration.tests/contracts/mainnet/call.contract.mainnet.test.js",
+    "test:hedera:jsonrpc:mainnet:contract:write": "jest json-rpc-relay/integration.tests/contracts/mainnet/write.contract.mainnet.test.js",
     "test:hedera:jsonrpc:read": "jest json-rpc-relay/integration.tests/mirror.node/*",
     "test:hedera:graphql:api": "mocha graphql/integration.test/graphql.test.js",
     "test:wt:connect": "jest --runInBand watchtower/integration.tests/connect.test.js",
