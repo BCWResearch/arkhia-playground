@@ -37,8 +37,6 @@ const deleteSettingsItem = async (eventDeletePayload, eventType) => {
 
 describe("Test to validate Delete Item Event Settings", () => {
 
-
-
     it('Account | Delete a account should return null if not found', async function () {
         // Arrange.
         const deleteAccount = {
@@ -50,11 +48,21 @@ describe("Test to validate Delete Item Event Settings", () => {
 
     it('Contract | Delete a contract should return null if not found', async function () {
         // Arrange.
-        const deleteAccount = {
+        const deleteContract = {
             item_id: `0.0.0000`,
             network_id: eventConfig.mainnet.networkId,
         };
-        return deleteSettingsInvalidItem(deleteAccount, `contract`);
+        return deleteSettingsInvalidItem(deleteContract, `contract`);
+    });
+
+
+    it('Contract | Delete a contract should return null if not found', async function () {
+        // Arrange.
+        const deleteEthTopic = {
+            item_id: `0.0.0000`,
+            network_id: eventConfig.mainnet.networkId,
+        };
+        return deleteSettingsInvalidItem(deleteEthTopic, `ethtopic`);
     });
 
     it('Account | Should be able to delete a valid account item', async function () {
@@ -76,7 +84,7 @@ describe("Test to validate Delete Item Event Settings", () => {
         const accountItem = accounts.data?.response.find((item) => item.type_id == eventConfig.type.contract);
     
         if (accountItem === null) {
-            console.log(`Could not find item account`);
+            console.log(`Could not find item contract`);
             return;
         }
         const itemDeletePayload = {
@@ -90,7 +98,7 @@ describe("Test to validate Delete Item Event Settings", () => {
     });
  
 
-    it('Eth Topic | Should be able to delete a valid contract item', async function () {
+    it('Eth Topic | Should be able to delete a valid eth topic item', async function () {
         const items = await arkhiaApiHandler.getItemSettings();
         const ethItem = items.data?.response.find((item) => item.type_id == eventConfig.type.ethTopic);
     
@@ -104,7 +112,6 @@ describe("Test to validate Delete Item Event Settings", () => {
         };
         console.log(`Deleting Eth Topic ${itemDeletePayload.item_id} (${itemDeletePayload.network_id})`);      
         return deleteSettingsItem(itemDeletePayload, `ethtopic`, eventConfig.type.ethTopic);
-   
     });
 
 });

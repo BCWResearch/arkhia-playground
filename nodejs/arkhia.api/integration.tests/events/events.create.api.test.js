@@ -55,8 +55,8 @@ const createEventSettingsInvalidItem = async (eventCreatePayload, eventType) => 
         return response;
     } 
     catch (error) {
-        expect(error.response.data).toHaveProperty("status", false);
-        expect(error.response.data.response).toContain("Could not create item. Arguments invalid or item does not seem available in Hedera Mirror Node");
+        expect(error.response.data).toHaveProperty("status", 404);
+        expect(error.response.data.message).toContain('Request failed with status code 404');
     }
 }
 
@@ -96,6 +96,7 @@ const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) =
   
     }
 }
+
 
 describe("Test to validate Create Event Settings | Account ", () => {
 
@@ -252,13 +253,12 @@ describe("Test to validate Create Event Settings | Contract ", () => {
 
 });
 
-
 describe("Test to validate Create Event Settings | EthTopic ", () => {
 
     beforeAll(() => {
 
     });
-
+    
     it('Mainnet | EthTopic | Create Event Settings with valid payload and not existing should create a Events settings item', async function () {
         // Arrange.
         const getRandomItem = Math.floor(Math.random() * 20);
@@ -280,3 +280,4 @@ describe("Test to validate Create Event Settings | EthTopic ", () => {
     });
 
 });
+
