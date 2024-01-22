@@ -55,7 +55,7 @@ class ArkhiaApiHandler {
         return response;
     }
 
-    getItemsCategoryConfig = async(eventSettingsPayload, item, configCategory) => {
+    getItemsCategoryConfig = async (eventSettingsPayload, item, configCategory) => {
         const settingsUnique = `${urlHandler.getArkhiaApiUrl()}/events/hedera/settings/${item}/${configCategory}/${apiKey}`;
         console.log(`Calling for ${settingsUnique} with payload ${eventSettingsPayload}`);
         const response = await axios.post(settingsUnique, { scoutSettings: eventSettingsPayload }, headers);
@@ -81,6 +81,30 @@ class ArkhiaApiHandler {
         const response = await axios.post(updateUrl, { itemSettings: tokenPayload }, headers);
        
        // `/token/:protocol?/metadata/:x_api_key?`,
+        return response;
+    }
+
+    getNetworkAccountBalance = async (networkTag, accountId) => {
+        const postUrl = `${urlHandler.getArkhiaApiUrl()}/hedera/${networkTag}/${apiKey}/api/v1/balances?account.id=${accountId}`;
+        console.log(`Looking for ${postUrl}`);
+        const response = await axios.post(postUrl, {}, headers);
+        return response;
+    }
+
+    getArkhiaApiNetworkAccounts = async (networkTag, from, to, interval, customApiKey, customHeader, customParams = {}) => {
+        const getUrl = `${urlHandler.getArkhiaApiUrl()}/analytics/network/accounts/${customApiKey || apiKey}`;
+        const params = {
+            network: networkTag,
+            from: from,
+            to: to,
+            ...(interval && { interval: interval }),
+            ...customParams
+        };
+        console.log(`Looking for ${getUrl} with params ${JSON.stringify(params)}`);
+        const response = await axios.get(getUrl, {
+            headers: customHeader || headers.headers,
+            params
+        });
         return response;
     }
 }
