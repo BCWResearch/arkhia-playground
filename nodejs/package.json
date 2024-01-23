@@ -35,7 +35,8 @@
     "test:hedera:api:events:update:events": "jest --runInBand arkhia.api/integration.tests/events/events.update.events.api.test.js",
     "test:hedera:api:events:delete": "jest --runInBand arkhia.api/integration.tests/events/events.delete.api.test.js",
     "test:hedera:api:status:read": "jest --runInBand arkhia.api/integration.tests/status.api.test.js",
-    "test:hedera:api:token:all" : "jest --runInBand arkhia.api/integration.tests/token/token.api.test.js"
+    "test:hedera:api:token:all" : "jest --runInBand arkhia.api/integration.tests/token/token.api.test.js",
+    "test:hedera:api:analytics:accounts": "jest --runInBand arkhia.api/integration.tests/analytics/accounts.api.test.js"
   },
   "author": "",
   "license": "ISC",
