@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 
 const testnetContractConfig = {
-    id: `0.0.67908`,
-    sol_id: `0xf3Ae99D543B77b1a4Ad522cecDC80c93176CDedB`
+    id: `0.0.1194516`,
+    sol_id: `0x943eE4fe771C01388a78717C173080e173cf70c4`
 }
 
 
@@ -17,7 +17,7 @@ describe('[Ethers] Signed RawTransaction', () => {
 
     test('Testnet | Should make raw transaction into Contract', async () => {
         // Arrange
-        const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
+        const privateECDSAAccount = `a7d04198bd49b444525e17f657619b331360ff48929f4b3aac1d3c6e5ebacb0b`;
         const provider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
         const signer = new ethers.Wallet(privateECDSAAccount, provider);
         const contractPath = path.join(__dirname, '/');
