@@ -13,8 +13,8 @@ const getEthLogsPayload = () => {
             "method": "eth_getLogs",
             "params": [
                 {
-                    "fromBlock": "0x6347",
-                    "toBlock": "0x6347"
+                    "fromBlock": "0x2edb",
+                    "toBlock": "0x2edb"
                 }
             ]
         });

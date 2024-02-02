@@ -8,7 +8,7 @@ const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 
-const blockHashTestnet = "0x1753f5df715bdd24dc46021ab75972407c9e242ee48b2d9e80b9eaf25842f6c3";
+const blockHashTestnet = "0x4245dd5d17cc8721680b5cfabf977426d8470761691c9c488df0cd23efb491aa";
 const blockHashMainnet = "0x22970bd538feb8f833f6ec8f7d3a6056f09bbf62f8dd2ffcabf7aae534a98114";
 const hashTestnetParsed = blockHashTestnet.substring(0, 66);
 const hashMainnetParsed = blockHashMainnet.substring(0, 66);

@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../../handlers/url.handler');
-const privateECDSAAccount = `0xbc5daad36686fd629a93ae8bcd1a833d93df62eaaa307f5ffa69a592ff44b360`;
+const privateECDSAAccount = `a7d04198bd49b444525e17f657619b331360ff48929f4b3aac1d3c6e5ebacb0b`;
 
 
 describe('[Ethers] Deploy Contract ', () => {
@@ -28,7 +28,7 @@ describe('[Ethers] Deploy Contract ', () => {
         expect(contract).toBeDefined();
         expect(contract.address).toBeDefined();
         console.log(`Contract deployed successfully : ${contract.address}`);
-    
+
     });
 
 });
