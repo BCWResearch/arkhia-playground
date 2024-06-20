@@ -54,7 +54,7 @@
     "get-func-name": "^3.0.0",
     "hardhat": "^2.12.6",
     "node-libcurl": "^4.0.0",
-    "socket.io": "^4.6.1",
+    "socket.io": "^4.6.2",
     "socket.io-client": "^4.6.1",
     "socket.io-parser": "^4.2.4",
     "solc": "^0.8.19",
