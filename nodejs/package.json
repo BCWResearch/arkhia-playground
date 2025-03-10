@@ -38,15 +38,18 @@
     "test:hedera:api:token:all": "jest --runInBand arkhia.api/integration.tests/token/token.api.test.js",
     "test:hedera:api:analytics:accounts": "jest --runInBand arkhia.api/integration.tests/analytics/accounts.api.test.js",
     "test:hedera:subgraph:api": "jest --runInBand graphql/integration.test/subgraph.test.js",
-    "test:hedera:grpc": "node grpc/grpc.test.js"
+    "test:hedera:grpc": "node grpc/grpc.test.js",
+    "test:check": "node cron-job/endpointChecker.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/traverse": "^7.24.6",
     "@hashgraph/sdk": "^2.19.2",
+    "@mailchimp/mailchimp_transactional": "^1.0.59",
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "axios": "^1.3.3",
+    "cron": "^4.1.0",
     "dotenv": "^16.0.3",
     "dotenv-array": "^0.0.5",
     "ethers": "^5.7.2",
