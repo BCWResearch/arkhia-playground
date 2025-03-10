@@ -37,7 +37,8 @@
     "test:hedera:api:status:read": "jest --runInBand arkhia.api/integration.tests/status.api.test.js",
     "test:hedera:api:token:all": "jest --runInBand arkhia.api/integration.tests/token/token.api.test.js",
     "test:hedera:api:analytics:accounts": "jest --runInBand arkhia.api/integration.tests/analytics/accounts.api.test.js",
-    "test:hedera:subgraph:api": "jest --runInBand graphql/integration.test/subgraph.test.js"
+    "test:hedera:subgraph:api": "jest --runInBand graphql/integration.test/subgraph.test.js",
+    "test:hedera:grpc": "node grpc/grpc.test.js"
   },
   "author": "",
   "license": "ISC",
