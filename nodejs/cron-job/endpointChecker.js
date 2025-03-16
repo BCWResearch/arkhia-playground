@@ -25,10 +25,65 @@ const LoggerMessage = {
 class EndpointMonitorHandler {
     static endpointMonitoringJob;
 
-    // Define the endpoints to monitor with their types
+    // Define the endpoints to monitor with their complete configuration
     static endpoints = [
-        { name: 'REST API', url: `${endpoint}/${apiKey}/api/v1/transactions`, type: 'rest' },
-        { name: 'JSON-RPC', url: `${endpoint}/json-rpc/v1/${apiKey}`, type: 'json-rpc' },
+        {
+            name: "JSON-RPC",
+            url: `${endpoint}/json-rpc/v1/${apiKey}`,
+            type: "json-rpc",
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                jsonrpc: "2.0",
+                method: "web3_clientVersion",
+                params: [],
+                id: 0
+            },
+            validateResponse: (response) => {
+                const isValidRpcResponse = response.data &&
+                    response.data.hasOwnProperty('jsonrpc') &&
+                    response.data.hasOwnProperty('id');
+
+                if (!isValidRpcResponse) {
+                    console.error(`Invalid JSON-RPC response:`, response.data);
+                    return false;
+                }
+                return true;
+            }
+        },
+        {
+            name: "REST API",
+            url: `${endpoint}/${apiKey}/api/v1/transactions`,
+            type: "rest",
+            method: "get",
+            headers: {},
+            data: {},
+            validateResponse: (response) => {
+                return response.status >= 200 && response.status < 300;
+            }
+        },
+        {
+            name: "Arkhia Auth API",
+            url: "https://auth-be.arkhia.io/health",
+            type: "health",
+            method: "get",
+            headers: {},
+            data: {},
+            validateResponse: (response) => {
+                // Check if response status is OK and data contains status field
+                const isValid = response.status >= 200 &&
+                    response.status < 300 &&
+                    response.data ;
+
+                if (!isValid) {
+                    console.error(`Invalid health check response from Auth API:`, response.data);
+                    return false;
+                }
+                return true;
+            }
+        }
     ];
 
     // Start all scheduled jobs
@@ -40,9 +95,8 @@ class EndpointMonitorHandler {
     static async startEndpointMonitoringJob() {
         try {
             // Run every 5 minutes
-            //TODO: Update time to check every 24 hours
+            // TODO: Update time to check every 24 hours:   // For every 24 hours at midnight: '0 0 * * *'
             const everyFiveMinutes = '*/5 * * * *';
-
             this.endpointMonitoringJob = new CronJob(everyFiveMinutes, async () => {
                 console.log(SuccessMessages.ENDPOINT_MONITORING_RUNNING);
                 await this.checkEndpoints();
@@ -63,7 +117,7 @@ class EndpointMonitorHandler {
         for (const endpoint of this.endpoints) {
             console.log(`Checking endpoint: ${endpoint.name} - ${endpoint.url}`);
             try {
-                const isHealthy = await this.checkEndpointHealth(endpoint.url, endpoint.type);
+                const isHealthy = await this.checkEndpointHealth(endpoint);
                 if (!isHealthy) {
                     failedEndpoints.push(endpoint);
                     console.error(`${LoggerMessage.ENDPOINT_DOWN}: ${endpoint.name} - ${endpoint.url}`);
@@ -84,55 +138,41 @@ class EndpointMonitorHandler {
         }
     }
 
-    // Check if an endpoint is healthy based on its type
-    static async checkEndpointHealth(url, type = 'rest') {
+    // Check if an endpoint is healthy based on its configuration
+    static async checkEndpointHealth(endpoint) {
         try {
-            let response;
+            console.log(`Making ${endpoint.type} request to: ${endpoint.url} using ${endpoint.method.toUpperCase()} method`);
             const startTime = Date.now();
 
-            if (type === 'json-rpc') {
-                console.log(`Making JSON-RPC request to: ${url}`);
-                // Use the specific JSON-RPC request format
-                response = await axios({
-                    method: 'post',
-                    url: url,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        jsonrpc: "2.0",
-                        method: "web3_clientVersion",
-                        params: [],
-                        id: 0
-                    },
-                    timeout: 10000
-                });
+            // Create the request configuration using the endpoint's properties
+            const requestConfig = {
+                method: endpoint.method,
+                url: endpoint.url,
+                headers: endpoint.headers || {},
+                timeout: 10000
+            };
 
-                // For JSON-RPC, also check if the response contains expected fields
-                const isValidRpcResponse = response.data &&
-                    response.data.hasOwnProperty('jsonrpc') &&
-                    response.data.hasOwnProperty('id')
-
-                if (!isValidRpcResponse) {
-                    console.error(`Invalid JSON-RPC response from ${url}:`, response.data);
-                    return false;
-                }
-            } else {
-                console.log(`Making REST API request to: ${url}`);
-                response = await axios.get(url, { timeout: 10000 });
+            // Add data payload if it exists
+            if (endpoint.data && Object.keys(endpoint.data).length > 0) {
+                requestConfig.data = endpoint.data;
             }
 
+            const response = await axios(requestConfig);
             const responseTime = Date.now() - startTime;
 
-            const isHealthy = response.status >= 200 && response.status < 300;
+            // Use the endpoint's validation function or default to status code check
+            const isHealthy = endpoint.validateResponse
+                ? endpoint.validateResponse(response)
+                : (response.status >= 200 && response.status < 300);
+
             if (isHealthy) {
-                console.log(`Response from ${url} received in ${responseTime}ms with status code: ${response.status}`);
+                console.log(`Response from ${endpoint.url} received in ${responseTime}ms with status code: ${response.status}`);
             } else {
-                console.error(`Unhealthy response from ${url} with status code: ${response.status}`);
+                console.error(`Unhealthy response from ${endpoint.url} with status code: ${response.status}`);
             }
             return isHealthy;
         } catch (error) {
-            console.error(`Failed to connect to ${url}: ${error.message}`);
+            console.error(`Failed to connect to ${endpoint.url}: ${error.message}`);
             return false;
         }
     }
@@ -162,6 +202,7 @@ class EndpointMonitorHandler {
       `;
 
             // Prepare email message
+            //TODO: added Syed and Daniel email address when deploying
             const emailMessage = {
                 message: {
                     from_email: 'paul@arkhia.io',
@@ -183,10 +224,8 @@ class EndpointMonitorHandler {
     }
 }
 
-// Export the class for use in other modules
 module.exports = EndpointMonitorHandler;
 
-// Start the monitoring when this file is executed directly
 if (require.main === module) {
     (async () => {
         try {
