@@ -75,10 +75,68 @@ class EndpointMonitorHandler {
                 // Check if response status is OK and data contains status field
                 const isValid = response.status >= 200 &&
                     response.status < 300 &&
-                    response.data ;
+                    response.data;
 
                 if (!isValid) {
                     console.error(`Invalid health check response from Auth API:`, response.data);
+                    return false;
+                }
+                return true;
+            }
+        },
+        {
+            name: "Watchtower API",
+            url: `${endpoint}/watchtower/v1`,
+            type: "watchtower",
+            method: "get",
+            headers: {},
+            data: {},
+            validateResponse: (response) => {
+                const isValid = response.status >= 200 && response.status < 300;
+
+                if (!isValid) {
+                    console.error(`Invalid response from Watchtower API:`, response.data);
+                    return false;
+                }
+                return true;
+            }
+        },
+        {
+            name: "Events API",
+            url: `https://api.arkhia.io/service/status/${apiKey}`,
+            type: "events",
+            method: "get",
+            headers: {},
+            data: {},
+            validateResponse: (response) => {
+                const isValid = response.status >= 200 && response.status < 300;
+
+                if (!isValid) {
+                    console.error(`Invalid response from Events API:`, response.data);
+                    return false;
+                }
+                return true;
+            }
+        },
+        {
+            name: "Subgraph API",
+            url: `${endpoint}/subgraph/v1/${apiKey}`,
+            type: "subgraph",
+            method: "post",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                query: `{ _meta { block { number } } }`
+            },
+            validateResponse: (response) => {
+                const isValid = response.status >= 200 &&
+                    response.status < 300 &&
+                    response.data &&
+                    !response.data.errors;
+
+                if (!isValid) {
+                    console.error(`Invalid response from Subgraph API:`, response.data);
                     return false;
                 }
                 return true;
@@ -94,10 +152,9 @@ class EndpointMonitorHandler {
     // Initialize and start the endpoint monitoring job
     static async startEndpointMonitoringJob() {
         try {
-            // Run every 5 minutes
-            // TODO: Update time to check every 24 hours:   // For every 24 hours at midnight: '0 0 * * *'
-            const everyFiveMinutes = '*/5 * * * *';
-            this.endpointMonitoringJob = new CronJob(everyFiveMinutes, async () => {
+            // Run every 6 hours
+            const everySixHours = '0 */6 * * *';
+            this.endpointMonitoringJob = new CronJob(everySixHours, async () => {
                 console.log(SuccessMessages.ENDPOINT_MONITORING_RUNNING);
                 await this.checkEndpoints();
             });
@@ -201,12 +258,16 @@ class EndpointMonitorHandler {
         <p>Time of check: ${new Date().toISOString()}</p>
       `;
 
-            // Prepare email message
-            //TODO: added Syed and Daniel email address when deploying
+            // Prepare email message with multiple recipients
             const emailMessage = {
                 message: {
                     from_email: 'paul@arkhia.io',
-                    to: [{ email: 'paul@bcw.group' }],
+                    to: [
+                        { email: 'paul@bcw.group' },
+                        { email: 'daniel@arkhia.io' },
+                        { email: 'syed@arkhia.io' },
+                        { email: 'amman@bcw.group' }
+                    ],
                     subject: 'Endpoint Monitoring Alert: Endpoints Down',
                     text: `The following endpoints are currently down:\n\n${messageDetails}`,
                     html: htmlContent
