@@ -1,6 +1,7 @@
 console.clear();
 require('dotenv').config({path: '.env'});
 const { CronJob } = require('cron');
+const { exec } = require('child_process');
 const axios = require('axios');
 const mailchimp = require('@mailchimp/mailchimp_transactional');
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
@@ -192,6 +193,8 @@ class EndpointMonitorHandler {
             await this.sendNotificationEmail(failedEndpoints);
         } else {
             console.log(`All endpoints are healthy! Check completed at ${new Date().toISOString()}`);
+            console.log('All endpoints are healthy. Running NPM commands...');
+            await this.runNPMCommands();
         }
     }
 
@@ -231,6 +234,33 @@ class EndpointMonitorHandler {
         } catch (error) {
             console.error(`Failed to connect to ${endpoint.url}: ${error.message}`);
             return false;
+        }
+    }
+    static async runNPMCommands() {
+        const commands = [
+            'npm run test:hedera:rest:api',
+            'npm run test:hedera:rest:api:contracts',
+            'npm run test:hedera:jsonrpc:testnet:contract:all',
+            'npm run test:hedera:api:events:read',
+            'npm run test:hedera:subgraph:api'
+        ];
+
+        for (const command of commands) {
+            try {
+                console.log(`Running command: ${command}`);
+                exec(command, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`Error executing command ${command}:`, error);
+                        return;
+                    }
+                    console.log(`Output from command ${command}:`, stdout);
+                    if (stderr) {
+                        console.error(`Stderr from command ${command}:`, stderr);
+                    }
+                });
+            } catch (error) {
+                console.error(`Failed to run command ${command}: ${error.message}`);
+            }
         }
     }
 
