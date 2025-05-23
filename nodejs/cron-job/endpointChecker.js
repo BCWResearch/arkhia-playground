@@ -238,6 +238,7 @@ class EndpointMonitorHandler {
     }
     static async runNPMCommands() {
         const commands = [
+            'npm run test:arkhia',
             'npm run test:hedera:rest:api',
             'npm run test:hedera:rest:api:contracts',
             'npm run test:hedera:jsonrpc:testnet:contract:all',
