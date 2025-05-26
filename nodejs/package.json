@@ -39,7 +39,8 @@
     "test:hedera:api:analytics:accounts": "jest --runInBand arkhia.api/integration.tests/analytics/accounts.api.test.js",
     "test:hedera:subgraph:api": "jest --runInBand graphql/integration.test/subgraph.test.js",
     "test:hedera:grpc": "node grpc/grpc.test.js",
-    "test:check": "node cron-job/endpointChecker.js"
+    "test:check": "node cron-job/endpointChecker.js",
+    "test:arkhia": "jest --runInBand cron-job/arkhiaApiCheck.test.js"
   },
   "author": "",
   "license": "ISC",
