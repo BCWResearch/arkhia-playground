@@ -7,7 +7,7 @@ const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
-const testnetNetworkId = 296;
+const testnetNetworkId = '296';
 const hashTestnetNetworkId = "0x128";
 
 const getPayload = () => {
@@ -34,7 +34,7 @@ describe('[CURL] Net Version', () => {
 
         // Assert
         expect(data?.result).toBeDefined();
-        expect(data?.result).toBe(hashTestnetNetworkId);
+        expect(data?.result).toBe(testnetNetworkId);
     });
 
 });
@@ -50,7 +50,7 @@ describe('[Web3] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe(testnetNetworkId);
+        expect(result.toString()).toBe(testnetNetworkId);
     });
 
 });
@@ -66,7 +66,7 @@ describe('[Ethers] Net Version', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result?.chainId).toBe(testnetNetworkId);
+        expect(result?.chainId.toString()).toBe(testnetNetworkId);
     });
 
 });
