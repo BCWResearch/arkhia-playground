@@ -407,6 +407,8 @@ describe("Test to validate Update Item Event Rule [Parameters] Settings", () => 
                             },
                             {
                                 tag: "api-micro",
+                                key: "api-micro-2",
+                                value: "https://www.mywebhook2.com",
                                 type: "get",
                                 active: true
                             }

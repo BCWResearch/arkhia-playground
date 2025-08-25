@@ -90,10 +90,9 @@ const createEventSettingsItem = async (eventCreatePayload, eventType, eventId) =
         expect(eventItem).toHaveProperty("request_fetch_limit");
         return response;
     } catch(error) {
-        expect(error.data?.status).toHaveProperty("status", true);
-        console.log(`Something went wrong`);
-        console.log(error);
-  
+        console.log(`Event creation failed for ${eventType} with payload:`, eventCreatePayload);
+        console.log(`API Error:`, error.response?.data || error.message);
+        throw error; // Re-throw to fail the test appropriately
     }
 }
 
