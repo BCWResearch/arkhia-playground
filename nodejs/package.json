@@ -40,7 +40,9 @@
     "test:hedera:subgraph:api": "jest --runInBand graphql/integration.test/subgraph.test.js",
     "test:hedera:grpc": "node grpc/grpc.test.js",
     "test:check": "node cron-job/endpointChecker.js",
-    "test:arkhia": "jest --runInBand cron-job/arkhiaApiCheck.test.js"
+    "test:arkhia": "jest --runInBand cron-job/arkhiaApiCheck.test.js",
+    "test:wallet": "mocha arkhia-wallet/integration.test/arkhia.wallet.test.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -63,7 +65,8 @@
     "socket.io-client": "^4.6.1",
     "socket.io-parser": "^4.2.4",
     "solc": "^0.8.19",
-    "web3": "^1.8.2"
+    "web3": "^1.8.2",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "chai": "^4.3.6",

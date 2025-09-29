@@ -5,6 +5,7 @@ const jsonRPCSuffix = 'json-rpc/v1';
 const restAPISuffix = 'api/v1';
 const graphqlSuffix = 'graphql/alpha';
 const subgraphSuffix = 'subgraph/v1'
+const arkhiaWalletSuffix = 'gcp/bigquery';
 const apiKey = process.env.ARKHIA_API_KEY;
 const isHashio = process.env.ARKHIA_HASHIO === true ? true : false;
 
@@ -29,6 +30,8 @@ const subgraphUrlTestnet = `${process.env.ARKHIA_TESTNET_API_URL}/${subgraphSuff
 
 const accountHistoryMainnet = `${process.env.MAINNET_ACCOUNT_HISTORY_ID ?? ``}`;
 const accountHistoryTestnet = `${process.env.TESTNET_ACCOUNT_HISTORY_ID ?? ``}`;
+
+const arkhiaWalletURL = `${process.env.ARKHIA_MAINNET_API_URL}/${arkhiaWalletSuffix}/${apiKey}`;
 
 const arkhiaApi = `${process.env.ARKHIA_API_URL}`;
 
@@ -100,6 +103,10 @@ class UrlHandler {
     }
     getSubgraphURL= (isMainnet)=>{
         return isMainnet? subgraphUrlTestnet: subgraphUrlMainnet
+    }
+    getArkhiaWalletURL = () => {
+        const baseUrl = process.env.ARKHIA_MAINNET_API_URL.replace('/hedera/mainnet', '');
+        return `${baseUrl}/${arkhiaWalletSuffix}/${apiKey}`;
     }
 }
 
