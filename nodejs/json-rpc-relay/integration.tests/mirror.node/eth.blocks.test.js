@@ -2,10 +2,9 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const axios = require('axios');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const getPayload = () => {
     const data = {
@@ -17,21 +16,23 @@ const getPayload = () => {
     return data;
 }
 
-describe('[CURL] Get Latest Block Number', () => {
+describe('[AXIOS] Get Latest Block Number', () => {
 
     test('Should return Latest BlockNumber in Hext format from Arkhia Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data.result).toBeDefined();
-        expect(data.result.length).toBeGreaterThanOrEqual(6);
+        expect(response.data.result).toBeDefined();
+        expect(response.data.result.length).toBeGreaterThanOrEqual(6);
     });
 
     test('Should return Latest BlockNumber in Hext format from Arkhia Mainnet', async () => {
@@ -39,14 +40,16 @@ describe('[CURL] Get Latest Block Number', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-       expect(data.result).toBeDefined();
-       expect(data.result.length).toBeGreaterThanOrEqual(7);
+       expect(response.data.result).toBeDefined();
+       expect(response.data.result.length).toBeGreaterThanOrEqual(7);
     });
 });
 

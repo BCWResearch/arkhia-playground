@@ -2,10 +2,9 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const axios = require('axios');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const arkhiaRelayVersion = "relay/0.23.0-rc1";
 const arkhiaRelayVersionTestnet = "relay/0.23.0-rc1";
@@ -20,20 +19,22 @@ const getPayload = () => {
     return data;
 }
 
-describe('[CURL] ClientVersion', () => {
+describe('[AXIOS] ClientVersion', () => {
 
     test('Should get relay version from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data?.result).toBeDefined();
+        expect(response.data?.result).toBeDefined();
     });
 
     test('Should get relay version from Mainnet', async () => {
@@ -41,13 +42,15 @@ describe('[CURL] ClientVersion', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data?.result).toBeDefined();
+        expect(response.data?.result).toBeDefined();
     });
 
 });

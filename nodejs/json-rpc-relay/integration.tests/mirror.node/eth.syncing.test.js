@@ -2,10 +2,9 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const axios = require('axios');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const getPayload = () => {
     const data = {
@@ -17,21 +16,23 @@ const getPayload = () => {
     return data;
 }
 
-describe('[CURL] Eth Syncing', () => {
+describe('[AXIOS] Eth Syncing', () => {
 
     test('Should return false from Arkhia Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data.result).toBeDefined();
-        expect(JSON.parse(data.result)).toBeFalsy()
+        expect(response.data.result).toBeDefined();
+        expect(JSON.parse(response.data.result)).toBeFalsy()
 
     });
 
@@ -40,14 +41,16 @@ describe('[CURL] Eth Syncing', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data.result).toBeDefined();
-        expect(JSON.parse(data.result)).toBeFalsy()
+        expect(response.data.result).toBeDefined();
+        expect(JSON.parse(response.data.result)).toBeFalsy()
     });
 
 });

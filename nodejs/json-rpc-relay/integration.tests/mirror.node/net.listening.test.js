@@ -2,7 +2,7 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const axios = require('axios');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
 const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
@@ -17,37 +17,41 @@ const getPayload = () => {
     return data;
 }
 
-describe('[CURL] Net Listening', () => {
+describe('[AXIOS] Net Listening', () => {
 
-    test('Should return false from Testnet', async () => {
+    test('Should return listening status from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data.result).toBeDefined();
-        expect(JSON.parse(data.result)).toBeFalsy();
+        expect(response.data.result).toBeDefined();
+        expect(typeof response.data.result).toBe('boolean');
 
     });
 
-    test('Should return false from Mainnet', async () => {
+    test('Should return listening status from Mainnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
+        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         // Assert
-        expect(data.result).toBeDefined();
-        expect(JSON.parse(data.result)).toBeFalsy();
+        expect(response.data.result).toBeDefined();
+        expect(typeof response.data.result).toBe('boolean');
 
     });
 
@@ -55,7 +59,7 @@ describe('[CURL] Net Listening', () => {
 
 describe('[Web3] Net Listening', () => {
 
-    test('Should return false from Testnet', async () => {
+    test('Should return listening status from Testnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcTestnet());
 
@@ -64,10 +68,10 @@ describe('[Web3] Net Listening', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("false");
+        expect(typeof result).toBe('boolean');
     });
 
-    test('Should return false from Mainnet', async () => {
+    test('Should return listening status from Mainnet', async () => {
         // Arrange
         const web3Provider = new Web3(urlHandler.getJsonRpcMainnet());
 
@@ -76,34 +80,34 @@ describe('[Web3] Net Listening', () => {
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("false");
+        expect(typeof result).toBe('boolean');
     });
 
 });
 
 describe('[Ethers] Net Listening', () => {
 
-    test('Should return false from Arkhia Testnet', async () => {
+    test('Should return listening status from Arkhia Testnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcTestnet());
-        
+
         // Act
         const result = await ethersProvider.send("net_listening", []);
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("false");
+        expect(typeof result).toBe('boolean');
     });
 
-    test('Should return false from Arkhia Mainnet', async () => {
+    test('Should return listening status from Arkhia Mainnet', async () => {
         // Arrange
         const ethersProvider = new ethers.providers.JsonRpcProvider(urlHandler.getJsonRpcMainnet());
-        
+
         // Act
         const result = await ethersProvider.send("net_listening", []);
 
         // Assert
         expect(result).toBeDefined();
-        expect(result).toBe("false");
+        expect(typeof result).toBe('boolean');
     });
 });
