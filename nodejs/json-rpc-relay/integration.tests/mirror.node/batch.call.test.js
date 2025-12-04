@@ -1,9 +1,8 @@
 console.clear();
 
 require('dotenv').config({ path: '.env' });
-const axios = require('axios');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
 
 const testnetNetworkId = 296;
 const hashTestnetNetworkId = "0x128";
@@ -22,12 +21,7 @@ describe('Batch EthChainId', () => {
         const configPayload = getPayload(batchRequestLimit);
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
         expect(response.data).toBeDefined();
@@ -42,12 +36,7 @@ describe('Batch EthChainId', () => {
 
         // Act & Assert
         try {
-            await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            });
+            await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
             // If it doesn't throw, fail the test
             fail('Expected request to fail with 400 error');
         } catch (error) {

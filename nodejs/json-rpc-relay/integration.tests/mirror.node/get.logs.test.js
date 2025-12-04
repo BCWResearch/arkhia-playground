@@ -1,7 +1,7 @@
 console.clear();
 
 require('dotenv').config({path: '.env'});
-const axios = require('axios');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const urlHandler = require('../../../handlers/url.handler');
 
 const getEthLogsPayload = () => {
@@ -27,12 +27,7 @@ describe('[AXIOS] Get Logs',  () => {
         const ethLogsPayload = getEthLogsPayload();
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcTestnet(), ethLogsPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), ethLogsPayload);
 
         // Assert
         expect(response.data.result.length).toBeGreaterThan(0);

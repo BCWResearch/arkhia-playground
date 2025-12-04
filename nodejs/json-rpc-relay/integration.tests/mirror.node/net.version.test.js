@@ -2,9 +2,9 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const axios = require('axios');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 
 const testnetNetworkId = '296';
 const hashTestnetNetworkId = "0x128";
@@ -26,12 +26,7 @@ describe('[AXIOS] Net Version', () => {
         const configPayload = getPayload();
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
         expect(response.data?.result).toBeDefined();

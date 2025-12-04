@@ -2,7 +2,7 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const axios = require('axios');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const urlHandler = require('../../../handlers/url.handler');
 
 const getPayload = () => {
@@ -22,12 +22,7 @@ describe('[AXIOS] Hashrate', () => {
         const configPayload = getPayload();
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
         expect(response.data).toBeDefined();
@@ -39,12 +34,7 @@ describe('[AXIOS] Hashrate', () => {
         const configPayload = getPayload();
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcMainnet(), configPayload);
 
         // Assert
         expect(response.data).toBeDefined();

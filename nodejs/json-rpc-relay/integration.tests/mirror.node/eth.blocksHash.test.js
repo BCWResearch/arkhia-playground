@@ -2,7 +2,7 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const axios = require('axios');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
 
@@ -40,12 +40,7 @@ describe('[AXIOS] Get Block By Hash', () => {
         const configPayload = getPayload(false);
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcTestnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
         assertPayload(response.data);
@@ -57,12 +52,7 @@ describe('[AXIOS] Get Block By Hash', () => {
         const configPayload = getPayload(true);
 
         // Act
-        const response = await axios.post(urlHandler.getJsonRpcMainnet(), configPayload, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcMainnet(), configPayload);
 
         // Assert
         assertPayload(response.data);
