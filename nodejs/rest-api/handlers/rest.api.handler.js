@@ -77,7 +77,8 @@ class RestApiHandler {
             const response = await axios.get(contractUrl);
             return response;
         } catch(e) {
-            console.error(e.response.data);
+            console.error(e.response?.data || e.message);
+            throw e;
         }
     }
 
@@ -109,8 +110,9 @@ class RestApiHandler {
             return response;
         } catch(e) {
             console.log(`Error`);
-            console.error(e.response.data);
-            console.log(e.response.data._status);
+            console.error(e.response?.data || e.message);
+            console.log(e.response?.data?._status);
+            throw e;
         }
     }
 

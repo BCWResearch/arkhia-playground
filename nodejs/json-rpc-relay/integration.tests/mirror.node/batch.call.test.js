@@ -1,9 +1,8 @@
 console.clear();
 
 require('dotenv').config({ path: '.env' });
-const { curly } = require('node-libcurl');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json', 'Accept: application/json'];
 
 const testnetNetworkId = 296;
 const hashTestnetNetworkId = "0x128";
@@ -22,32 +21,31 @@ describe('Batch EthChainId', () => {
         const configPayload = getPayload(batchRequestLimit);
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
-        expect(data).toBeDefined();
-        expect(data.length).toBe(batchRequestLimit);
-        expect(data[0].result).toBeDefined();
-        expect(data[0].result).toBe(hashTestnetNetworkId);
+        expect(response.data).toBeDefined();
+        expect(response.data.length).toBe(batchRequestLimit);
+        expect(response.data[0].result).toBeDefined();
+        expect(response.data[0].result).toBe(hashTestnetNetworkId);
     });
 
     test(`Should throw error on current chain id from Testnet for ${(batchRequestLimit + 1)} batch request exceeding 1 more than limit`, async () => {
         // Arrange
         const configPayload = getPayload(batchRequestLimit + 1);
 
-        // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
-
-        // Assert
-        expect(data).toBeDefined();
-        expect(data.error).toBeDefined();
-        expect(data.error.message).toBe("Batch request amount " + (batchRequestLimit + 1) + " exceeds max " + batchRequestLimit);
+        // Act & Assert
+        try {
+            await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
+            // If it doesn't throw, fail the test
+            fail('Expected request to fail with 400 error');
+        } catch (error) {
+            expect(error.response).toBeDefined();
+            expect(error.response.status).toBe(400);
+            expect(error.response.data).toBeDefined();
+            expect(error.response.data.error).toBeDefined();
+            expect(error.response.data.error.message).toContain("Batch request amount " + (batchRequestLimit + 1) + " exceeds max " + batchRequestLimit);
+        }
     });
 
 

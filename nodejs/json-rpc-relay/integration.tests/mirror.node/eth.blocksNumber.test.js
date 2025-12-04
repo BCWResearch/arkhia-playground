@@ -2,10 +2,9 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const { ethers } = require("ethers");
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const getPayload = () => {
     const data = {
@@ -27,20 +26,17 @@ const assertPayload = (data) => {
     expect(data.jsonrpc).toEqual('2.0');
 }
 
-describe('[CURL] Get Block By Number', () => {
+describe('[AXIOS] Get Block By Number', () => {
 
     test('Should return BlockByNumber from Arkhia Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
-        assertPayload(data);
+        assertPayload(response.data);
 
     });
 
@@ -49,13 +45,10 @@ describe('[CURL] Get Block By Number', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcMainnet(), configPayload);
 
         // Assert
-        assertPayload(data);
+        assertPayload(response.data);
 
     });
 });

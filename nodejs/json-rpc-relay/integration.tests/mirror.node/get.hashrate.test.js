@@ -2,9 +2,8 @@ console.clear();
 
 require('dotenv').config({path: '.env'});
 const Web3 = require('web3');
-const { curly } = require('node-libcurl');
+const { makeJsonRpcRequest } = require('../helpers/jsonrpc.helper');
 const urlHandler = require('../../../handlers/url.handler');
-const httpHeaderJson = ['Content-Type: application/json','Accept: application/json'];
 
 const getPayload = () => {
     const data = {
@@ -16,21 +15,18 @@ const getPayload = () => {
     return data;
 }
 
-describe('[CURL] Hashrate', () => {
+describe('[AXIOS] Hashrate', () => {
 
     test('Should get 0x0 from Testnet', async () => {
         // Arrange
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcTestnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcTestnet(), configPayload);
 
         // Assert
-        expect(data).toBeDefined();
-        expect(data?.result).toEqual("0x0");
+        expect(response.data).toBeDefined();
+        expect(response.data?.result).toEqual("0x0");
     });
 
     test('Should get 0x0 from Mainnet', async () => {
@@ -38,14 +34,11 @@ describe('[CURL] Hashrate', () => {
         const configPayload = getPayload();
 
         // Act
-        const { data } = await curly.post(urlHandler.getJsonRpcMainnet(), {
-            postFields: JSON.stringify(configPayload),
-            httpHeader: httpHeaderJson,
-        });
+        const response = await makeJsonRpcRequest(urlHandler.getJsonRpcMainnet(), configPayload);
 
         // Assert
-        expect(data).toBeDefined();
-        expect(data?.result).toEqual("0x0");
+        expect(response.data).toBeDefined();
+        expect(response.data?.result).toEqual("0x0");
     });
 });
 
